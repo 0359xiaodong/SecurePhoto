@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/main_layout"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+    <LinearLayout style="@style/Title">
+
+        <TextView
+                android:text="@string/app_name"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:textSize="28sp"
+                android:gravity="center_horizontal"
+                />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="6dip">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            <Button android:id="@+id/btn_auth"
+                    style="@style/MainButton"
+                    android:text="@string/auth_button_lbl"
+                    />
+
+            <Button android:id="@+id/btn_takeimg"
+                    style="@style/MainButton"
+                    android:text="@string/take_images_lbl"
+                    />
+
+            <Button android:id="@+id/btn_viewimg"
+                    style="@style/MainButton"
+                    android:text="@string/view_images_lbl"
+                    />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            <Button android:id="@+id/btn_export"
+                    style="@style/MainButton"
+                    android:text="@string/export_images"
+                    />
+
+            <Button android:id="@+id/btn_pref"
+                    style="@style/MainButton"
+                    android:text="@string/preferences"
+                    />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

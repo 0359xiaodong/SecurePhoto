@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="@string/auth_features">
+
+
+        <CheckBoxPreference
+                android:key="base_station_logging"
+                android:summary="@string/base_station_auth_summary"
+                android:title="@string/base_station_auth"
+                android:defaultValue="true"
+                />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/other_features">
+
+
+        <CheckBoxPreference
+                android:key="use_autofocus"
+                android:summary="@string/use_autofocus_summary"
+                android:title="@string/use_autofocus"
+                android:defaultValue="true"
+                />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

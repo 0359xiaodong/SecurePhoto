@@ -10,15 +10,47 @@ package eu.tpmusielak.securephoto;
 public final class R {
     public static final class attr {
     }
+    public static final class drawable {
+        public static final int ic_launcher=0x7f020000;
+    }
     public static final class id {
-        public static final int exit_button=0x7f040001;
-        public static final int widget30=0x7f040000;
-        public static final int widget32=0x7f040002;
+        public static final int btn_auth=0x7f080001;
+        public static final int btn_export=0x7f080004;
+        public static final int btn_pref=0x7f080005;
+        public static final int btn_takeimg=0x7f080002;
+        public static final int btn_viewimg=0x7f080003;
+        public static final int help=0x7f080007;
+        public static final int main_layout=0x7f080000;
+        public static final int settings=0x7f080006;
     }
     public static final class layout {
-        public static final int main=0x7f020000;
+        public static final int home_screen=0x7f030000;
+    }
+    public static final class menu {
+        public static final int main_menu=0x7f070000;
     }
     public static final class string {
-        public static final int app_name=0x7f030000;
+        public static final int app_name=0x7f050000;
+        public static final int auth_button_lbl=0x7f050009;
+        public static final int auth_features=0x7f050006;
+        public static final int author_text_lbl=0x7f050001;
+        public static final int base_station_auth=0x7f050004;
+        public static final int base_station_auth_summary=0x7f050005;
+        public static final int export_images=0x7f05000b;
+        public static final int help=0x7f050003;
+        public static final int other_features=0x7f050007;
+        public static final int preferences=0x7f050008;
+        public static final int settings=0x7f050002;
+        public static final int take_images_lbl=0x7f05000a;
+        public static final int use_autofocus=0x7f05000d;
+        public static final int use_autofocus_summary=0x7f05000e;
+        public static final int view_images_lbl=0x7f05000c;
+    }
+    public static final class style {
+        public static final int MainButton=0x7f060001;
+        public static final int Title=0x7f060000;
+    }
+    public static final class xml {
+        public static final int preferences=0x7f040000;
     }
 }
