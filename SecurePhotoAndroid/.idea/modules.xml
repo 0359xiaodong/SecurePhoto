@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SecurePhotoAndroid.iml" filepath="$PROJECT_DIR$/SecurePhotoAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../SecurePhotoBase/SecurePhotoBase.iml" filepath="$PROJECT_DIR$/../SecurePhotoBase/SecurePhotoBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../SecurePhotoCommon/SecurePhotoCommon.iml" filepath="$PROJECT_DIR$/../SecurePhotoCommon/SecurePhotoCommon.iml" />
     </modules>
   </component>
 </project>

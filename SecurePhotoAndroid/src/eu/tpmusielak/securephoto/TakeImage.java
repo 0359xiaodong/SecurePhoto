@@ -48,7 +48,7 @@ public class TakeImage extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        programPreferences = getSharedPreferences("Preferences", MODE_PRIVATE);
+        programPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
 
 
         // Hide the window title.

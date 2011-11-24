@@ -14,6 +14,7 @@ public class HomeScreen extends Activity
 {
     private static final int PREFERENCES_INTENT = 100;
     private static final int TAKE_IMAGE_INTENT = 101;
+    private static final int AUTHENTICATION_INTENT = 102;
 
     /** Called when the activity is first created. */
 
@@ -28,6 +29,7 @@ public class HomeScreen extends Activity
         Button authButton = (Button) findViewById(R.id.btn_auth);
         authButton.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
+                startAuthentication();
             }
         });
 
@@ -86,6 +88,11 @@ public class HomeScreen extends Activity
     protected void showPreferences() {
         Intent preferencesIntent = new Intent(this, ShowPreferences.class);
         startActivityForResult(preferencesIntent, PREFERENCES_INTENT);
+    }
+
+    protected void startAuthentication() {
+        Intent authenticationIntent = new Intent(this, BaseAuthenticate.class);
+        startActivityForResult(authenticationIntent, AUTHENTICATION_INTENT);
     }
 
 

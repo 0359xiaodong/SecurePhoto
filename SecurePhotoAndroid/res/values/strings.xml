@@ -15,4 +15,7 @@
     <string name="view_images_lbl">View images</string>
     <string name="use_autofocus">Use autofocus</string>
     <string name="use_autofocus_summary">Use autofocus while taking pictures</string>
+    <string name="authentication">Base authentication</string>
+    <string name="msg_authenticating_wait">Authenticating. Please wait...</string>
+    <string name="msg_authenticating_ok">Authentication successful</string>
 </resources>

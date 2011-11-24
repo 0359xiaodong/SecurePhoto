@@ -15,8 +15,13 @@
         </activity>
         <activity android:name=".ShowPreferences" android:label="@string/preferences"/>
         <activity android:name=".TakeImage" android:label="@string/take_images_lbl" android:screenOrientation="landscape"/>
+        <activity android:name=".BaseAuthenticate" android:label="@string/authentication" android:theme="@android:style/Theme.NoTitleBar"/>
     </application>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
 </manifest> 

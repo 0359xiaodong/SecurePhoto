@@ -51,7 +51,8 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:padding="6dip">
 
             <Button android:id="@+id/btn_export"
                     style="@style/MainButton"
@@ -61,6 +62,11 @@
             <Button android:id="@+id/btn_pref"
                     style="@style/MainButton"
                     android:text="@string/preferences"
+                    />
+
+            <Button android:id="@+id/btn_help"
+                    style="@style/MainButton"
+                    android:text="@string/help"
                     />
 
         </LinearLayout>
