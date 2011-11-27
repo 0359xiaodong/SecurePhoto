@@ -12,17 +12,25 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int ic_menu_camera=0x7f020001;
+        public static final int ic_menu_forward=0x7f020002;
+        public static final int ic_menu_gallery=0x7f020003;
+        public static final int ic_menu_help=0x7f020004;
+        public static final int ic_menu_login=0x7f020005;
+        public static final int ic_menu_preferences=0x7f020006;
     }
     public static final class id {
-        public static final int btn_auth=0x7f080001;
-        public static final int btn_export=0x7f080004;
-        public static final int btn_help=0x7f080006;
-        public static final int btn_pref=0x7f080005;
-        public static final int btn_takeimg=0x7f080002;
-        public static final int btn_viewimg=0x7f080003;
-        public static final int help=0x7f080008;
-        public static final int main_layout=0x7f080000;
-        public static final int settings=0x7f080007;
+        public static final int btn_auth=0x7f080003;
+        public static final int btn_export=0x7f080006;
+        public static final int btn_help=0x7f080008;
+        public static final int btn_pref=0x7f080007;
+        public static final int btn_shutter=0x7f080001;
+        public static final int btn_takeimg=0x7f080004;
+        public static final int btn_viewimg=0x7f080005;
+        public static final int help=0x7f08000a;
+        public static final int main_layout=0x7f080002;
+        public static final int preview=0x7f080000;
+        public static final int settings=0x7f080009;
     }
     public static final class layout {
         public static final int camera_view=0x7f030000;
@@ -43,15 +51,18 @@ public final class R {
         public static final int help=0x7f050003;
         public static final int msg_authenticating_ok=0x7f050011;
         public static final int msg_authenticating_wait=0x7f050010;
+        public static final int msg_autheticated=0x7f050012;
         public static final int other_features=0x7f050007;
         public static final int preferences=0x7f050008;
         public static final int settings=0x7f050002;
         public static final int take_images_lbl=0x7f05000a;
+        public static final int take_picture=0x7f050013;
         public static final int use_autofocus=0x7f05000d;
         public static final int use_autofocus_summary=0x7f05000e;
         public static final int view_images_lbl=0x7f05000c;
     }
     public static final class style {
+        public static final int IconGrid=0x7f060002;
         public static final int MainButton=0x7f060001;
         public static final int Title=0x7f060000;
     }

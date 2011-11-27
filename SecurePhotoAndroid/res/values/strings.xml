@@ -18,4 +18,6 @@
     <string name="authentication">Base authentication</string>
     <string name="msg_authenticating_wait">Authenticating. Please wait...</string>
     <string name="msg_authenticating_ok">Authentication successful</string>
+    <string name="msg_autheticated">Authenticated</string>
+    <string name="take_picture">Shoot</string>
 </resources>

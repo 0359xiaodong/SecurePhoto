@@ -25,48 +25,48 @@
             android:layout_weight="1"
             android:padding="6dip">
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                style="@style/IconGrid">
+
 
             <Button android:id="@+id/btn_auth"
                     style="@style/MainButton"
                     android:text="@string/auth_button_lbl"
+                    android:drawableTop="@drawable/ic_menu_login"
                     />
 
             <Button android:id="@+id/btn_takeimg"
                     style="@style/MainButton"
                     android:text="@string/take_images_lbl"
+                    android:drawableTop="@drawable/ic_menu_camera"
                     />
+            
+        </LinearLayout>
+        <LinearLayout style="@style/IconGrid">
 
             <Button android:id="@+id/btn_viewimg"
                     style="@style/MainButton"
                     android:text="@string/view_images_lbl"
+                    android:drawableTop="@drawable/ic_menu_gallery"
                     />
-
-        </LinearLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="6dip">
 
             <Button android:id="@+id/btn_export"
                     style="@style/MainButton"
                     android:text="@string/export_images"
+                    android:drawableTop="@drawable/ic_menu_forward"
                     />
+        </LinearLayout>
+        <LinearLayout style="@style/IconGrid">
 
             <Button android:id="@+id/btn_pref"
                     style="@style/MainButton"
                     android:text="@string/preferences"
+                    android:drawableTop="@drawable/ic_menu_preferences"
                     />
 
             <Button android:id="@+id/btn_help"
                     style="@style/MainButton"
                     android:text="@string/help"
+                    android:drawableTop="@drawable/ic_menu_help"
                     />
 
         </LinearLayout>

@@ -5,10 +5,10 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 /**
@@ -23,11 +23,10 @@ public class BaseAuthenticate extends Activity {
     private SharedPreferences preferences;
 
     private ProgressDialog progressDialog;
-    private Runnable authThread;
 
     private final int AUTH_PROGRESS_DIALOG = 0;
 
-    private enum MESSAGES{AUTH_OK, AUTH_FAILED}
+    private enum ServerMessage {AUTH_OK, AUTH_FAILED}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,14 +34,13 @@ public class BaseAuthenticate extends Activity {
         resources = getResources();
         preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
 
-        authThread = connectToServer();
-        showDialog(AUTH_PROGRESS_DIALOG);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        authThread.run();
+        new ConnectToServerTask().execute();
     }
 
     @Override
@@ -58,29 +56,43 @@ public class BaseAuthenticate extends Activity {
         }
         return null;
     }
+    
+    private class ConnectToServerTask extends AsyncTask<Void, Void, ServerMessage> {
 
-    private Thread connectToServer() {
-        return new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(0);
-                } catch (InterruptedException e) {
-                    //
-                }
-                Message message = new Message();
-                message.obj = MESSAGES.AUTH_OK;
-                msgHandler.sendMessage(message);
+        @Override
+        protected void onPreExecute() {
+            showDialog(AUTH_PROGRESS_DIALOG);
+        }
+
+        @Override
+        protected ServerMessage doInBackground(Void... voids) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        };
+            return ServerMessage.AUTH_OK;
+        }
+
+        @Override
+        protected void onPostExecute(ServerMessage serverMessage) {
+            Message message = new Message();
+            message.obj = serverMessage;
+            msgHandler.sendMessage(message);
+        }
     }
 
     private Handler msgHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.obj == MESSAGES.AUTH_OK) {
+            if (msg.obj == ServerMessage.AUTH_OK) {
                 removeDialog(AUTH_PROGRESS_DIALOG);
+                setResult(Activity.RESULT_OK);
+                finish();
+            } else if (msg.obj == ServerMessage.AUTH_FAILED) {
+
             }
+            
         }
     };
 
