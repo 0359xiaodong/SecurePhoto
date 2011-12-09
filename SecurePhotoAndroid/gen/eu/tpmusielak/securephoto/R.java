@@ -20,21 +20,23 @@ public final class R {
         public static final int ic_menu_preferences=0x7f020006;
     }
     public static final class id {
-        public static final int btn_auth=0x7f080003;
-        public static final int btn_export=0x7f080006;
-        public static final int btn_help=0x7f080008;
-        public static final int btn_pref=0x7f080007;
-        public static final int btn_shutter=0x7f080001;
-        public static final int btn_takeimg=0x7f080004;
-        public static final int btn_viewimg=0x7f080005;
-        public static final int help=0x7f08000a;
-        public static final int main_layout=0x7f080002;
-        public static final int preview=0x7f080000;
-        public static final int settings=0x7f080009;
+        public static final int btn_auth=0x7f080004;
+        public static final int btn_export=0x7f080007;
+        public static final int btn_go_auth=0x7f080000;
+        public static final int btn_help=0x7f080009;
+        public static final int btn_pref=0x7f080008;
+        public static final int btn_shutter=0x7f080002;
+        public static final int btn_takeimg=0x7f080005;
+        public static final int btn_viewimg=0x7f080006;
+        public static final int help=0x7f08000b;
+        public static final int main_layout=0x7f080003;
+        public static final int preview=0x7f080001;
+        public static final int settings=0x7f08000a;
     }
     public static final class layout {
-        public static final int camera_view=0x7f030000;
-        public static final int home_screen=0x7f030001;
+        public static final int authentication=0x7f030000;
+        public static final int camera_view=0x7f030001;
+        public static final int home_screen=0x7f030002;
     }
     public static final class menu {
         public static final int main_menu=0x7f070000;
@@ -49,14 +51,23 @@ public final class R {
         public static final int base_station_auth_summary=0x7f050005;
         public static final int export_images=0x7f05000b;
         public static final int help=0x7f050003;
+        public static final int kpref_base_station_address=0x7f050018;
+        public static final int kpref_base_station_logging=0x7f050017;
+        public static final int kpref_base_station_username=0x7f05001a;
+        public static final int kpref_use_autofocus=0x7f050019;
+        public static final int msg_authenticating_failed=0x7f050012;
         public static final int msg_authenticating_ok=0x7f050011;
         public static final int msg_authenticating_wait=0x7f050010;
-        public static final int msg_autheticated=0x7f050012;
+        public static final int msg_autheticated=0x7f050013;
         public static final int other_features=0x7f050007;
+        public static final int pref_caption_base_station_address=0x7f050016;
+        public static final int pref_caption_base_station_username=0x7f05001b;
+        public static final int pref_summary_base_station_address=0x7f050015;
+        public static final int pref_summary_base_station_username=0x7f05001c;
         public static final int preferences=0x7f050008;
         public static final int settings=0x7f050002;
         public static final int take_images_lbl=0x7f05000a;
-        public static final int take_picture=0x7f050013;
+        public static final int take_picture=0x7f050014;
         public static final int use_autofocus=0x7f05000d;
         public static final int use_autofocus_summary=0x7f05000e;
         public static final int view_images_lbl=0x7f05000c;
