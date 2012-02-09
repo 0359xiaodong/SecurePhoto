@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 /**
  * Created by IntelliJ IDEA.
@@ -34,7 +35,7 @@ public class ConnectionHandler extends Thread {
 
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
-            address = inetAddress.getAddress().toString();
+            address = Arrays.toString(inetAddress.getAddress());
             name = inetAddress.getHostName();
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -52,8 +53,6 @@ public class ConnectionHandler extends Thread {
 
             handleMessage(clientMessage);
 
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

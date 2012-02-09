@@ -5,7 +5,6 @@ import eu.tpmusielak.securephoto.server.ISecurePhotoBase;
 import eu.tpmusielak.securephoto.server.SecurePhotoBase;
 import org.junit.Assert;
 import org.junit.Test;
-import sun.net.www.http.HttpClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;

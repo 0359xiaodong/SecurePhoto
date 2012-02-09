@@ -1,6 +1,5 @@
 package eu.tpmusielak.securephoto.server;
 
-import java.awt.*;
 import eu.tpmusielak.securephoto.SPConstants;
 
 /**
