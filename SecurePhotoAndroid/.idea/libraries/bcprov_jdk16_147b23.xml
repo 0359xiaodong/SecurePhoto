@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="bcprov-jdk16-147b23">
+    <CLASSES>
+      <root url="jar://C:/Program Files/Java/jdk1.6.0_29/lib/bcprov-jdk16-147b23.jar!/" />
+      <root url="jar://C:/Program Files/Java/jdk1.6.0_29/lib/bctsp-jdk16-147b23.jar!/" />
+      <root url="jar://C:/Program Files/Java/jdk1.6.0_29/lib/bcmail-jdk16-147b23.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

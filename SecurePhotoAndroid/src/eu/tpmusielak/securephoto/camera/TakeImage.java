@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
-import android.hardware.Camera.*;
+import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.Parameters;
+import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.Size;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -17,15 +20,14 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import eu.tpmusielak.securephoto.FileHandling;
 import eu.tpmusielak.securephoto.R;
+import eu.tpmusielak.securephoto.container.SPImage;
 import eu.tpmusielak.securephoto.communication.CommunicationService;
-import eu.tpmusielak.securephoto.communication.CommunicationService.*;
+import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceBinder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -45,8 +47,7 @@ public class TakeImage extends Activity {
 
     private Button shutterButton;
 
-    private PictureCallback jpgPictureCallback;
-    private PictureCallback rawPictureCallback;
+    private PictureCallback pictureCallback;
 
     private String cameraFocusMode;
 
@@ -89,8 +90,7 @@ public class TakeImage extends Activity {
 
         cameraPreviewFrame = (FrameLayout) findViewById(R.id.preview);
 
-        jpgPictureCallback = new mPictureCallback("jpg");
-        rawPictureCallback = new mPictureCallback("raw");
+        pictureCallback = new mPictureCallback();
 
         shutterButton = (Button) findViewById(R.id.btn_shutter);
         shutterButton.setOnClickListener(new ShutterListener());
@@ -112,14 +112,9 @@ public class TakeImage extends Activity {
     }
 
     private class mPictureCallback implements PictureCallback {
-        private final String fileExtension;
-
-        private mPictureCallback(String fileExtension) {
-            this.fileExtension = fileExtension;
-        }
 
         public void onPictureTaken(byte[] bytes, Camera camera) {
-            new SavePictureTask(fileExtension).execute(bytes);
+            new SavePictureTask().execute(new byte[][]{bytes});
             camera.startPreview();
         }
     }
@@ -144,23 +139,18 @@ public class TakeImage extends Activity {
     }
 
     private void takePicture() {
-        camera.takePicture(null, rawPictureCallback, null, jpgPictureCallback);
+        camera.takePicture(null, null, null, pictureCallback);
     }
 
     private class SavePictureTask extends AsyncTask<byte[], Void, String> {
 
-        private final String fileExtension;
-
-        private SavePictureTask(String fileExtension) {
-            this.fileExtension = fileExtension;
-        }
-
         @Override
         protected String doInBackground(byte[]... bytes) {
             File pictureFile = null;
+            byte[] pictureData = bytes[0];
 
             try {
-                pictureFile = FileHandling.getOutputFile(fileExtension);
+                pictureFile = FileHandling.getOutputFile(SPImage.defaultExtension);
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
@@ -168,8 +158,9 @@ public class TakeImage extends Activity {
 
             try {
                 FileOutputStream fileOutputStream = new FileOutputStream(pictureFile);
-                fileOutputStream.write(bytes[0]);
-                notifyBaseStation(bytes[0]);
+                SPImage image = new SPImage(pictureData);
+                fileOutputStream.write(image.toByteArray());
+                notifyBaseStation(image);
                 fileOutputStream.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -181,18 +172,8 @@ public class TakeImage extends Activity {
             return pictureFile.getName();
         }
 
-        private byte[] getDigest(byte[] picture) {
-            try {
-                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
-                return messageDigest.digest(picture);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        private void notifyBaseStation(byte[] picture) {
-            communicationService.sendImageNotification(getDigest(picture));
+        private void notifyBaseStation(SPImage image) {
+            communicationService.sendImageNotification(image.getImageDigest());
         }
 
         @Override

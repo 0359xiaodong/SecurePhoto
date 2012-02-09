@@ -11,25 +11,13 @@ import android.provider.Settings.Secure;
 import android.view.View;
 import android.widget.Button;
 import eu.tpmusielak.securephoto.R;
-import eu.tpmusielak.securephoto.SPConstants;
-import eu.tpmusielak.securephoto.communication.ServerMessage.ServerResponse;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.UnknownHostException;
-
-import eu.tpmusielak.securephoto.communication.CommunicationService.*;
+import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceBinder;
 
 /**
  * Created by IntelliJ IDEA.
  * User: enx
  * Date: 24.11.11
  * Time: 12:01
- * To change this template use File | Settings | File Templates.
  */
 public class BaseAuthenticate extends Activity {
     private Resources resources;

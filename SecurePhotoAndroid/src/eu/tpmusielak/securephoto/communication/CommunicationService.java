@@ -4,16 +4,15 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.widget.Toast;
+import android.util.Pair;
 import eu.tpmusielak.securephoto.SPConstants;
+import org.bouncycastle.tsp.*;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.UnknownHostException;
+import java.io.*;
+import java.math.BigInteger;
+import java.net.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,6 +26,9 @@ public class CommunicationService extends Service {
     private boolean authenticated = false;
     private String serverAddress = "";
     private String androidID = "";
+
+    private static final String timestampServerAddress = "http://www.cryptopro.ru/tsp/tsp.srf";
+
 
     public class CommServiceBinder extends Binder {
         public CommunicationService getService() {
@@ -74,7 +76,9 @@ public class CommunicationService extends Service {
 
         if (serverMessage == null) {
             serverMessage = new ServerMessage(ServerMessage.ServerResponse.AUTH_FAILED, serverName, "");
-            serverMessage.setErrorMessage(exception.getMessage());
+            if (exception != null) {
+                serverMessage.setErrorMessage(exception.getMessage());
+            }
         }
 
         this.authenticated = true;
@@ -119,6 +123,45 @@ public class CommunicationService extends Service {
         }
 
         return serverMessage;
+    }
+
+    public Pair<TimeStampRequest, TimeStampResponse> getTimestamp(byte[] imageHash) {
+        TimeStampRequest timeStampRequest = null;
+        TimeStampResponse timeStampResponse = null;
+        try {
+            TimeStampRequestGenerator reqGen = new TimeStampRequestGenerator();
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+            BigInteger nonce = BigInteger.valueOf(secureRandom.nextLong());
+
+            timeStampRequest = reqGen.generate(TSPAlgorithms.SHA1, imageHash, nonce);
+
+            byte[] requestBytes = timeStampRequest.getEncoded();
+
+            URL netAddress = new URL(timestampServerAddress);
+            HttpURLConnection connection = (HttpURLConnection) netAddress.openConnection();
+
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("ContentType", "application/timestamp-query");
+            connection.setRequestProperty("ContentLength", String.valueOf(requestBytes.length));
+            connection.setDoOutput(true);
+            connection.connect();
+
+            OutputStream stream = connection.getOutputStream();
+            stream.write(requestBytes, 0, requestBytes.length);
+            stream.close();
+
+            InputStream responseStream = new BufferedInputStream(connection.getInputStream());
+            timeStampResponse = new TimeStampResponse(responseStream);
+            responseStream.close();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TSPException e) {
+            e.printStackTrace();
+        }
+        return new Pair<TimeStampRequest, TimeStampResponse>(timeStampRequest, timeStampResponse);
     }
 
 }
