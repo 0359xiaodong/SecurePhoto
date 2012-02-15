@@ -17,6 +17,7 @@
         <activity android:name=".camera.TakeImage" android:label="@string/take_images_lbl" android:screenOrientation="landscape"/>
         <activity android:name=".communication.BaseAuthenticate" android:label="@string/authentication" android:theme="@android:style/Theme.NoTitleBar"/>
         <activity android:name=".camera.TakeImage"/>
+        <activity android:name=".camera.viewer.ViewImages" android:theme="@android:style/Theme.NoTitleBar"/>
         <service android:name=".communication.CommunicationService"/>
     </application>
     <uses-permission android:name="android.permission.CAMERA"/>

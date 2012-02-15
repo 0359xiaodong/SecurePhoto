@@ -20,26 +20,31 @@ public final class R {
         public static final int ic_menu_preferences=0x7f020006;
     }
     public static final class id {
-        public static final int btn_auth=0x7f080007;
-        public static final int btn_export=0x7f08000a;
+        public static final int btn_auth=0x7f08000a;
+        public static final int btn_export=0x7f08000d;
         public static final int btn_go_auth=0x7f080000;
-        public static final int btn_help=0x7f08000c;
-        public static final int btn_pref=0x7f08000b;
+        public static final int btn_help=0x7f08000f;
+        public static final int btn_pref=0x7f08000e;
         public static final int btn_shutter=0x7f080002;
-        public static final int btn_takeimg=0x7f080008;
-        public static final int btn_viewimg=0x7f080009;
+        public static final int btn_takeimg=0x7f08000b;
+        public static final int btn_viewimg=0x7f08000c;
         public static final int camera_text=0x7f080003;
         public static final int camera_text2=0x7f080004;
         public static final int camera_text3=0x7f080005;
-        public static final int help=0x7f08000e;
-        public static final int main_layout=0x7f080006;
+        public static final int file_view=0x7f080007;
+        public static final int gallery_list=0x7f080008;
+        public static final int help=0x7f080011;
+        public static final int main_layout=0x7f080009;
         public static final int preview=0x7f080001;
-        public static final int settings=0x7f08000d;
+        public static final int roll_descriptor=0x7f080006;
+        public static final int settings=0x7f080010;
     }
     public static final class layout {
         public static final int authentication=0x7f030000;
         public static final int camera_view=0x7f030001;
-        public static final int home_screen=0x7f030002;
+        public static final int gallery_row=0x7f030002;
+        public static final int gallery_view=0x7f030003;
+        public static final int home_screen=0x7f030004;
     }
     public static final class menu {
         public static final int main_menu=0x7f070000;
@@ -83,4 +88,25 @@ public final class R {
     public static final class xml {
         public static final int preferences=0x7f040000;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a HelloGallery.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #HelloGallery_android_galleryItemBackground eu.tpmusielak.securephoto:android_galleryItemBackground}</code></td><td></td></tr>
+           </table>
+           @see #HelloGallery_android_galleryItemBackground
+         */
+        public static final int[] HelloGallery = {
+            0x0101004c
+        };
+        /**
+          <p>This symbol is the offset where the {@link eu.tpmusielak.securephoto.R.attr#android_galleryItemBackground}
+          attribute's value can be found in the {@link #HelloGallery} array.
+          @attr name android:android_galleryItemBackground
+        */
+        public static final int HelloGallery_android_galleryItemBackground = 0;
+    };
 }

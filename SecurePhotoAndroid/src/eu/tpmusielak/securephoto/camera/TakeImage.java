@@ -20,14 +20,18 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import eu.tpmusielak.securephoto.FileHandling;
 import eu.tpmusielak.securephoto.R;
-import eu.tpmusielak.securephoto.container.SPImage;
 import eu.tpmusielak.securephoto.communication.CommunicationService;
 import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceBinder;
+import eu.tpmusielak.securephoto.container.SPImage;
+import eu.tpmusielak.securephoto.verification.DummyVerifier;
+import eu.tpmusielak.securephoto.verification.RFC3161Timestamp;
+import eu.tpmusielak.securephoto.verification.VerificationFactor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -35,7 +39,6 @@ import java.util.List;
  * User: enx
  * Date: 27.11.11
  * Time: 14:01
- * To change this template use File | Settings | File Templates.
  */
 public class TakeImage extends Activity {
     private FrameLayout cameraPreviewFrame = null;
@@ -55,6 +58,8 @@ public class TakeImage extends Activity {
 
     private CommunicationService communicationService;
     private boolean boundToCommService = false;
+    
+    private List<VerificationFactor> verifiers;
 
     private ServiceConnection communicationServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -79,6 +84,16 @@ public class TakeImage extends Activity {
         bindService(intent, communicationServiceConnection, Context.BIND_AUTO_CREATE);
 
         locationProvider = new LocationProvider();
+
+        verifiers = new LinkedList<VerificationFactor>();
+
+        verifiers.add(new RFC3161Timestamp("http://www.cryptopro.ru/tsp/tsp.srf"));
+        verifiers.add(new DummyVerifier());
+        
+        for(VerificationFactor v : verifiers) {
+            v.onCreate();
+        }
+
     }
 
     private void setupScreen() {
@@ -158,7 +173,7 @@ public class TakeImage extends Activity {
 
             try {
                 FileOutputStream fileOutputStream = new FileOutputStream(pictureFile);
-                SPImage image = new SPImage(pictureData);
+                SPImage image = SPImage.getInstance(pictureData, verifiers);
                 fileOutputStream.write(image.toByteArray());
                 notifyBaseStation(image);
                 fileOutputStream.close();
@@ -173,7 +188,7 @@ public class TakeImage extends Activity {
         }
 
         private void notifyBaseStation(SPImage image) {
-            communicationService.sendImageNotification(image.getImageDigest());
+            communicationService.sendImageNotification(image.getImageHash());
         }
 
         @Override

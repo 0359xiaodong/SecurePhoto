@@ -1,10 +1,15 @@
 package eu.tpmusielak.securephoto.container;
 
+import eu.tpmusielak.securephoto.verification.VerificationFactor;
+import eu.tpmusielak.securephoto.verification.VerificationFactorData;
+
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,39 +22,55 @@ public class SPImage implements Serializable {
     public final static String defaultExtension = "spi";
 
     private final byte[] imageData;
-    private final byte[] imageDigest;
+    private final byte[] imageHash;
 
-    public Set<VerificationFactor> getVerificationFactors() {
-        return verificationFactors;
-    }
+    private List<Class<VerificationFactor>> verificationFactors;
+    private Map<Class<VerificationFactor>, VerificationFactorData> verificationFactorData;
 
-    private Set<VerificationFactor> verificationFactors;
-
-    public SPImage(byte[] imageData) {
-        byte[] mImageDigest = null;
+    private SPImage(byte[] imageData) {
+        byte[] mImageHash = null;
         this.imageData = imageData;
 
         try {
-            MessageDigest messageDigest = MessageDigest.getInstance(VerificationFactor.digestAlgorithm);
-            mImageDigest = messageDigest.digest(imageData);
+            MessageDigest messageDigest = MessageDigest.getInstance(digestAlgorithm);
+            mImageHash = messageDigest.digest(imageData);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        this.imageDigest = mImageDigest;
-        verificationFactors = new HashSet<VerificationFactor>();
+        this.imageHash = mImageHash;
+        verificationFactors = new ArrayList<Class<VerificationFactor>>();
+        verificationFactorData = new HashMap<Class<VerificationFactor>, VerificationFactorData>();
     }
 
-    public static SPImage fromBytes(byte[] bytes) throws IOException {
+    public static SPImage getInstance(byte[] imageData) {
+        return getInstance(imageData, null);
+    }
+
+    public static SPImage getInstance(byte[] imageData, List<VerificationFactor> verificationFactors) {
+        SPImage image = new SPImage(imageData);
+
+        if (verificationFactors != null) {
+            for (VerificationFactor f : verificationFactors) {
+
+                Class<VerificationFactor> factorClass = (Class<VerificationFactor>) f.getClass();
+                VerificationFactorData data = f.onCapture(image);
+
+                image.verificationFactors.add(factorClass);
+                image.verificationFactorData.put(factorClass, data);
+            }
+
+        }
+
+
+        return image;
+    }
+
+    public static SPImage fromBytes(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream byteArrayInput = new ByteArrayInputStream(bytes);
         ObjectInput objectInput = new ObjectInputStream(byteArrayInput);
 
-
-        SPImage image = null;
-        try {
-            image = (SPImage) objectInput.readObject();
-        } catch (ClassNotFoundException ignored) {
-        }
+        SPImage image = (SPImage) objectInput.readObject();
 
         objectInput.close();
         byteArrayInput.close();
@@ -57,12 +78,38 @@ public class SPImage implements Serializable {
         return image;
     }
 
+    public static SPImage fromFile(File file) throws IOException, ClassNotFoundException {
+        FileInputStream inputStream = new FileInputStream(file);
+
+        long fileLength = file.length();
+
+        byte[] bytes = new byte[(int) fileLength];
+        int bytesRead = 0;
+
+        bytesRead = inputStream.read(bytes);
+
+        inputStream.close();
+
+        if(bytesRead != fileLength)
+            throw new IOException("Could not read the entire file");
+
+        return fromBytes(bytes);
+    }
+
     public byte[] getImageData() {
         return imageData;
     }
 
-    public byte[] getImageDigest() {
-        return imageDigest;
+    public byte[] getImageHash() {
+        return imageHash;
+    }
+
+    public List<Class<VerificationFactor>> getVerificationFactors() {
+        return verificationFactors;
+    }
+
+    public Map<Class<VerificationFactor>, VerificationFactorData> getVerificationFactorData() {
+        return verificationFactorData;
     }
 
     public byte[] toByteArray() {

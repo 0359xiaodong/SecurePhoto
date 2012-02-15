@@ -32,34 +32,7 @@
     <orderEntry type="jdk" jdkName="Android 2.3.3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="SecurePhotoCommon" exported="" />
-    <orderEntry type="module-library" exported="" scope="RUNTIME">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.6.0_29/lib/bcmail-jdk16-147b23.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="" scope="RUNTIME">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.6.0_29/lib/bcprov-jdk16-147b23.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="" scope="RUNTIME">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.6.0_29/lib/bctsp-jdk16-147b23.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="bcprov-jdk16-147b23" level="project" />
+    <orderEntry type="library" name="bouncy" level="project" />
   </component>
 </module>
 

@@ -1,21 +1,17 @@
 package eu.tpmusielak.securephoto.server;
 
-import eu.tpmusielak.securephoto.SPConstants;
-
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
 /**
  * Created by IntelliJ IDEA.
  * User: enx
  * Date: 24.11.11
  * Time: 12:24
- * To change this template use File | Settings | File Templates.
  */
 public class SecureServer extends Thread implements IMessagePrinter {
 
@@ -56,7 +52,7 @@ public class SecureServer extends Thread implements IMessagePrinter {
 
     @Override
     public void run() {
-        ServerSocket serverSocket = null;
+        ServerSocket serverSocket;
 
         try {
             msgPrinter.printMsg("Starting the server on port " + this.port);
@@ -87,7 +83,7 @@ public class SecureServer extends Thread implements IMessagePrinter {
 
     public synchronized void addKnownDevice(String deviceID) {
         knownDevices.add(deviceID);
-        OutputStream file = null;
+        OutputStream file;
         try {
             file = new FileOutputStream(KNOWN_DEVICES_FILE);
             OutputStream buffer = new BufferedOutputStream(file);

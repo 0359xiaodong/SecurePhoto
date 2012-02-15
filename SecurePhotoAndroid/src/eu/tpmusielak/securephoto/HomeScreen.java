@@ -7,6 +7,7 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import eu.tpmusielak.securephoto.camera.viewer.ViewImages;
 import eu.tpmusielak.securephoto.communication.BaseAuthenticate;
 import eu.tpmusielak.securephoto.communication.CommunicationService;
 import eu.tpmusielak.securephoto.communication.ServerMessage;
@@ -57,17 +58,17 @@ public class HomeScreen extends Activity {
         viewImgButton = (Button) findViewById(R.id.btn_viewimg);
         viewImgButton.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, VIEW_IMAGE_INTENT);
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(intent, VIEW_IMAGE_INTENT);
+                startViewer();
             }
         });
 
         exportImgButton = (Button) findViewById(R.id.btn_export);
         exportImgButton.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
-                //To change body of implemented methods use File | Settings | File Templates.
             }
         });
 
@@ -82,6 +83,11 @@ public class HomeScreen extends Activity {
     private void takeImage() {
         Intent takeImageIntent = new Intent(this, TakeImage.class);
         startActivityForResult(takeImageIntent, TAKE_IMAGE_INTENT);
+    }
+
+    private void startViewer() {
+        Intent startViewerIntent = new Intent(this, ViewImages.class);
+        startActivityForResult(startViewerIntent, VIEW_IMAGE_INTENT);
     }
 
     @Override

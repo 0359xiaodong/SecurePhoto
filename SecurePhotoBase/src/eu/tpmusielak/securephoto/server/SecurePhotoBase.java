@@ -7,7 +7,6 @@ import eu.tpmusielak.securephoto.SPConstants;
  * User: enx
  * Date: 20.11.11
  * Time: 18:10
- * To change this template use File | Settings | File Templates.
  */
 public class SecurePhotoBase implements ISecurePhotoBase {
     private final int serverPort;
