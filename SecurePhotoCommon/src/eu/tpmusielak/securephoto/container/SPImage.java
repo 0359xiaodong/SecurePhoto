@@ -90,7 +90,7 @@ public class SPImage implements Serializable {
 
         inputStream.close();
 
-        if(bytesRead != fileLength)
+        if (bytesRead != fileLength)
             throw new IOException("Could not read the entire file");
 
         return fromBytes(bytes);

@@ -78,4 +78,8 @@ public class RFC3161Timestamp implements VerificationFactor {
         return new TimestampData(request, response);
     }
 
+    @Override
+    public String toString() {
+        return "RFC3161 Timestamp";
+    }
 }

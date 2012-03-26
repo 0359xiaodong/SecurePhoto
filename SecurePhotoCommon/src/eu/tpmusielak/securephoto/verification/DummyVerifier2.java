@@ -5,14 +5,19 @@ import eu.tpmusielak.securephoto.container.SPImage;
 /**
  * Created by IntelliJ IDEA.
  * User: Tomasz P. Musielak
- * Date: 09.02.12
- * Time: 14:42
+ * Date: 25/03/12
+ * Time: 21:50
  */
-public class DummyVerifier implements VerificationFactor {
+public class DummyVerifier2 implements VerificationFactor {
 
 
     @Override
     public void onCreate() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -22,6 +27,6 @@ public class DummyVerifier implements VerificationFactor {
 
     @Override
     public String toString() {
-        return "DummyVerifier";
+        return "DummyVerifier2";
     }
 }

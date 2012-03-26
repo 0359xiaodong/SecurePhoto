@@ -37,7 +37,7 @@ public class SecureServer extends Thread implements IMessagePrinter {
 
 
         } catch (FileNotFoundException e) {
-          //
+            //
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

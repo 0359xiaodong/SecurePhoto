@@ -19,27 +19,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="050ad933-fc6a-4b2f-818f-87c92fffad67" name="Default" comment="Refactoring">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/camera_overlay.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/menu/camera_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/CameraPreview.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/InitializeFactorTask.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/SaveMode.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TimeUpdateTask.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/VerifierManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/container/SPFileHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/GenericVFWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/VerificationFactorWrapper.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/DummyVerifier2.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroid.iml" afterPath="$PROJECT_DIR$/SecurePhotoAndroid.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/eu/tpmusielak/securephoto/R.java" afterPath="$PROJECT_DIR$/gen/eu/tpmusielak/securephoto/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/camera_view.xml" afterPath="$PROJECT_DIR$/res/layout/camera_view.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/xml/preferences.xml" afterPath="$PROJECT_DIR$/res/xml/preferences.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/FileHandling.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/FileHandling.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/IMessagePrinter.java" afterPath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/IMessagePrinter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/ISecurePhotoBase.java" afterPath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/ISecurePhotoBase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/SecurePhotoBase.java" afterPath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/SecurePhotoBase.java" />
