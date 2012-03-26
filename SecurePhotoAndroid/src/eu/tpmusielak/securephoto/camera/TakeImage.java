@@ -1,38 +1,31 @@
 package eu.tpmusielak.securephoto.camera;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.*;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
-import android.hardware.Camera.Size;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.view.*;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.Toast;
-import eu.tpmusielak.securephoto.FileHandling;
+import android.widget.*;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.communication.CommunicationService;
 import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceBinder;
-import eu.tpmusielak.securephoto.container.SPImage;
-import eu.tpmusielak.securephoto.verification.DummyVerifier;
-import eu.tpmusielak.securephoto.verification.RFC3161Timestamp;
-import eu.tpmusielak.securephoto.verification.VerificationFactor;
+import eu.tpmusielak.securephoto.container.SPFileHandler;
+import eu.tpmusielak.securephoto.container.SPImageHandler;
+import eu.tpmusielak.securephoto.container.SPImageRollHandler;
+import eu.tpmusielak.securephoto.verification.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,6 +42,12 @@ public class TakeImage extends Activity {
     private int usedCamera;
 
     private Button shutterButton;
+    private Button saveModeButton;
+
+    private ProgressBar backgroundOperationBar;
+    private AtomicInteger backgroundOpsCounter;
+
+    private TextView baseStationDisplay;
 
     private PictureCallback pictureCallback;
 
@@ -58,8 +57,22 @@ public class TakeImage extends Activity {
 
     private CommunicationService communicationService;
     private boolean boundToCommService = false;
-    
+
+    private InitializeFactorTask verifierSetupTask;
+    private List<VerificationFactorWrapper> verifierWrappers;
     private List<VerificationFactor> verifiers;
+    private boolean[] enabledVerifiers;
+
+    private Map<SaveMode, SPFileHandler> fileHandlers;
+    private SPFileHandler fileHandler;
+    private SaveMode saveMode;
+
+    private TimeUpdateTask timeUpdateTask;
+
+    SharedPreferences preferences;
+
+    ViewGroup optionsPane;
+    ViewGroup pluginsPane;
 
     private ServiceConnection communicationServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -73,9 +86,15 @@ public class TakeImage extends Activity {
         }
     };
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        backgroundOpsCounter = new AtomicInteger(0);
+
+        saveMode = SaveMode.IMAGE_ROLL;
 
         setupScreen();
         setupCamera();
@@ -85,17 +104,34 @@ public class TakeImage extends Activity {
 
         locationProvider = new LocationProvider();
 
-        verifiers = new LinkedList<VerificationFactor>();
+        verifierWrappers = new LinkedList<VerificationFactorWrapper>();
+        verifierWrappers.add(new GenericVFWrapper(new DummyVerifier(), getBaseContext()));
+        verifierWrappers.add(new GenericVFWrapper(new DummyVerifier2(), getBaseContext()));
 
-        verifiers.add(new RFC3161Timestamp("http://www.cryptopro.ru/tsp/tsp.srf"));
-        verifiers.add(new DummyVerifier());
-        
-        for(VerificationFactor v : verifiers) {
-            v.onCreate();
+        verifiers = new LinkedList<VerificationFactor>();
+        for (VerificationFactorWrapper v : verifierWrappers) {
+            verifiers.add(v.getVerificationFactor());
         }
 
+//        String tsaAddress = preferences.getString(
+//                getResources().getString(R.string.kpref_TSA_address), "");
+
+//        verifiers.add(new RFC3161Timestamp(tsaAddress));
+
+        enabledVerifiers = new boolean[verifiers.size()];
+        Arrays.fill(enabledVerifiers, Boolean.TRUE); // Enable verifiers by default
+
+        verifierSetupTask = new InitializeFactorTask(this);
+        verifierSetupTask.execute(verifierWrappers);
+
+        fileHandlers = new HashMap<SaveMode, SPFileHandler>();
+        fileHandlers.put(SaveMode.SINGLE_IMAGE, new SPImageHandler(verifiers));
+        fileHandlers.put(SaveMode.IMAGE_ROLL, new SPImageRollHandler(verifiers));
+
+        fileHandler = fileHandlers.get(saveMode);
     }
 
+    @SuppressWarnings(value = "unchecked")
     private void setupScreen() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -109,6 +145,22 @@ public class TakeImage extends Activity {
 
         shutterButton = (Button) findViewById(R.id.btn_shutter);
         shutterButton.setOnClickListener(new ShutterListener());
+
+        saveModeButton = (Button) findViewById(R.id.btn_save_mode);
+        saveModeButton.setText(saveMode.getTextResID());
+        saveModeButton.setOnClickListener(new SaveModeListener());
+
+        optionsPane = (ViewGroup) findViewById(R.id.options_pane);
+        pluginsPane = (ViewGroup) findViewById(R.id.plugins_pane);
+
+        timeUpdateTask = new TimeUpdateTask(this);
+        timeUpdateTask.execute();
+
+        String baseStationAddress = preferences.getString(getResources().getString(R.string.kpref_base_station_address), "");
+
+        baseStationDisplay = (TextView) findViewById(R.id.camera_base);
+        baseStationDisplay.setText(baseStationAddress);
+
     }
 
     private class ShutterListener implements View.OnClickListener {
@@ -126,11 +178,21 @@ public class TakeImage extends Activity {
         }
     }
 
+    private class SaveModeListener implements Button.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            saveMode = saveMode.switchMode();
+            fileHandler = fileHandlers.get(saveMode);
+            ((Button) view).setText(saveMode.getTextResID());
+        }
+    }
+
     private class mPictureCallback implements PictureCallback {
 
         public void onPictureTaken(byte[] bytes, Camera camera) {
             new SavePictureTask().execute(new byte[][]{bytes});
             camera.startPreview();
+            shutterButton.setEnabled(true);
         }
     }
 
@@ -154,46 +216,35 @@ public class TakeImage extends Activity {
     }
 
     private void takePicture() {
-        camera.takePicture(null, null, null, pictureCallback);
+        shutterButton.setEnabled(false);
+        try {
+            camera.takePicture(null, null, null, pictureCallback);
+        } catch (RuntimeException ignore) {
+            /* If the shutter is pressed too often, the shutter button doesn't get disabled
+               and camera.takePicture fails */
+            shutterButton.setEnabled(true);
+        }
     }
 
     private class SavePictureTask extends AsyncTask<byte[], Void, String> {
+        ProgressBar progressBar;
+
+        @Override
+        protected void onPreExecute() {
+            startBackgroundOperation();
+        }
 
         @Override
         protected String doInBackground(byte[]... bytes) {
-            File pictureFile = null;
             byte[] pictureData = bytes[0];
-
-            try {
-                pictureFile = FileHandling.getOutputFile(SPImage.defaultExtension);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream(pictureFile);
-                SPImage image = SPImage.getInstance(pictureData, verifiers);
-                fileOutputStream.write(image.toByteArray());
-                notifyBaseStation(image);
-                fileOutputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-            return pictureFile.getName();
-        }
-
-        private void notifyBaseStation(SPImage image) {
-            communicationService.sendImageNotification(image.getImageHash());
+            return fileHandler.saveFile(pictureData);
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(TakeImage.this, "File " + result + " saved successfully", Toast.LENGTH_SHORT).show();
+            endBackgroundOperation();
+            if (result != null)
+                Toast.makeText(TakeImage.this, "File " + result + " saved successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -236,171 +287,76 @@ public class TakeImage extends Activity {
             boundToCommService = false;
         }
 
+        timeUpdateTask.cancel(true);
+
         super.onPause();
     }
 
-    /**
-     * Taken from Android API Examples
-     * <p/>
-     * (C) Google
-     * <p/>
-     * A simple wrapper around a Camera and a SurfaceView that renders a centered preview of the Camera
-     * to the surface. We need to center the SurfaceView because not all devices have cameras that
-     * support preview sizes at the same aspect ratio as the device's display.
-     */
-    private class CameraPreview extends ViewGroup implements SurfaceHolder.Callback {
-        private final String TAG = "Preview";
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.camera_menu, menu);
+        return true;
+    }
 
-        SurfaceView mSurfaceView;
-        SurfaceHolder mHolder;
-        Size mPreviewSize;
-        List<Size> mSupportedPreviewSizes;
-        Camera mCamera;
-
-        CameraPreview(Context context) {
-            super(context);
-
-            mSurfaceView = new SurfaceView(context);
-            addView(mSurfaceView);
-
-            // Install a SurfaceHolder.Callback so we get notified when the
-            // underlying surface is created and destroyed.
-            mHolder = mSurfaceView.getHolder();
-            mHolder.addCallback(this);
-            mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        }
-
-        public void setCamera(Camera camera) {
-            mCamera = camera;
-            if (mCamera != null) {
-                mSupportedPreviewSizes = mCamera.getParameters().getSupportedPreviewSizes();
-                requestLayout();
-            }
-        }
-
-        public void switchCamera(Camera camera) {
-            setCamera(camera);
-            try {
-                camera.setPreviewDisplay(mHolder);
-            } catch (IOException exception) {
-                //
-            }
-            Camera.Parameters parameters = camera.getParameters();
-            parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
-            requestLayout();
-
-            camera.setParameters(parameters);
-        }
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            camera.autoFocus(new AFCallback(false));
-            return true;
-        }
-
-        @Override
-        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            // We purposely disregard child measurements because act as a
-            // wrapper to a SurfaceView that centers the camera preview instead
-            // of stretching it.
-            final int width = resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec);
-            final int height = resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec);
-            setMeasuredDimension(width, height);
-
-            if (mSupportedPreviewSizes != null) {
-                mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, width, height);
-            }
-        }
-
-        @Override
-        protected void onLayout(boolean changed, int l, int t, int r, int b) {
-            if (changed && getChildCount() > 0) {
-                final View child = getChildAt(0);
-
-                final int width = r - l;
-                final int height = b - t;
-
-                int previewWidth = width;
-                int previewHeight = height;
-                if (mPreviewSize != null) {
-                    previewWidth = mPreviewSize.width;
-                    previewHeight = mPreviewSize.height;
-                }
-
-                // Center the child SurfaceView within the parent.
-                if (width * previewHeight > height * previewWidth) {
-                    final int scaledChildWidth = previewWidth * height / previewHeight;
-                    child.layout((width - scaledChildWidth) / 2, 0,
-                            (width + scaledChildWidth) / 2, height);
-                } else {
-                    final int scaledChildHeight = previewHeight * width / previewWidth;
-                    child.layout(0, (height - scaledChildHeight) / 2,
-                            width, (height + scaledChildHeight) / 2);
-                }
-            }
-        }
-
-        public void surfaceCreated(SurfaceHolder holder) {
-            // The Surface has been created, acquire the camera and tell it where
-            // to draw.
-            try {
-                if (mCamera != null) {
-                    mCamera.setPreviewDisplay(holder);
-                }
-            } catch (IOException exception) {
-                //
-            }
-        }
-
-        public void surfaceDestroyed(SurfaceHolder holder) {
-            // Surface will be destroyed when we return, so stop the preview.
-            if (mCamera != null) {
-                mCamera.stopPreview();
-            }
-        }
-
-
-        private Size getOptimalPreviewSize(List<Size> sizes, int w, int h) {
-            final double ASPECT_TOLERANCE = 0.1;
-            double targetRatio = (double) w / h;
-            if (sizes == null) return null;
-
-            Size optimalSize = null;
-            double minDiff = Double.MAX_VALUE;
-
-            // Try to find an size match aspect ratio and size
-            for (Size size : sizes) {
-                double ratio = (double) size.width / size.height;
-                if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
-                if (Math.abs(size.height - h) < minDiff) {
-                    optimalSize = size;
-                    minDiff = Math.abs(size.height - h);
-                }
-            }
-
-            // Cannot find the one match the aspect ratio, ignore the requirement
-            if (optimalSize == null) {
-                minDiff = Double.MAX_VALUE;
-                for (Size size : sizes) {
-                    if (Math.abs(size.height - h) < minDiff) {
-                        optimalSize = size;
-                        minDiff = Math.abs(size.height - h);
-                    }
-                }
-            }
-            return optimalSize;
-        }
-
-        public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-            // Now that the size is known, set up the camera parameters and begin
-            // the preview.
-            Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
-            requestLayout();
-
-            mCamera.setParameters(parameters);
-            mCamera.startPreview();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.v_factors:
+                showVerificationFactors();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
+
+    void startBackgroundOperation() {
+        backgroundOperationBar = (ProgressBar) findViewById(R.id.camera_save_progress);
+        backgroundOperationBar.isIndeterminate();
+        backgroundOperationBar.setVisibility(View.VISIBLE);
+        backgroundOpsCounter.incrementAndGet();
+    }
+
+    void endBackgroundOperation() {
+        if (backgroundOpsCounter.decrementAndGet() == 0)
+            backgroundOperationBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        return super.onCreateDialog(id);
+    }
+
+    private void showVerificationFactors() {
+        List<CharSequence> verificationFactorNames = new LinkedList<CharSequence>();
+
+        for (VerificationFactorWrapper v : verifierWrappers) {
+            verificationFactorNames.add(v.getName());
+        }
+
+        CharSequence[] items = new CharSequence[verificationFactorNames.size()];
+
+        verificationFactorNames.toArray(items);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.pick_vfactor);
+
+        builder.setMultiChoiceItems(items, enabledVerifiers, new OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    @SuppressWarnings("unchecked")
+    void updateTime() {
+        timeUpdateTask = new TimeUpdateTask(this);
+        timeUpdateTask.execute();
+    }
+
 }
 

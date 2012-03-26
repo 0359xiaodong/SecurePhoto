@@ -1,43 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-  <FrameLayout
-    android:id="@+id/preview"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_alignParentTop="true"
-    />
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+        >
+    <FrameLayout
+            android:id="@+id/preview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            />
 
-  <Button
-    android:id="@+id/btn_shutter"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:layout_centerVertical="true"
-    android:background="@drawable/ic_menu_camera"
-    />
 
-  <TextView
-    android:id="@+id/camera_text"
-    android:text="@string/app_name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignBottom="@+id/preview"
-    android:layout_centerHorizontal="true"/>
+    <Button
+            android:id="@+id/btn_shutter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_menu_camera"
+            />
+
+    <ScrollView android:id="@+id/options_scroll"
+                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:scrollbars="none">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:id="@+id/options_pane"
+                      android:layout_height="fill_parent"
+                      android:layout_width="100px"
+                      android:orientation="vertical">
+            <Button
+                    android:id="@+id/btn_save_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/camera_image_roll"
+                    />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <HorizontalScrollView
+            android:id="@+id/plugin_scroll"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:scrollbars="none"
+            android:layout_toLeftOf="@id/btn_shutter"
+            android:layout_toRightOf="@id/options_scroll">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/plugins_pane"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1">
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ProgressBar
+            android:id="@+id/camera_save_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"
+            android:text="@string/camera_image_roll"
+            />
 
     <TextView
-        android:id="@+id/camera_text2"
-        android:text="@string/kpref_base_station_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/preview"
-        android:layout_alignRight="@+id/preview"/>
+            android:id="@+id/camera_text"
+            android:text="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/preview"
+            android:layout_centerHorizontal="true"/>
 
     <TextView
-            android:id="@+id/camera_text3"
-            android:text="2011/12/09"
+            android:id="@+id/camera_base"
+            android:text="@string/kpref_base_station_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/preview"
+            android:layout_alignRight="@+id/preview"/>
+
+    <TextView
+            android:id="@+id/camera_date"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/preview"

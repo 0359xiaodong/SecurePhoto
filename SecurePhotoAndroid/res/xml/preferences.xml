@@ -26,6 +26,13 @@
                 android:defaultValue=""
                 />
 
+        <android.preference.EditTextPreference
+                android:key="@string/kpref_TSA_address"
+                android:summary="@string/pref_summary_TSA_address"
+                android:title="@string/pref_caption_TSA_address"
+                android:defaultValue="http://www.cryptopro.ru/tsp/tsp.srf"
+                />
+
     </PreferenceCategory>
     <PreferenceCategory
             android:title="@string/other_features">

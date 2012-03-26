@@ -21,34 +21,34 @@ public class FileHandling {
 
         return getOutputFile(name, extension);
     }
-    
+
     public static File getOutputFile(String name, String extension) throws IOException {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    throw new IOException("External storage inaccessible");
-                }
+            throw new IOException("External storage inaccessible");
+        }
 
-                File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES), "SecureCamera");
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "SecureCamera");
 
-                if (!mediaStorageDir.exists()) {
-                    if (!mediaStorageDir.mkdirs()) {
-                        return null;
-                    }
-                }
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
 
-                File mediaFile;
-                mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                        name + "." + extension);
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                name + "." + extension);
 
-                return mediaFile;
+        return mediaFile;
     }
-    
+
     public static File[] getFiles() {
         return getFiles("");
     }
-    
+
     public static File[] getFiles(final String extension) {
-        String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() ;
+        String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
         File dir = new File(dirPath + "/SecureCamera");
 
 //        return dir.listFiles(new FilenameFilter() {
@@ -62,10 +62,10 @@ public class FileHandling {
         return dir.listFiles();
 
     }
-    
+
     public static String[] getFileNames(final String extension) {
-        String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() ;
-            File dir = new File(dirPath + "/SecureCamera");
+        String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+        File dir = new File(dirPath + "/SecureCamera");
 
 //        return dir.list(new FilenameFilter() {
 //            @Override
