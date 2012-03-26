@@ -33,6 +33,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="SecurePhotoCommon" exported="" />
     <orderEntry type="library" scope="PROVIDED" name="bouncy" level="project" />
+    <orderEntry type="module" module-name="SecurePhotoAndroidCommon" />
   </component>
 </module>
 

@@ -36,4 +36,5 @@
     <string name="camera_image_single">SingleImage</string>
     <string name="verification_factors">Verification factors</string>
     <string name="pick_vfactor">Pick verifiers</string>
+    <string name="verifier_settings">Verifier settings</string>
 </resources>

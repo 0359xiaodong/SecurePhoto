@@ -1,7 +1,7 @@
 package eu.tpmusielak.securephoto.container;
 
 import eu.tpmusielak.securephoto.FileHandling;
-import eu.tpmusielak.securephoto.verification.VerificationFactor;
+import eu.tpmusielak.securephoto.verification.Verifier;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class SPImageHandler implements SPFileHandler {
 
-    private List<VerificationFactor> verifiers;
+    private List<Verifier> verifiers;
 
-    public SPImageHandler(List<VerificationFactor> verifiers) {
+    public SPImageHandler(List<Verifier> verifiers) {
         this.verifiers = verifiers;
     }
 

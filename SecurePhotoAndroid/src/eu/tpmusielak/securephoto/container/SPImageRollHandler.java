@@ -1,6 +1,6 @@
 package eu.tpmusielak.securephoto.container;
 
-import eu.tpmusielak.securephoto.verification.VerificationFactor;
+import eu.tpmusielak.securephoto.verification.Verifier;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class SPImageRollHandler implements SPFileHandler {
 
-    private List<VerificationFactor> verifiers;
+    private List<Verifier> verifiers;
 
-    public SPImageRollHandler(List<VerificationFactor> verifiers) {
+    public SPImageRollHandler(List<Verifier> verifiers) {
         this.verifiers = verifiers;
     }
 

@@ -1,10 +1,8 @@
 package eu.tpmusielak.securephoto.camera;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.*;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -22,9 +20,12 @@ import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceB
 import eu.tpmusielak.securephoto.container.SPFileHandler;
 import eu.tpmusielak.securephoto.container.SPImageHandler;
 import eu.tpmusielak.securephoto.container.SPImageRollHandler;
-import eu.tpmusielak.securephoto.verification.*;
+import eu.tpmusielak.securephoto.verification.Verifier;
+import eu.tpmusielak.securephoto.verification.VerifierGUIReceiver;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -33,7 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Date: 27.11.11
  * Time: 14:01
  */
-public class TakeImage extends Activity {
+public class TakeImage extends Activity implements VerifierGUIReceiver {
     private FrameLayout cameraPreviewFrame = null;
     private CameraPreview cameraPreview = null;
     private int cameraCount = 0;
@@ -43,6 +44,7 @@ public class TakeImage extends Activity {
 
     private Button shutterButton;
     private Button saveModeButton;
+    private Button verifierSettingsButton;
 
     private ProgressBar backgroundOperationBar;
     private AtomicInteger backgroundOpsCounter;
@@ -58,10 +60,9 @@ public class TakeImage extends Activity {
     private CommunicationService communicationService;
     private boolean boundToCommService = false;
 
-    private InitializeFactorTask verifierSetupTask;
-    private List<VerificationFactorWrapper> verifierWrappers;
-    private List<VerificationFactor> verifiers;
-    private boolean[] enabledVerifiers;
+    private SCVerifierManager SCVerifierManager;
+
+    private List<Verifier> verifiers;
 
     private Map<SaveMode, SPFileHandler> fileHandlers;
     private SPFileHandler fileHandler;
@@ -86,6 +87,7 @@ public class TakeImage extends Activity {
         }
     };
 
+
     @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,25 +106,14 @@ public class TakeImage extends Activity {
 
         locationProvider = new LocationProvider();
 
-        verifierWrappers = new LinkedList<VerificationFactorWrapper>();
-        verifierWrappers.add(new GenericVFWrapper(new DummyVerifier(), getBaseContext()));
-        verifierWrappers.add(new GenericVFWrapper(new DummyVerifier2(), getBaseContext()));
+        SCVerifierManager = new SCVerifierManager(this);
+        verifiers = SCVerifierManager.getVerifiers();
 
-        verifiers = new LinkedList<VerificationFactor>();
-        for (VerificationFactorWrapper v : verifierWrappers) {
-            verifiers.add(v.getVerificationFactor());
-        }
 
 //        String tsaAddress = preferences.getString(
 //                getResources().getString(R.string.kpref_TSA_address), "");
 
 //        verifiers.add(new RFC3161Timestamp(tsaAddress));
-
-        enabledVerifiers = new boolean[verifiers.size()];
-        Arrays.fill(enabledVerifiers, Boolean.TRUE); // Enable verifiers by default
-
-        verifierSetupTask = new InitializeFactorTask(this);
-        verifierSetupTask.execute(verifierWrappers);
 
         fileHandlers = new HashMap<SaveMode, SPFileHandler>();
         fileHandlers.put(SaveMode.SINGLE_IMAGE, new SPImageHandler(verifiers));
@@ -147,8 +138,10 @@ public class TakeImage extends Activity {
         shutterButton.setOnClickListener(new ShutterListener());
 
         saveModeButton = (Button) findViewById(R.id.btn_save_mode);
-        saveModeButton.setText(saveMode.getTextResID());
-        saveModeButton.setOnClickListener(new SaveModeListener());
+        saveModeButton.setOnClickListener(new SaveModeListener(saveModeButton));
+
+        verifierSettingsButton = (Button) findViewById(R.id.btn_verifier_settings);
+        verifierSettingsButton.setOnClickListener(new VerifierSettingsListener());
 
         optionsPane = (ViewGroup) findViewById(R.id.options_pane);
         pluginsPane = (ViewGroup) findViewById(R.id.plugins_pane);
@@ -179,11 +172,21 @@ public class TakeImage extends Activity {
     }
 
     private class SaveModeListener implements Button.OnClickListener {
+        public SaveModeListener(Button saveModeButton) {
+            saveModeButton.setBackgroundResource(saveMode.getDrawableResID());
+        }
+
         @Override
         public void onClick(View view) {
             saveMode = saveMode.switchMode();
             fileHandler = fileHandlers.get(saveMode);
-            ((Button) view).setText(saveMode.getTextResID());
+            ((Button) view).setBackgroundResource(saveMode.getDrawableResID());
+        }
+    }
+
+    private class VerifierSettingsListener implements Button.OnClickListener {
+        public void onClick(View view) {
+            SCVerifierManager.showVerificationFactors();
         }
     }
 
@@ -303,21 +306,21 @@ public class TakeImage extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.v_factors:
-                showVerificationFactors();
+                SCVerifierManager.showVerificationFactors();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    void startBackgroundOperation() {
+    public void startBackgroundOperation() {
         backgroundOperationBar = (ProgressBar) findViewById(R.id.camera_save_progress);
         backgroundOperationBar.isIndeterminate();
         backgroundOperationBar.setVisibility(View.VISIBLE);
         backgroundOpsCounter.incrementAndGet();
     }
 
-    void endBackgroundOperation() {
+    public void endBackgroundOperation() {
         if (backgroundOpsCounter.decrementAndGet() == 0)
             backgroundOperationBar.setVisibility(View.GONE);
     }
@@ -325,31 +328,6 @@ public class TakeImage extends Activity {
     @Override
     protected Dialog onCreateDialog(int id) {
         return super.onCreateDialog(id);
-    }
-
-    private void showVerificationFactors() {
-        List<CharSequence> verificationFactorNames = new LinkedList<CharSequence>();
-
-        for (VerificationFactorWrapper v : verifierWrappers) {
-            verificationFactorNames.add(v.getName());
-        }
-
-        CharSequence[] items = new CharSequence[verificationFactorNames.size()];
-
-        verificationFactorNames.toArray(items);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.pick_vfactor);
-
-        builder.setMultiChoiceItems(items, enabledVerifiers, new OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
-
     }
 
     @SuppressWarnings("unchecked")

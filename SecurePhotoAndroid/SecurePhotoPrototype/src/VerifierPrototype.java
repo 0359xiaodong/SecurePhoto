@@ -1,7 +1,7 @@
-import eu.tpmusielak.securephoto.container.*;
-import eu.tpmusielak.securephoto.verification.*;
 import eu.tpmusielak.bouncy.tsp.TSPException;
 import eu.tpmusielak.bouncy.tsp.TimeStampResponse;
+import eu.tpmusielak.securephoto.container.SPImage;
+import eu.tpmusielak.securephoto.verification.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,10 +15,10 @@ import java.util.Map;
  * Time: 12:11
  */
 public class VerifierPrototype {
-    private List<VerificationFactor> verifiers;
+    private List<Verifier> verifiers;
 
     public VerifierPrototype() {
-        verifiers = new ArrayList<VerificationFactor>();
+        verifiers = new ArrayList<Verifier>();
         verifiers.add(new RFC3161Timestamp("http://www.cryptopro.ru/tsp/tsp.srf"));
         verifiers.add(new DummyVerifier());
     }
@@ -66,7 +66,7 @@ public class VerifierPrototype {
     }
 
     public void extractTimestampData(SPImage image) throws TSPException, IOException {
-        Map<Class<VerificationFactor>, VerificationFactorData> verificationFactorData = image.getVerificationFactorData();
+        Map<Class<Verifier>, VerificationFactorData> verificationFactorData = image.getVerificationFactorData();
         Class<RFC3161Timestamp> timestampDataClass = RFC3161Timestamp.class;
         TimestampData timestampData = (TimestampData) verificationFactorData.get(timestampDataClass);
 
@@ -75,11 +75,11 @@ public class VerifierPrototype {
         System.out.println(tsr.getTimeStampToken().getTimeStampInfo().getGenTime());
 
     }
-    
+
     public void printVerificationFactors(SPImage image) {
-        List<Class<VerificationFactor>> verificationFactors = image.getVerificationFactors();
+        List<Class<Verifier>> verificationFactors = image.getVerificationFactors();
         System.out.println("Verification factors:");
-        for(Class<VerificationFactor> factorClass : verificationFactors) {
+        for (Class<Verifier> factorClass : verificationFactors) {
             System.out.println(factorClass.getCanonicalName());
         }
     }
@@ -93,7 +93,6 @@ public class VerifierPrototype {
         SPImage img = vp.openSPI("./SecurePhotoPrototype/pic3.spi");
 //        vp.extractTimestampData(img);
         vp.printVerificationFactors(img);
-
 
 
     }
