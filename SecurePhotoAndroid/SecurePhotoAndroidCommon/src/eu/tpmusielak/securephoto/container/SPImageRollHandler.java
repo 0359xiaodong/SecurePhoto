@@ -1,9 +1,5 @@
 package eu.tpmusielak.securephoto.container;
 
-import eu.tpmusielak.securephoto.verification.Verifier;
-
-import java.util.List;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Tomasz P. Musielak
@@ -12,10 +8,10 @@ import java.util.List;
  */
 public class SPImageRollHandler implements SPFileHandler {
 
-    private List<Verifier> verifiers;
+    private VerifierProvider verifierProvider;
 
-    public SPImageRollHandler(List<Verifier> verifiers) {
-        this.verifiers = verifiers;
+    public SPImageRollHandler(VerifierProvider provider) {
+        this.verifierProvider = provider;
     }
 
     @Override

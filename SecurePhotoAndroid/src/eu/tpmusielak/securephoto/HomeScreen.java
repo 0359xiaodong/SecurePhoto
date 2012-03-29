@@ -7,11 +7,13 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-import eu.tpmusielak.securephoto.camera.viewer.ViewImages;
+import eu.tpmusielak.securephoto.camera.TakeImage;
 import eu.tpmusielak.securephoto.communication.BaseAuthenticate;
 import eu.tpmusielak.securephoto.communication.CommunicationService;
 import eu.tpmusielak.securephoto.communication.ServerMessage;
-import eu.tpmusielak.securephoto.camera.TakeImage;
+import eu.tpmusielak.securephoto.preferences.ShowPreferences;
+import eu.tpmusielak.securephoto.verification.SCVerifierManager;
+import eu.tpmusielak.securephoto.viewer.ViewImages;
 
 import static eu.tpmusielak.securephoto.communication.ServerMessage.ServerResponse;
 
@@ -28,7 +30,6 @@ public class HomeScreen extends Activity {
     private Button prefButton;
 
 
-
     /**
      * Called when the activity is first created.
      */
@@ -36,6 +37,10 @@ public class HomeScreen extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent verifierServiceIntent = new Intent(this, SCVerifierManager.class);
+        startService(verifierServiceIntent);
+
         setContentView(R.layout.home_screen);
         initialiseUI();
     }
@@ -181,7 +186,11 @@ public class HomeScreen extends Activity {
 
     @Override
     protected void onDestroy() {
-        stopService(new Intent(this, CommunicationService.class));
+        if (isFinishing()) {
+            stopService(new Intent(this, CommunicationService.class));
+            stopService(new Intent(this, SCVerifierManager.class));
+        }
+
 
         super.onDestroy();
     }

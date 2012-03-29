@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ACTIVITY_ENTRY_NAME</string>
+    <string name="verifier_name">TimestampVerifier</string>
+    <string name="kpref_TSA_address">TSA address</string>
+    <string name="pref_caption_TSA_address">TSA address</string>
+    <string name="pref_summary_TSA_address">Timestamping authority address</string>
+</resources>
+

@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Created by IntelliJ IDEA.
@@ -85,13 +86,17 @@ public class VerifierPrototype {
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, TSPException {
+        Scanner scanner = new Scanner(System.in);
+        String filename = scanner.next();
+
+
         VerifierPrototype vp = new VerifierPrototype();
-        SPImage image = vp.makeSPI("./SecurePhotoPrototype/res/picture.jpg");
-        vp.saveSPI(image, "./SecurePhotoPrototype/pic3.spi");
+//        SPImage image = vp.makeSPI("./SecurePhotoPrototype/res/picture.jpg");
+//        vp.saveSPI(image, "./SecurePhotoPrototype/pic3.spi");
 
 //        SPImage img = vp.openSPI("./SecurePhotoPrototype/SCIMG_20120209_174216.spi");
-        SPImage img = vp.openSPI("./SecurePhotoPrototype/pic3.spi");
-//        vp.extractTimestampData(img);
+        SPImage img = vp.openSPI(String.format("./SecurePhotoPrototype/%s", filename));
+        vp.extractTimestampData(img);
         vp.printVerificationFactors(img);
 
 

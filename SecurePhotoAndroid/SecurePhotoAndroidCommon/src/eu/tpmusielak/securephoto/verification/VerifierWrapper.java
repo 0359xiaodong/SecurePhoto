@@ -24,42 +24,39 @@ public abstract class VerifierWrapper {
 
     private boolean enabled = true;
     protected boolean registered = false;
-    protected boolean initialized = false;
 
     public final int iconID = RESOURCE_ID_OFFSET + resourceOffset.incrementAndGet();
     protected Verifier verifier;
 
-    private VerifierGUIReceiver activity;
+    private VerifierGUIReceiver guiReceiver;
     protected Context context;
     ViewGroup pluginsPane;
 
-    VerifierBinder manager;
+    protected VerifierBinder manager;
 
     InitializeVerifierTask initTask;
 
-
     public void register(VerifierBinder m) {
         manager = m;
-        m.register(this);
-        putIcon();
-        setIconColor(Color.GRAY);
-
+        manager.register(this);
         registered = true;
     }
 
-    public void setActivity(VerifierGUIReceiver activity) {
-        this.activity = activity;
-        this.context = activity.getBaseContext();
-    }
-
-    public void setPluginsPane(ViewGroup vg) {
-        pluginsPane = vg;
+    public void setReceiver(VerifierGUIReceiver receiver) {
+        this.guiReceiver = receiver;
     }
 
     @SuppressWarnings("unchecked")
     public void initialize() {
         initTask = new InitializeVerifierTask();
         initTask.execute();
+    }
+
+    public void bindToGUI() {
+        this.context = guiReceiver.getBaseContext();
+        pluginsPane = guiReceiver.getPluginsPane();
+        putIcon();
+        setStateColor();
     }
 
     public Verifier getVerifier() {
@@ -74,19 +71,26 @@ public abstract class VerifierWrapper {
         return context.getResources().getDrawable(R.drawable.ic_stat_padlock);
     }
 
-
-    private void putIcon() {
-        putIcon(0);
+    public int getPreferenceID() {
+        return 0; // No default preferences defined.
     }
 
-    private void putIcon(final int filter) {
-        activity.runOnUiThread(new Runnable() {
+
+    public void setEnabled(boolean val) {
+        enabled = val;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    private void putIcon() {
+        guiReceiver.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ImageView imageView = new ImageView(activity.getBaseContext());
+                ImageView imageView = new ImageView(guiReceiver.getBaseContext());
                 imageView.setImageDrawable(getDrawable());
                 imageView.setId(iconID);
-                imageView.setColorFilter(filter, PorterDuff.Mode.MULTIPLY);
                 pluginsPane.addView(imageView);
             }
         });
@@ -94,35 +98,59 @@ public abstract class VerifierWrapper {
     }
 
     private void setIconColor(final int filter) {
-        activity.runOnUiThread(new Runnable() {
+        guiReceiver.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((ImageView) activity.findViewById(iconID))
+                ((ImageView) guiReceiver.findViewById(iconID))
                         .setColorFilter(filter, PorterDuff.Mode.MULTIPLY);
             }
         });
 
     }
 
+    private boolean isBound() {
+        return guiReceiver != null;
+    }
+
+    protected void setStateColor() {
+        switch (verifier.getState()) {
+            case UNINITIALIZED:
+                setIconColor(Color.GRAY);
+                break;
+            case INITIALIZING:
+                setIconColor(Color.YELLOW);
+                break;
+            case INIT_SUCCESS:
+                setIconColor(Color.GREEN);
+                break;
+            case INIT_FAILURE:
+                setIconColor(Color.RED);
+                break;
+        }
+    }
+
     protected class InitializeVerifierTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
-            setIconColor(Color.RED);
-            activity.startBackgroundOperation();
+            if (isBound()) {
+                setIconColor(Color.YELLOW);
+                guiReceiver.startBackgroundOperation();
+            }
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            verifier.onCreate();
+            verifier.initialize();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            activity.endBackgroundOperation();
-            initialized = true;
-            setIconColor(Color.GREEN);
+            if (isBound()) {
+                guiReceiver.endBackgroundOperation();
+                setStateColor();
+            }
         }
     }
 

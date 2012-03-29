@@ -16,20 +16,17 @@
     <string name="use_autofocus">Use autofocus</string>
     <string name="use_autofocus_summary">Use autofocus while taking pictures</string>
     <string name="authentication">Base authentication</string>
-    <string name="msg_authenticating_wait">Authenticating. Please wait...</string>
+    <string name="msg_authenticating_wait">Authenticating. Please wait…</string>
     <string name="msg_authenticating_ok">Authentication with base station %1$s successful</string>
     <string name="msg_authenticating_failed">Failed to authenticate with base station %1$s:\n%2$s</string>
     <string name="msg_autheticated">Authenticated</string>
     <string name="take_picture">Shoot</string>
     <string name="pref_summary_base_station_address">Address of the base station to connect to</string>
     <string name="pref_caption_base_station_address">Base station address</string>
-    <string name="pref_caption_TSA_address">TSA address</string>
-    <string name="pref_summary_TSA_address">Timestamping authority address</string>
     <string name="kpref_base_station_logging">Base station logging</string>
     <string name="kpref_base_station_address">Base station address</string>
     <string name="kpref_use_autofocus">Use autofocus</string>
     <string name="kpref_base_station_username">Base station username</string>
-    <string name="kpref_TSA_address">TSA address</string>
     <string name="pref_caption_base_station_username">User name</string>
     <string name="pref_summary_base_station_username">User name to use with base station</string>
     <string name="camera_image_roll">FilmRoll</string>
@@ -37,4 +34,5 @@
     <string name="verification_factors">Verification factors</string>
     <string name="pick_vfactor">Pick verifiers</string>
     <string name="verifier_settings">Verifier settings</string>
+    <string name="no_files_found">No files found</string>
 </resources>

@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.*;
 import android.content.pm.ActivityInfo;
-import android.hardware.Camera;
-import android.hardware.Camera.CameraInfo;
-import android.hardware.Camera.Parameters;
-import android.hardware.Camera.PictureCallback;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -20,12 +16,15 @@ import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceB
 import eu.tpmusielak.securephoto.container.SPFileHandler;
 import eu.tpmusielak.securephoto.container.SPImageHandler;
 import eu.tpmusielak.securephoto.container.SPImageRollHandler;
+import eu.tpmusielak.securephoto.container.VerifierProvider;
+import eu.tpmusielak.securephoto.verification.SCVerifierManager;
 import eu.tpmusielak.securephoto.verification.Verifier;
 import eu.tpmusielak.securephoto.verification.VerifierGUIReceiver;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -34,13 +33,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Date: 27.11.11
  * Time: 14:01
  */
-public class TakeImage extends Activity implements VerifierGUIReceiver {
-    private FrameLayout cameraPreviewFrame = null;
-    private CameraPreview cameraPreview = null;
-    private int cameraCount = 0;
-    private int defaultCameraId = 0;
-    private Camera camera;
-    private int usedCamera;
+public class TakeImage extends Activity implements VerifierGUIReceiver, CameraReceiver, VerifierProvider {
+
+    private CameraHandler cameraHandler;
 
     private Button shutterButton;
     private Button saveModeButton;
@@ -51,16 +46,11 @@ public class TakeImage extends Activity implements VerifierGUIReceiver {
 
     private TextView baseStationDisplay;
 
-    private PictureCallback pictureCallback;
-
-    private String cameraFocusMode;
-
-    private LocationProvider locationProvider;
 
     private CommunicationService communicationService;
     private boolean boundToCommService = false;
 
-    private SCVerifierManager SCVerifierManager;
+    private SCVerifierManager verifierManager;
 
     private List<Verifier> verifiers;
 
@@ -68,12 +58,12 @@ public class TakeImage extends Activity implements VerifierGUIReceiver {
     private SPFileHandler fileHandler;
     private SaveMode saveMode;
 
-    private TimeUpdateTask timeUpdateTask;
+    private Timer timeUpdateTimer;
 
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
 
-    ViewGroup optionsPane;
-    ViewGroup pluginsPane;
+    private ViewGroup optionsPane;
+    private ViewGroup pluginsPane;
 
     private ServiceConnection communicationServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -87,37 +77,43 @@ public class TakeImage extends Activity implements VerifierGUIReceiver {
         }
     };
 
+    private ServiceConnection verifierServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            verifierManager = ((SCVerifierManager.VerifierServiceBinder) iBinder).getService();
+            verifierManager.bindToGUI(TakeImage.this);
+            verifiers = verifierManager.getVerifiers();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+        }
+    };
 
     @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        cameraHandler = new CameraHandler(this);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         backgroundOpsCounter = new AtomicInteger(0);
 
-        saveMode = SaveMode.IMAGE_ROLL;
+        saveMode = SaveMode.SINGLE_IMAGE;
 
         setupScreen();
-        setupCamera();
+        cameraHandler.setupCamera();
 
-        Intent intent = new Intent(this, CommunicationService.class);
-        bindService(intent, communicationServiceConnection, Context.BIND_AUTO_CREATE);
+//        Intent intent = new Intent(this, CommunicationService.class);
+//        bindService(intent, communicationServiceConnection, Context.BIND_AUTO_CREATE);
 
-        locationProvider = new LocationProvider();
-
-        SCVerifierManager = new SCVerifierManager(this);
-        verifiers = SCVerifierManager.getVerifiers();
-
-
-//        String tsaAddress = preferences.getString(
-//                getResources().getString(R.string.kpref_TSA_address), "");
-
-//        verifiers.add(new RFC3161Timestamp(tsaAddress));
+        Intent verifierServiceIntent = new Intent(this, SCVerifierManager.class);
+        bindService(verifierServiceIntent, verifierServiceConnection, Context.BIND_AUTO_CREATE);
 
         fileHandlers = new HashMap<SaveMode, SPFileHandler>();
-        fileHandlers.put(SaveMode.SINGLE_IMAGE, new SPImageHandler(verifiers));
-        fileHandlers.put(SaveMode.IMAGE_ROLL, new SPImageRollHandler(verifiers));
+        fileHandlers.put(SaveMode.SINGLE_IMAGE, new SPImageHandler(this));
+        fileHandlers.put(SaveMode.IMAGE_ROLL, new SPImageRollHandler(this));
 
         fileHandler = fileHandlers.get(saveMode);
     }
@@ -130,12 +126,10 @@ public class TakeImage extends Activity implements VerifierGUIReceiver {
 
         setContentView(R.layout.camera_view);
 
-        cameraPreviewFrame = (FrameLayout) findViewById(R.id.preview);
-
-        pictureCallback = new mPictureCallback();
+        cameraHandler.setCameraPreviewFrame((FrameLayout) findViewById(R.id.preview));
 
         shutterButton = (Button) findViewById(R.id.btn_shutter);
-        shutterButton.setOnClickListener(new ShutterListener());
+        cameraHandler.registerShutterButton(shutterButton);
 
         saveModeButton = (Button) findViewById(R.id.btn_save_mode);
         saveModeButton.setOnClickListener(new SaveModeListener(saveModeButton));
@@ -146,29 +140,16 @@ public class TakeImage extends Activity implements VerifierGUIReceiver {
         optionsPane = (ViewGroup) findViewById(R.id.options_pane);
         pluginsPane = (ViewGroup) findViewById(R.id.plugins_pane);
 
-        timeUpdateTask = new TimeUpdateTask(this);
-        timeUpdateTask.execute();
+        timeUpdateTimer = new Timer("TimeUpdateTimer");
+        timeUpdateTimer.scheduleAtFixedRate(new TimeUpdateTask(this), 0, 1000);
 
         String baseStationAddress = preferences.getString(getResources().getString(R.string.kpref_base_station_address), "");
 
         baseStationDisplay = (TextView) findViewById(R.id.camera_base);
         baseStationDisplay.setText(baseStationAddress);
 
-    }
-
-    private class ShutterListener implements View.OnClickListener {
-        public void onClick(View view) {
-            Parameters camParameters = camera.getParameters();
-            camParameters.setFlashMode(Parameters.FLASH_MODE_AUTO);
-            camera.setParameters(camParameters);
-
-            if (doAF()) {
-                camera.autoFocus(new AFCallback(true));
-            } else {
-                takePicture();
-            }
-
-        }
+        backgroundOperationBar = (ProgressBar) findViewById(R.id.camera_save_progress);
+        backgroundOperationBar.isIndeterminate();
     }
 
     private class SaveModeListener implements Button.OnClickListener {
@@ -186,51 +167,20 @@ public class TakeImage extends Activity implements VerifierGUIReceiver {
 
     private class VerifierSettingsListener implements Button.OnClickListener {
         public void onClick(View view) {
-            SCVerifierManager.showVerificationFactors();
+            verifierManager.showVerificationFactors();
         }
     }
 
-    private class mPictureCallback implements PictureCallback {
-
-        public void onPictureTaken(byte[] bytes, Camera camera) {
-            new SavePictureTask().execute(new byte[][]{bytes});
-            camera.startPreview();
-            shutterButton.setEnabled(true);
-        }
+    public Context getContext() {
+        return this;
     }
 
-    private class AFCallback implements Camera.AutoFocusCallback {
-        private boolean takePicture;
-
-        private AFCallback(boolean takePicture) {
-            this.takePicture = takePicture;
-        }
-
-        public void onAutoFocus(boolean success, Camera camera) {
-            if (takePicture) {
-                takePicture();
-            }
-        }
-    }
-
-    private boolean doAF() {
-        return cameraFocusMode.equals(Parameters.FOCUS_MODE_AUTO) ||
-                cameraFocusMode.equals(Parameters.FOCUS_MODE_MACRO);
-    }
-
-    private void takePicture() {
-        shutterButton.setEnabled(false);
-        try {
-            camera.takePicture(null, null, null, pictureCallback);
-        } catch (RuntimeException ignore) {
-            /* If the shutter is pressed too often, the shutter button doesn't get disabled
-               and camera.takePicture fails */
-            shutterButton.setEnabled(true);
-        }
+    @Override
+    public void savePicture(byte[] bytes) {
+        new SavePictureTask().execute(new byte[][]{bytes});
     }
 
     private class SavePictureTask extends AsyncTask<byte[], Void, String> {
-        ProgressBar progressBar;
 
         @Override
         protected void onPreExecute() {
@@ -251,48 +201,28 @@ public class TakeImage extends Activity implements VerifierGUIReceiver {
         }
     }
 
-    private void setupCamera() {
-        cameraCount = Camera.getNumberOfCameras();
-
-
-        CameraInfo cameraInfo = new CameraInfo();
-        for (int i = 0; i < cameraCount; i++) {
-            Camera.getCameraInfo(i, cameraInfo);
-
-            if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
-                defaultCameraId = i;
-            }
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-
-        camera = Camera.open();
-        cameraPreview = new CameraPreview(this);
-
-        cameraFocusMode = camera.getParameters().getFocusMode();
-
-        cameraPreviewFrame.removeAllViews();
-        cameraPreviewFrame.addView(cameraPreview);
-
-        cameraPreview.setCamera(camera);
+        cameraHandler.resumeCamera();
     }
 
     @Override
     protected void onPause() {
-        cameraPreview.setCamera(null);
-        camera.release();
+        cameraHandler.pauseCamera();
 
         if (boundToCommService) {
             unbindService(communicationServiceConnection);
             boundToCommService = false;
         }
 
-        timeUpdateTask.cancel(true);
-
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbindService(verifierServiceConnection);
+        super.onDestroy();
     }
 
     @Override
@@ -306,23 +236,28 @@ public class TakeImage extends Activity implements VerifierGUIReceiver {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.v_factors:
-                SCVerifierManager.showVerificationFactors();
+                verifierManager.showVerificationFactors();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public ViewGroup getPluginsPane() {
+        return pluginsPane;
+    }
+
     public void startBackgroundOperation() {
-        backgroundOperationBar = (ProgressBar) findViewById(R.id.camera_save_progress);
-        backgroundOperationBar.isIndeterminate();
         backgroundOperationBar.setVisibility(View.VISIBLE);
         backgroundOpsCounter.incrementAndGet();
     }
 
     public void endBackgroundOperation() {
-        if (backgroundOpsCounter.decrementAndGet() == 0)
+        if (backgroundOpsCounter.decrementAndGet() <= 0) {
             backgroundOperationBar.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -330,10 +265,9 @@ public class TakeImage extends Activity implements VerifierGUIReceiver {
         return super.onCreateDialog(id);
     }
 
-    @SuppressWarnings("unchecked")
-    void updateTime() {
-        timeUpdateTask = new TimeUpdateTask(this);
-        timeUpdateTask.execute();
+    @Override
+    public List<Verifier> getVerifiers() {
+        return verifiers;
     }
 
 }

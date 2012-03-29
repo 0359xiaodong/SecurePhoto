@@ -1,4 +1,4 @@
-package eu.tpmusielak.securephoto;
+package eu.tpmusielak.securephoto.tools;
 
 import android.os.Environment;
 
@@ -44,20 +44,8 @@ public class FileHandling {
     }
 
     public static File[] getFiles() {
-        return getFiles("");
-    }
-
-    public static File[] getFiles(final String extension) {
         String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
         File dir = new File(dirPath + "/SecureCamera");
-
-//        return dir.listFiles(new FilenameFilter() {
-//            @Override
-//            public boolean accept(File file, String s) {
-//                String pattern = "." + extension;
-//                return s.endsWith(pattern);
-//            }
-//        });
 
         return dir.listFiles();
 
@@ -66,13 +54,6 @@ public class FileHandling {
     public static String[] getFileNames(final String extension) {
         String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
         File dir = new File(dirPath + "/SecureCamera");
-
-//        return dir.list(new FilenameFilter() {
-//            @Override
-//            public boolean accept(File file, String s) {
-//                return s.endsWith("." + extension);
-//            }
-//        });
 
         return dir.list();
     }

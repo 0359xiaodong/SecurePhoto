@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="logLevel" value="error" />
+        <option name="logMessagePattern" value="FATAL EXCEPTION" />
+        <option name="logTagPattern" value="" />
+        <option name="name" value="Crashes" />
+        <option name="pid" value="" />
+      </filter>
+    </filters>
+  </component>
   <component name="AndroidLayoutPreviewToolWindow">
     <option name="state">
       <GlobalState>
@@ -16,60 +27,80 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TAB_LOG_LEVEL" value="ERROR" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Crashes" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="050ad933-fc6a-4b2f-818f-87c92fffad67" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-hdpi-v11/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-hdpi-v9/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-hdpi/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-ldpi-v11/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-ldpi-v9/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-ldpi/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-mdpi-v11/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-mdpi-v9/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-mdpi/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-xhdpi-v11/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-xhdpi-v9/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/drawable-xhdpi/ic_stat_padlock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/AndroidManifest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/SecurePhotoAndroidCommon.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/ant.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/build.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-hdpi-v11/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-hdpi-v9/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-hdpi/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-ldpi-v11/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-ldpi-v9/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-ldpi/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-mdpi-v11/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-mdpi-v9/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-mdpi/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-xhdpi-v11/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-xhdpi-v9/ic_stat_clock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/drawable-xhdpi/ic_stat_clock.png" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/gen/eu/tpmusielak/securephoto/R.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/local.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/proguard.cfg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/project.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/layout/main.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/values/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/GenericVerifierWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierBinder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierGUIReceiver.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/SCVerifierManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraReceiver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/VerifierProvider.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierPreferenceReceiver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/GeolocationVerifierWrapper/GeolocationVerifierWrapper.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/GeolocationVerifierWrapper/res/xml/geo_prefs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/GeolocationVerifierWrapper/src/eu/tpmusielak/securephoto/verification/geo/GeolocationVerifierWrapper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/AndroidManifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/TimestampVerifierWrapper.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/ant.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/build.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/local.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/proguard.cfg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/project.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/layout/main.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/values/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/res/xml/ts_preferences.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/src/eu/tpmusielak/securephoto/verification/TimestampVerifierWrapper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/LazyList/LazyList.iml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/BasicVerifier.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/BasicVerifierManager.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/VerifierManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/test/eu/tpmusielak/securephoto/verification/BasicVerifierManagerTest.java" />
-      <change type="DELETED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\.idea\libraries\activation_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\camera\InitializeFactorTask.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\camera\VerifierManager.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\verification\GenericVFWrapper.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\verification\VerificationFactorWrapper.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/VerifierState.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/geo/GeolocationData.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/geo/GeolocationProvider.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/geo/GeolocationVerifier.java" />
+      <change type="DELETED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\camera\LocationProvider.java" afterPath="" />
       <change type="DELETED" beforePath="D:\SecurePhoto\SecurePhotoCommon\src\eu\tpmusielak\securephoto\verification\DummyVerifier2.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/SecurePhotoAndroid.apk.res" afterPath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/SecurePhotoAndroid.apk.res" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/SecurePhotoAndroid.apk.unaligned" afterPath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/SecurePhotoAndroid.apk.unaligned" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/SecurePhotoAndroid.apk" afterPath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/SecurePhotoAndroid.apk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/classes.dex" afterPath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/classes.dex" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R$attr.class" afterPath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R$attr.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R$id.class" afterPath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R$id.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R$layout.class" afterPath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R$layout.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R$string.class" afterPath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R$string.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R.class" afterPath="$PROJECT_DIR$/out/production/SecurePhotoAndroid/eu/tpmusielak/securephoto/R.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroid.iml" afterPath="$PROJECT_DIR$/SecurePhotoAndroid.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/SecurePhotoAndroidCommon.iml" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/SecurePhotoAndroidCommon.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/values/strings.xml" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraHandler.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierBinder.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierBinder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierGUIReceiver.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierGUIReceiver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierWrapper.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierWrapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoPrototype/src/VerifierPrototype.java" afterPath="$PROJECT_DIR$/SecurePhotoPrototype/src/VerifierPrototype.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/eu/tpmusielak/securephoto/R.java" afterPath="$PROJECT_DIR$/gen/eu/tpmusielak/securephoto/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project.properties" afterPath="$PROJECT_DIR$/project.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/camera_view.xml" afterPath="$PROJECT_DIR$/res/layout/camera_view.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/FileHandling.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/FileHandling.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/SaveMode.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/SaveMode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/xml/preferences.xml" afterPath="$PROJECT_DIR$/res/xml/preferences.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/HomeScreen.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/HomeScreen.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TimeUpdateTask.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TimeUpdateTask.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/IMessagePrinter.java" afterPath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/IMessagePrinter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/ISecurePhotoBase.java" afterPath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/ISecurePhotoBase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/SecurePhotoBase.java" afterPath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/SecurePhotoBase.java" />
@@ -79,7 +110,13 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/DummyVerifier.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/DummyVerifier.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/RFC3161Timestamp.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/RFC3161Timestamp.java" />
-      <change type="MOVED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\camera\CameraPreview.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraPreview.java" />
+      <change type="MOVED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\FileHandling.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/tools/FileHandling.java" />
+      <change type="MOVED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\ShowPreferences.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/preferences/ShowPreferences.java" />
+      <change type="MOVED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\camera\SCVerifierManager.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java" />
+      <change type="MOVED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\camera\viewer\ViewImages.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/ViewImages.java" />
+      <change type="MOVED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\container\SPFileHandler.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPFileHandler.java" />
+      <change type="MOVED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\container\SPImageHandler.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" />
+      <change type="MOVED" beforePath="D:\SecurePhoto\SecurePhotoAndroid\src\eu\tpmusielak\securephoto\container\SPImageRollHandler.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java" />
       <change type="MOVED" beforePath="D:\SecurePhoto\SecurePhotoCommon\src\eu\tpmusielak\securephoto\verification\VerificationFactor.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/Verifier.java" />
     </list>
     <ignored path="SecurePhotoAndroid.iws" />
@@ -118,6 +155,32 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
       <breakpoint url="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/CommunicationService.java" line="46" class="eu.tpmusielak.securephoto.communication.CommunicationService" package="eu.tpmusielak.securephoto.communication">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/SecurePhotoPrototype/src/VerifierPrototype.java" line="69" class="VerifierPrototype" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/HomeScreen.java" line="190" class="eu.tpmusielak.securephoto.HomeScreen" package="eu.tpmusielak.securephoto">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -175,77 +238,65 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SCVerifierManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/SCVerifierManager.java">
+      <file leaf-file-name="TimestampData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/TimestampData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="47" selection-start="712" selection-end="712" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#532#562#0" expanded="true" />
-              </folding>
+            <state line="43" column="47" selection-start="1300" selection-end="1300" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TakeImage.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TakeImage.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="308" column="33" selection-start="9825" selection-end="9842" vertical-scroll-proportion="0.49584815">
+            <state line="82" column="0" selection-start="2732" selection-end="2732" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;class#TakeImage#0" expanded="false" />
-                <element signature="class#2409:2820" expanded="false" />
-                <element signature="method#onServiceConnected#0;class#2409:2820" expanded="false" />
-                <element signature="method#onServiceDisconnected#0;class#2409:2820" expanded="false" />
-                <element signature="class#ShutterListener#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#onClick#0;class#ShutterListener#0;class#TakeImage#0" expanded="false" />
-                <element signature="class#SaveModeListener#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#SaveModeListener#0;class#SaveModeListener#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#onClick#0;class#SaveModeListener#0;class#TakeImage#0" expanded="false" />
-                <element signature="class#mPictureCallback#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#onPictureTaken#0;class#mPictureCallback#0;class#TakeImage#0" expanded="false" />
-                <element signature="class#AFCallback#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#AFCallback#0;class#AFCallback#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#onAutoFocus#0;class#AFCallback#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#doAF#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#takePicture#0;class#TakeImage#0" expanded="false" />
+                <element signature="class#2129:2540" expanded="false" />
+                <element signature="e#4109#4147#0" expanded="true" />
                 <element signature="class#SavePictureTask#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#onPreExecute#0;class#SavePictureTask#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#doInBackground#0;class#SavePictureTask#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#onPostExecute#0;class#SavePictureTask#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#setupCamera#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#onCreateOptionsMenu#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#startBackgroundOperation#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#endBackgroundOperation#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#onCreateDialog#0;class#TakeImage#0" expanded="false" />
-                <element signature="method#updateTime#0;class#TakeImage#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CameraPreview.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraPreview.java">
+      <file leaf-file-name="SPImageHandler.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="80" selection-start="706" selection-end="706" vertical-scroll-proportion="0.0">
+            <state line="25" column="0" selection-start="579" selection-end="579" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CameraHandler.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraHandler.java">
+      <file leaf-file-name="SCVerifierManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="31" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="73" column="0" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="class#VerifierServiceBinder#0;class#SCVerifierManager#0" expanded="false" />
+                <element signature="e#4286#4295#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GenericVerifierWrapper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/GenericVerifierWrapper.java">
+      <file leaf-file-name="TimeUpdateTask.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TimeUpdateTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="41" selection-start="306" selection-end="306" vertical-scroll-proportion="0.0">
+            <state line="30" column="47" selection-start="703" selection-end="703" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#886#887#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShowPreferences.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/preferences/ShowPreferences.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="0" selection-start="1033" selection-end="1033" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -254,20 +305,28 @@
       <file leaf-file-name="VerifierWrapper.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierWrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="51" selection-start="1224" selection-end="1224" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1461#1491#0" expanded="true" />
-              </folding>
+            <state line="59" column="0" selection-start="1580" selection-end="1580" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BasicVerifier.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/BasicVerifier.java">
+      <file leaf-file-name="HomeScreen.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/HomeScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="205" selection-end="205" vertical-scroll-proportion="0.0">
+            <state line="190" column="0" selection-start="6642" selection-end="6642" vertical-scroll-proportion="0.7456847">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GeolocationVerifierWrapper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/addons/GeolocationVerifierWrapper/src/eu/tpmusielak/securephoto/verification/geo/GeolocationVerifierWrapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="48" selection-start="830" selection-end="830" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -281,33 +340,31 @@
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
-      <array>
+      <list>
         <option value="tpmusielak" />
-      </array>
+      </list>
     </option>
-    <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
-    <option name="SSH_EXECUTABLE" value="NATIVE_SSH" />
-    <option name="UPDATE_CHANGES_POLICY" value="STASH" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/SecurePhotoCommonAndroid/src/eu/tpmusielak/securephoto/verification/GenericVerifierWrapper.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoCommonAndroid/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/SecurePhotoCommonAndroid/src/eu/tpmusielak/securephoto/verification/VerifierWrapper.java" />
-        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/BaseAuthenticate.java" />
+        <option value="$PROJECT_DIR$/addons/GeolocationVerifierWrapper/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/geo/GeolocationProvider.java" />
+        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/geo/GeographicalLocation.java" />
+        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/geo/GeolocationData.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierBinder.java" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/addons/GeolocationVerifierWrapper/src/eu/tpmusielak/securephoto/verification/geo/GeolocationVerifierWrapper.java" />
+        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/preferences/ShowPreferences.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/VerifierProvider.java" />
         <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TimeUpdateTask.java" />
-        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/SaveMode.java" />
-        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/viewer/ViewImages.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierGUIReceiver.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/GenericVerifierWrapper.java" />
-        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/DummyVerifier.java" />
         <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java" />
-        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/VerifierManager.java" />
-        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/BasicVerifier.java" />
-        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/BasicVerifierManager.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierWrapper.java" />
-        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/SCVerifierManager.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPGenericFileHandler.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java" />
+        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java" />
+        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/HomeScreen.java" />
       </list>
     </option>
   </component>
@@ -385,6 +442,33 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Changed Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="All">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -449,6 +533,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoCommon" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="securephoto" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="verification" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="SecurePhotoAndroid" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -489,69 +599,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="camera" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroidCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroidCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="securephoto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroidCommon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="securephoto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="camera" />
+              <option name="myItemId" value="preferences" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -565,134 +613,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eu.tpmusielak.securephoto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eu.tpmusielak.securephoto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="communication" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GenericVerifierWrapper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GenericVerifierWrapper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eu.tpmusielak.securephoto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GenericVerifierWrapper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eu.tpmusielak.securephoto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="verification" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GenericVerifierWrapper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eu.tpmusielak.securephoto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="275" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="277" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="296" />
     <property name="OverrideImplement.combined" value="true" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="294" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="Repository.Attach.JavaDocs" value="true" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="292" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="recentsLimit" value="5" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="290" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="297" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="972" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="967" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="292" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="295" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="964" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="959" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="290" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="DEBUGGABLE_DEVICE" value="304D19B95A69EB8E" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="291" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="289" />
     <property name="DEBUGGABLE_PROCESS" value="eu.tpmusielak.securephoto" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
@@ -700,19 +646,19 @@
     <property name="Repository.Attach.Sources" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="Downloaded.Files.Path" value="C:\Program Files\Java\jdk1.6.0_29\lib" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="options.lastSelected" value="preferences.keymap" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Background" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -726,10 +672,12 @@
       <recent name="eu.tpmusielak.securephoto.verification" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="eu.tpmusielak.securephoto.camera" />
       <recent name="eu.tpmusielak.securephoto.verification" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="eu.tpmusielak.securephoto.verification" />
+      <recent name="eu.tpmusielak.securephoto" />
       <recent name="eu.tpmusielak.bouncy" />
       <recent name="eu.tpmusielak.bouncy.smime" />
     </key>
@@ -785,34 +733,6 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="SecurePhotoPrototype" />
       <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="BasicVerifierManagerTest" type="JUnit" factoryName="JUnit" temporary="true">
-      <module name="SecurePhotoCommon" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="eu.tpmusielak.securephoto.verification" />
-      <option name="MAIN_CLASS_NAME" value="eu.tpmusielak.securephoto.verification.BasicVerifierManagerTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="" />
         <option name="TRANSPORT" value="0" />
@@ -958,12 +878,29 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="LazyList" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="LazyList" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="USB_DEVICE" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Android Application.SecurePhotoAndroid" />
-      <item index="1" class="java.lang.String" itemvalue="Application.SecurePhotoBase" />
-      <item index="2" class="java.lang.String" itemvalue="Application.TimestampClient" />
-      <item index="3" class="java.lang.String" itemvalue="Application.VerifierPrototype" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.BasicVerifierManagerTest" />
+      <item index="1" class="java.lang.String" itemvalue="Android Application.LazyList" />
+      <item index="2" class="java.lang.String" itemvalue="Application.SecurePhotoBase" />
+      <item index="3" class="java.lang.String" itemvalue="Application.TimestampClient" />
+      <item index="4" class="java.lang.String" itemvalue="Application.VerifierPrototype" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -971,7 +908,7 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration" maxAnnotateRevisions="500">
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
     <option name="mySSHConnectionTimeout" value="30000" />
@@ -1040,29 +977,30 @@
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.49509802" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32763228" sideWeight="0.67745537" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32700893" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.54129463" sideWeight="0.49786323" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.50061274" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.40736607" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32589287" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4799107" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18382353" sideWeight="0.3298731" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22394441" sideWeight="0.3203125" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.67410713" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39975476" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17744522" sideWeight="0.45870537" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19187601" sideWeight="0.45870537" order="1" side_tool="false" content_ui="combo" x="19" y="91" width="419" height="896" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32254463" sideWeight="0.49754903" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39732143" sideWeight="0.49839744" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32763228" sideWeight="0.67745537" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32700893" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39732143" sideWeight="0.49839744" order="12" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -1098,8 +1036,11 @@
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" value="Plugin architecture with preferences" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1121,6 +1062,7 @@
     <MESSAGE value="Added SPRoll" />
     <MESSAGE value="Interface tweaks" />
     <MESSAGE value="Refactoring" />
+    <MESSAGE value="Plugin architecture with preferences" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1130,151 +1072,129 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/BaseAuthenticate.java">
+    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/geo/GeolocationProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="31" selection-start="1407" selection-end="1407" vertical-scroll-proportion="-1.5040276">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/gen/eu/tpmusielak/securephoto/R.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="19" selection-start="237" selection-end="237" vertical-scroll-proportion="0.07825086">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/DummyVerifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="48" selection-start="251" selection-end="251" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/Verifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="91" selection-start="321" selection-end="321" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/BasicVerifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="205" selection-end="205" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/VerifierManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="38" selection-start="170" selection-end="170" vertical-scroll-proportion="0.17606445">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierGUIReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="48" selection-start="427" selection-end="427" vertical-scroll-proportion="0.3521289">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="31" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Program Files (x86)/Android/android-sdk/platforms/android-10/android.jar!/android/app/Activity.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="302" column="22" selection-start="14470" selection-end="14470" vertical-scroll-proportion="0.81654674">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/GenericVerifierWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="41" selection-start="306" selection-end="306" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraPreview.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="80" selection-start="706" selection-end="706" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/BasicVerifierManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="43" selection-start="1011" selection-end="1011" vertical-scroll-proportion="0.7629459">
+        <state line="10" column="50" selection-start="233" selection-end="233" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierBinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="79" selection-start="227" selection-end="227" vertical-scroll-proportion="0.21518987">
+        <state line="12" column="55" selection-start="308" selection-end="308" vertical-scroll-proportion="0.24085006">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/verification/VerifierWrapper.java">
+    <entry file="file://$PROJECT_DIR$/addons/GeolocationVerifierWrapper/src/eu/tpmusielak/securephoto/verification/geo/GeolocationVerifierWrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="51" selection-start="1224" selection-end="1224" vertical-scroll-proportion="0.0">
+        <state line="26" column="48" selection-start="830" selection-end="830" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1461#1491#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/SCVerifierManager.java">
+    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPFileHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="47" selection-start="712" selection-end="712" vertical-scroll-proportion="0.0">
+        <state line="8" column="17" selection-start="161" selection-end="161" vertical-scroll-proportion="0.15650173">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/VerifierProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="41" selection-start="302" selection-end="302" vertical-scroll-proportion="0.25431532">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#532#562#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TimeUpdateTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="47" selection-start="703" selection-end="703" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#886#887#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="32" selection-start="488" selection-end="488" vertical-scroll-proportion="0.43037975">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/VerifierManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="17" selection-start="188" selection-end="188" vertical-scroll-proportion="0.20070839">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/TimestampData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="47" selection-start="1300" selection-end="1300" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/camera/CameraPreview.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="168" column="0" selection-start="5762" selection-end="5762" vertical-scroll-proportion="0.470024">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/DummyVerifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="13" selection-start="213" selection-end="213" vertical-scroll-proportion="0.3314917">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="579" selection-end="579" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="0" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#VerifierServiceBinder#0;class#SCVerifierManager#0" expanded="false" />
+            <element signature="e#4286#4295#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="308" column="33" selection-start="9825" selection-end="9842" vertical-scroll-proportion="0.49584815">
+        <state line="82" column="0" selection-start="2732" selection-end="2732" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#TakeImage#0" expanded="false" />
-            <element signature="class#2409:2820" expanded="false" />
-            <element signature="method#onServiceConnected#0;class#2409:2820" expanded="false" />
-            <element signature="method#onServiceDisconnected#0;class#2409:2820" expanded="false" />
-            <element signature="class#ShutterListener#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#onClick#0;class#ShutterListener#0;class#TakeImage#0" expanded="false" />
-            <element signature="class#SaveModeListener#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#SaveModeListener#0;class#SaveModeListener#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#onClick#0;class#SaveModeListener#0;class#TakeImage#0" expanded="false" />
-            <element signature="class#mPictureCallback#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#onPictureTaken#0;class#mPictureCallback#0;class#TakeImage#0" expanded="false" />
-            <element signature="class#AFCallback#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#AFCallback#0;class#AFCallback#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#onAutoFocus#0;class#AFCallback#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#doAF#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#takePicture#0;class#TakeImage#0" expanded="false" />
+            <element signature="class#2129:2540" expanded="false" />
+            <element signature="e#4109#4147#0" expanded="true" />
             <element signature="class#SavePictureTask#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#onPreExecute#0;class#SavePictureTask#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#doInBackground#0;class#SavePictureTask#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#onPostExecute#0;class#SavePictureTask#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#setupCamera#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#onCreateOptionsMenu#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#startBackgroundOperation#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#endBackgroundOperation#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#onCreateDialog#0;class#TakeImage#0" expanded="false" />
-            <element signature="method#updateTime#0;class#TakeImage#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/preferences/ShowPreferences.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="0" selection-start="1033" selection-end="1033" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/HomeScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="190" column="0" selection-start="6642" selection-end="6642" vertical-scroll-proportion="0.7456847">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1319,7 +1239,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.6</last-edited>
+          <last-edited>Android 2.3.3 Platform</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1331,7 +1251,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>SecurePhotoAndroidCommon</last-edited>
+          <last-edited>Android|LazyList</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

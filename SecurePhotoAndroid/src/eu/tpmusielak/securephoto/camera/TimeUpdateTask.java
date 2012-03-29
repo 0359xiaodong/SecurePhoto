@@ -1,11 +1,11 @@
 package eu.tpmusielak.securephoto.camera;
 
-import android.os.AsyncTask;
 import android.widget.TextView;
 import eu.tpmusielak.securephoto.R;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimerTask;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,7 +13,7 @@ import java.util.Date;
  * Date: 26/03/12
  * Time: 02:25
  */
-public class TimeUpdateTask extends AsyncTask<Void, Void, String> {
+public class TimeUpdateTask extends TimerTask {
 
     private TakeImage activity;
 
@@ -22,26 +22,17 @@ public class TimeUpdateTask extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... voids) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+    public void run() {
         Calendar c = Calendar.getInstance();
         Date time = c.getTime();
+        final String timeString = time.toLocaleString();
 
-        return time.toLocaleString();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView cameraDate = (TextView) activity.findViewById(R.id.camera_date);
+                cameraDate.setText(timeString);
+            }
+        });
     }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    protected void onPostExecute(String result) {
-        TextView cameraDate = (TextView) activity.findViewById(R.id.camera_date);
-        cameraDate.setText(result);
-        activity.updateTime();
-    }
-
-
 }

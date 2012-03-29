@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/addons/GeolocationVerifierWrapper/GeolocationVerifierWrapper.iml" filepath="$PROJECT_DIR$/addons/GeolocationVerifierWrapper/GeolocationVerifierWrapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs/LazyList/LazyList.iml" filepath="$PROJECT_DIR$/libs/LazyList/LazyList.iml" />
       <module fileurl="file://$PROJECT_DIR$/SecurePhotoAndroid.iml" filepath="$PROJECT_DIR$/SecurePhotoAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/SecurePhotoAndroidCommon.iml" filepath="$PROJECT_DIR$/SecurePhotoAndroidCommon/SecurePhotoAndroidCommon.iml" />
       <module fileurl="file://$PROJECT_DIR$/../SecurePhotoBase/SecurePhotoBase.iml" filepath="$PROJECT_DIR$/../SecurePhotoBase/SecurePhotoBase.iml" />
       <module fileurl="file://$PROJECT_DIR$/../SecurePhotoCommon/SecurePhotoCommon.iml" filepath="$PROJECT_DIR$/../SecurePhotoCommon/SecurePhotoCommon.iml" />
       <module fileurl="file://$PROJECT_DIR$/SecurePhotoPrototype/SecurePhotoPrototype.iml" filepath="$PROJECT_DIR$/SecurePhotoPrototype/SecurePhotoPrototype.iml" />
+      <module fileurl="file://$PROJECT_DIR$/addons/TimestampVerifierWrapper/TimestampVerifierWrapper.iml" filepath="$PROJECT_DIR$/addons/TimestampVerifierWrapper/TimestampVerifierWrapper.iml" />
     </modules>
   </component>
 </project>

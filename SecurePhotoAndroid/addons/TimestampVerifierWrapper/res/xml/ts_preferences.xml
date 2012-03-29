@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/verifier_name">
+        <EditTextPreference
+                android:key="@string/kpref_TSA_address"
+                android:summary="@string/pref_summary_TSA_address"
+                android:title="@string/pref_caption_TSA_address"
+                android:defaultValue="http://www.cryptopro.ru/tsp/tsp.srf"
+                />
+    </PreferenceCategory>
+</PreferenceScreen>

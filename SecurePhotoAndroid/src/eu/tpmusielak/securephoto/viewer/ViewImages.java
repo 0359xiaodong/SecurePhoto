@@ -1,15 +1,19 @@
-package eu.tpmusielak.securephoto.camera.viewer;
+package eu.tpmusielak.securephoto.viewer;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import eu.tpmusielak.securephoto.FileHandling;
 import eu.tpmusielak.securephoto.R;
+import eu.tpmusielak.securephoto.container.SPImage;
+import eu.tpmusielak.securephoto.tools.FileHandling;
 
 import java.io.File;
 
@@ -35,9 +39,11 @@ public class ViewImages extends Activity {
         String[] fileNames = FileHandling.getFileNames(".spi");
         File[] files = FileHandling.getFiles();
 
-        listView.setAdapter(new ImageViewAdapter(ViewImages.this, R.layout.gallery_row, files));
-
-
+        if (files.length > 0) {
+            listView.setAdapter(new ImageViewAdapter(ViewImages.this, R.layout.gallery_row, files));
+        } else {
+            //TODO: show something in the gallery when no images are shown
+        }
     }
 
 
@@ -72,16 +78,26 @@ public class ViewImages extends Activity {
 
             try {
                 if (fileName.endsWith(".spi")) {
+                    ImageView imageView = new ImageView(getContext());
+
+                    SPImage spImage = SPImage.fromFile(file);
+                    byte[] imageData = spImage.getImageData();
+
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+                    bitmap = ThumbnailUtils.extractThumbnail(bitmap, 200, 150);
+
+                    imageView.setImageBitmap(bitmap);
+
+                    displayView = imageView;
+
+
+                } else if (fileName.endsWith(".spr")) {
                     Gallery roll = new Gallery(getContext());
                     roll.setAdapter(new ImageAdapter(getContext(), file));
                     displayView = roll;
 
                 } else if (fileName.endsWith(".jpg")) {
                     ImageView imageView = new ImageView(getContext());
-
-//                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-//                    bitmap = ThumbnailUtils.extractThumbnail(bitmap, 200, 150);
-//                    imageView.setImageBitmap(bitmap);
                     imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_gallery));
                     displayView = imageView;
                 }
@@ -99,6 +115,7 @@ public class ViewImages extends Activity {
         }
     }
 
+    // Adapter for image roll
     class ImageAdapter extends BaseAdapter {
         int mGalleryItemBackground;
         private Context mContext;

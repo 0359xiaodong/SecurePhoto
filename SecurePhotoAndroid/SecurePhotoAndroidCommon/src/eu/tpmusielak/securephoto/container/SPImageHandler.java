@@ -1,13 +1,11 @@
 package eu.tpmusielak.securephoto.container;
 
-import eu.tpmusielak.securephoto.FileHandling;
-import eu.tpmusielak.securephoto.verification.Verifier;
+import eu.tpmusielak.securephoto.tools.FileHandling;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,10 +15,10 @@ import java.util.List;
  */
 public class SPImageHandler implements SPFileHandler {
 
-    private List<Verifier> verifiers;
+    private VerifierProvider verifierProvider;
 
-    public SPImageHandler(List<Verifier> verifiers) {
-        this.verifiers = verifiers;
+    public SPImageHandler(VerifierProvider provider) {
+        verifierProvider = provider;
     }
 
     @Override
@@ -35,7 +33,7 @@ public class SPImageHandler implements SPFileHandler {
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(pictureFile);
-            SPImage image = SPImage.getInstance(bytes, verifiers);
+            SPImage image = SPImage.getInstance(bytes, verifierProvider.getVerifiers());
             fileOutputStream.write(image.toByteArray());
             fileOutputStream.close();
         } catch (FileNotFoundException e) {

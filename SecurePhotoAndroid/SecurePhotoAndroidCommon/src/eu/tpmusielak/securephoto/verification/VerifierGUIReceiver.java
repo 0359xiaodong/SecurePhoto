@@ -2,6 +2,7 @@ package eu.tpmusielak.securephoto.verification;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,9 +13,13 @@ import android.view.View;
 public interface VerifierGUIReceiver {
     Context getBaseContext();
 
+    Context getContext();
+
     void runOnUiThread(Runnable runnable);
 
     View findViewById(int iconID);
+
+    ViewGroup getPluginsPane();
 
     void startBackgroundOperation();
 
