@@ -1,5 +1,7 @@
 package eu.tpmusielak.securephoto.container;
 
+import java.io.File;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Tomasz P. Musielak
@@ -15,7 +17,7 @@ public class SPImageRollHandler implements SPFileHandler {
     }
 
     @Override
-    public String saveFile(byte[] bytes) {
+    public File saveFile(byte[] bytes) {
         //TODO: Check auto-generated code
         return null;
     }

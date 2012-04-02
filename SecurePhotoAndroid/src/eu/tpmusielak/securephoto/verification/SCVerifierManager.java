@@ -8,6 +8,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.preference.*;
 import eu.tpmusielak.securephoto.R;
+import eu.tpmusielak.securephoto.verification.geo.CellularVerifierWrapper;
+import eu.tpmusielak.securephoto.verification.geo.GeolocationVerifierWrapper;
 
 import java.lang.ref.WeakReference;
 import java.util.HashSet;
@@ -23,7 +25,6 @@ import java.util.Set;
  */
 public class SCVerifierManager extends Service implements VerifierBinder {
 
-    private List<Verifier> verifiers;
     private VerifierGUIReceiver guiReceiver;
     private VerifierPreferenceReceiver preferenceReceiver;
 
@@ -31,25 +32,15 @@ public class SCVerifierManager extends Service implements VerifierBinder {
 
     public static SCVerifierManager instance;
 
-    static {
-        instance = new SCVerifierManager();
-        instance.initialize();
-    }
-
-    public static SCVerifierManager getInstance() {
-        return instance;
-    }
-
     private void initialize() {
         verifierWrappers = new LinkedList<VerifierWrapper>();
-        verifiers = new LinkedList<Verifier>();
 
-        //        new TimestampVerifierWrapper().register(this);
-
-//        new GeolocationVerifierWrapper().register(this);
-        new GenericVerifierWrapper(new DummyVerifier()).register(this);
-        new GenericVerifierWrapper(new DummyVerifier(2000)).register(this);
-        new GenericVerifierWrapper(new DummyVerifier(30000)).register(this);
+        new GeolocationVerifierWrapper().register(this);
+        new CellularVerifierWrapper().register(this);
+//        new TimestampVerifierWrapper().register(this);
+//        new GenericVerifierWrapper(new DummyVerifier()).register(this);
+//        new GenericVerifierWrapper(new DummyVerifier(2000)).register(this);
+//        new GenericVerifierWrapper(new DummyVerifier(30000)).register(this);
     }
 
     public class VerifierServiceBinder extends Binder {
@@ -73,12 +64,7 @@ public class SCVerifierManager extends Service implements VerifierBinder {
     public void onCreate() {
         super.onCreate();
         initialize();
-        initializeVerifiers();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+        initializeVWrappers();
     }
 
     @Override
@@ -86,21 +72,36 @@ public class SCVerifierManager extends Service implements VerifierBinder {
         return new VerifierServiceBinder(this);
     }
 
+    @Override
+    public void onDestroy() {
+        tearDownVWrappers();
+        super.onDestroy();
+    }
+
     public void register(VerifierWrapper wrapper) {
         verifierWrappers.add(wrapper);
-
-        Verifier v = wrapper.getVerifier();
-        verifiers.add(v);
     }
 
     public List<Verifier> getVerifiers() {
-        return this.verifiers;
+        List<Verifier> verifiers = new LinkedList<Verifier>();
+
+        for (VerifierWrapper verifierWrapper : verifierWrappers) {
+            verifiers.add(verifierWrapper.getVerifier());
+        }
+
+        return verifiers;
     }
 
 
-    public void initializeVerifiers() {
+    public void initializeVWrappers() {
         for (VerifierWrapper verifierWrapper : verifierWrappers) {
-            verifierWrapper.initialize();
+            verifierWrapper.initializeWrapper();
+        }
+    }
+
+    public void tearDownVWrappers() {
+        for (VerifierWrapper verifierWrapper : verifierWrappers) {
+            verifierWrapper.onDestroy();
         }
     }
 
@@ -110,6 +111,13 @@ public class SCVerifierManager extends Service implements VerifierBinder {
         for (VerifierWrapper verifierWrapper : verifierWrappers) {
             verifierWrapper.setReceiver(guiReceiver);
             verifierWrapper.bindToGUI();
+            verifierWrapper.onCameraStart();
+        }
+    }
+
+    public void unbindFromGUI() {
+        for (VerifierWrapper verifierWrapper : verifierWrappers) {
+            verifierWrapper.onCameraExit();
         }
     }
 

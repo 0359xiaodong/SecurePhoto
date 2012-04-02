@@ -35,4 +35,5 @@
     <string name="pick_vfactor">Pick verifiers</string>
     <string name="verifier_settings">Verifier settings</string>
     <string name="no_files_found">No files found</string>
+    <string name="image_view">View of the image</string>
 </resources>

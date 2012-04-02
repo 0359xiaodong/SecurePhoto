@@ -1,5 +1,7 @@
 package eu.tpmusielak.securephoto.container;
 
+import java.io.File;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Tomasz P. Musielak
@@ -7,5 +9,5 @@ package eu.tpmusielak.securephoto.container;
  * Time: 16:24
  */
 public interface SPFileHandler {
-    public String saveFile(byte[] bytes);
+    public File saveFile(byte[] bytes);
 }

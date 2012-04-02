@@ -26,15 +26,13 @@
                 android:scrollbars="none">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:id="@+id/options_pane"
-                      android:layout_height="fill_parent"
-                      android:layout_width="100px"
+                      android:layout_height="wrap_content"
+                      android:layout_width="66dp"
                       android:orientation="vertical">
             <Button
                     android:id="@+id/btn_save_mode"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
                     android:background="@drawable/ic_filmroll"
                     />
 
@@ -42,9 +40,14 @@
                     android:id="@+id/btn_verifier_settings"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
                     android:background="@drawable/ic_menu_preferences"
+                    />
+
+            <Button
+                    android:id="@+id/btn_review_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/ic_menu_gallery"
                     />
 
         </LinearLayout>
@@ -60,9 +63,9 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:id="@+id/plugins_pane"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_weight="1">
+                >
         </LinearLayout>
     </HorizontalScrollView>
 

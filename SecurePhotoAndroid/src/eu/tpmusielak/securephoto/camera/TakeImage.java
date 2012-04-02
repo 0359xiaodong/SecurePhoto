@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Pair;
 import android.view.*;
 import android.widget.*;
 import eu.tpmusielak.securephoto.R;
@@ -20,7 +21,9 @@ import eu.tpmusielak.securephoto.container.VerifierProvider;
 import eu.tpmusielak.securephoto.verification.SCVerifierManager;
 import eu.tpmusielak.securephoto.verification.Verifier;
 import eu.tpmusielak.securephoto.verification.VerifierGUIReceiver;
+import eu.tpmusielak.securephoto.viewer.OpenImage;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +43,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     private Button shutterButton;
     private Button saveModeButton;
     private Button verifierSettingsButton;
+    private Button reviewImageButton;
 
     private ProgressBar backgroundOperationBar;
     private AtomicInteger backgroundOpsCounter;
@@ -64,6 +68,8 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
 
     private ViewGroup optionsPane;
     private ViewGroup pluginsPane;
+
+    private File lastImage;
 
     private ServiceConnection communicationServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -90,6 +96,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         }
     };
 
+
     @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,8 +112,8 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         setupScreen();
         cameraHandler.setupCamera();
 
-//        Intent intent = new Intent(this, CommunicationService.class);
-//        bindService(intent, communicationServiceConnection, Context.BIND_AUTO_CREATE);
+        Intent intent = new Intent(this, CommunicationService.class);
+        bindService(intent, communicationServiceConnection, Context.BIND_AUTO_CREATE);
 
         Intent verifierServiceIntent = new Intent(this, SCVerifierManager.class);
         bindService(verifierServiceIntent, verifierServiceConnection, Context.BIND_AUTO_CREATE);
@@ -137,6 +144,10 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         verifierSettingsButton = (Button) findViewById(R.id.btn_verifier_settings);
         verifierSettingsButton.setOnClickListener(new VerifierSettingsListener());
 
+        reviewImageButton = (Button) findViewById(R.id.btn_review_image);
+        reviewImageButton.setOnClickListener(new ReviewImageListener());
+
+
         optionsPane = (ViewGroup) findViewById(R.id.options_pane);
         pluginsPane = (ViewGroup) findViewById(R.id.plugins_pane);
 
@@ -166,9 +177,26 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     }
 
     private class VerifierSettingsListener implements Button.OnClickListener {
+        @Override
         public void onClick(View view) {
             verifierManager.showVerificationFactors();
         }
+    }
+
+    private class ReviewImageListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            reviewLastImage();
+        }
+    }
+
+    private void reviewLastImage() {
+        if (lastImage == null)
+            return;
+
+        Intent i = new Intent(getContext(), OpenImage.class);
+        i.putExtra("filename", lastImage.getAbsolutePath());
+        getContext().startActivity(i);
     }
 
     public Context getContext() {
@@ -180,7 +208,8 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         new SavePictureTask().execute(new byte[][]{bytes});
     }
 
-    private class SavePictureTask extends AsyncTask<byte[], Void, String> {
+    private class SavePictureTask extends AsyncTask<byte[], Void, Pair<File, String>> {
+        byte[] pictureData;
 
         @Override
         protected void onPreExecute() {
@@ -188,16 +217,34 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         }
 
         @Override
-        protected String doInBackground(byte[]... bytes) {
-            byte[] pictureData = bytes[0];
-            return fileHandler.saveFile(pictureData);
+        protected Pair<File, String> doInBackground(byte[]... bytes) {
+            pictureData = bytes[0];
+            File file = null;
+            String outcome = null;
+
+            try {
+                file = fileHandler.saveFile(pictureData);
+            } catch (NullPointerException e) {
+                throw e;
+            } catch (RuntimeException e) {
+                outcome = e.toString();
+            }
+            return new Pair<File, String>(file, outcome);
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Pair<File, String> result) {
+            File file = result.first;
+            String outcome = result.second;
+
+            if (file != null) {
+                Toast.makeText(TakeImage.this, "File " + file.getName() + " saved successfully", Toast.LENGTH_SHORT).show();
+
+                onImageSaved(file);
+            } else
+                Toast.makeText(TakeImage.this, "Error while saving file:" + outcome, Toast.LENGTH_SHORT).show();
+
             endBackgroundOperation();
-            if (result != null)
-                Toast.makeText(TakeImage.this, "File " + result + " saved successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -221,6 +268,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
 
     @Override
     protected void onDestroy() {
+        verifierManager.unbindFromGUI();
         unbindService(verifierServiceConnection);
         super.onDestroy();
     }
@@ -260,6 +308,11 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
 
     }
 
+    public void onImageSaved(File file) {
+        lastImage = file;
+        reviewLastImage();
+    }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         return super.onCreateDialog(id);
@@ -269,6 +322,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     public List<Verifier> getVerifiers() {
         return verifiers;
     }
+
 
 }
 

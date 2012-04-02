@@ -8,8 +8,13 @@ import eu.tpmusielak.securephoto.container.SPImage;
  * Date: 09.02.12
  * Time: 03:08
  */
-public interface VerificationFactor {
+public interface Verifier {
 
-    public void onCreate();
+    public void initialize();
+
+    public VerifierState getState();
+
     public VerificationFactorData onCapture(SPImage image);
+
+
 }

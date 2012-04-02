@@ -15,6 +15,9 @@ import java.util.Date;
  */
 public class FileHandling {
 
+    public final static String dirPath
+            = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/SecureCamera";
+
     public static File getOutputFile(String extension) throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String name = "SCIMG_" + timeStamp;
@@ -44,17 +47,14 @@ public class FileHandling {
     }
 
     public static File[] getFiles() {
-        String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-        File dir = new File(dirPath + "/SecureCamera");
+        File dir = new File(dirPath);
 
         return dir.listFiles();
 
     }
 
     public static String[] getFileNames(final String extension) {
-        String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-        File dir = new File(dirPath + "/SecureCamera");
-
+        File dir = new File(dirPath);
         return dir.list();
     }
 

@@ -19,7 +19,7 @@ import java.security.SecureRandom;
  * Date: 09.02.12
  * Time: 03:11
  */
-public class RFC3161Timestamp implements VerificationFactor {
+public class RFC3161Timestamp extends BasicVerifier {
 
     private final String timestampServerAddress;
 
@@ -28,7 +28,8 @@ public class RFC3161Timestamp implements VerificationFactor {
     }
 
     @Override
-    public void onCreate() {
+    protected VerifierState onInitialize() {
+        return VerifierState.INIT_SUCCESS;
     }
 
     @Override

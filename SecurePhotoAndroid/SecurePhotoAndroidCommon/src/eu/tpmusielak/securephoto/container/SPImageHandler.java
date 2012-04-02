@@ -22,14 +22,15 @@ public class SPImageHandler implements SPFileHandler {
     }
 
     @Override
-    public String saveFile(byte[] bytes) {
+    public File saveFile(byte[] bytes) {
         File pictureFile = null;
         try {
             pictureFile = FileHandling.getOutputFile(SPImage.defaultExtension);
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Cannot create output file");
         }
+
+        // TODO: stop exception swallowing
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(pictureFile);
@@ -37,14 +38,12 @@ public class SPImageHandler implements SPFileHandler {
             fileOutputStream.write(image.toByteArray());
             fileOutputStream.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException(String.format("Cannot write to file %s", pictureFile.getAbsolutePath()));
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+            throw new RuntimeException("IOException: " + e.toString());
         }
 
-        return pictureFile.getName();
+        return pictureFile;
     }
 }
 

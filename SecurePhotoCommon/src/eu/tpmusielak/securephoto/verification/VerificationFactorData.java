@@ -7,5 +7,9 @@ package eu.tpmusielak.securephoto.verification;
  * Time: 12:57
  */
 public interface VerificationFactorData {
+    //
+    // !! Make sure that the implementing interface is Serializable !!
+    //
+
     public byte[] getHash();
 }

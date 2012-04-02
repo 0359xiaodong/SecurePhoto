@@ -5,6 +5,7 @@ import eu.tpmusielak.securephoto.container.SPImage;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 /**
  * Created by IntelliJ IDEA.
@@ -48,4 +49,15 @@ public class TimestampData implements VerificationFactorData, Serializable {
     public byte[] getHash() {
         return timestampHash;
     }
+
+    @Override
+    public String toString() {
+        final String format = "Timestamp Data:\n" +
+                "    Request:  %s\n" +
+                "    Response: %s\n" +
+                "    TimestampHash: %s\n";
+
+        return String.format(format, Arrays.toString(request), Arrays.toString(response), Arrays.toString(timestampHash));
+    }
 }
+

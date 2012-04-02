@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import eu.tpmusielak.securephoto.R;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -28,17 +30,19 @@ public abstract class VerifierWrapper {
     public final int iconID = RESOURCE_ID_OFFSET + resourceOffset.incrementAndGet();
     protected Verifier verifier;
 
-    private VerifierGUIReceiver guiReceiver;
+    protected VerifierGUIReceiver guiReceiver;
     protected Context context;
     ViewGroup pluginsPane;
 
-    protected VerifierBinder manager;
+    protected VerifierBinder verifierManager;
 
     InitializeVerifierTask initTask;
+    Timer blinkingTimer;
 
     public void register(VerifierBinder m) {
-        manager = m;
-        manager.register(this);
+        verifierManager = m;
+        context = m.getApplicationContext();
+        verifierManager.register(this);
         registered = true;
     }
 
@@ -47,17 +51,29 @@ public abstract class VerifierWrapper {
     }
 
     @SuppressWarnings("unchecked")
-    public void initialize() {
+    public void initializeWrapper() {
         initTask = new InitializeVerifierTask();
         initTask.execute();
     }
 
     public void bindToGUI() {
-        this.context = guiReceiver.getBaseContext();
         pluginsPane = guiReceiver.getPluginsPane();
         putIcon();
         setStateColor();
     }
+
+    /**
+     * Called after binding to camera GUI
+     */
+    public void onCameraStart() {
+    }
+
+    public void onCameraExit() {
+    }
+
+    public void onDestroy() {
+    }
+
 
     public Verifier getVerifier() {
         return verifier;
@@ -74,7 +90,6 @@ public abstract class VerifierWrapper {
     public int getPreferenceID() {
         return 0; // No default preferences defined.
     }
-
 
     public void setEnabled(boolean val) {
         enabled = val;
@@ -108,7 +123,21 @@ public abstract class VerifierWrapper {
 
     }
 
-    private boolean isBound() {
+    protected void startFlashingIcon() {
+        blinkingTimer = new Timer();
+
+        blinkingTimer.schedule(new FlashIconTask(), 0, 1000);
+    }
+
+    protected void stopFlashingIcon() {
+        try {
+            blinkingTimer.cancel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isBoundToGUI() {
         return guiReceiver != null;
     }
 
@@ -133,7 +162,7 @@ public abstract class VerifierWrapper {
 
         @Override
         protected void onPreExecute() {
-            if (isBound()) {
+            if (isBoundToGUI()) {
                 setIconColor(Color.YELLOW);
                 guiReceiver.startBackgroundOperation();
             }
@@ -147,9 +176,22 @@ public abstract class VerifierWrapper {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            if (isBound()) {
+            if (isBoundToGUI()) {
                 guiReceiver.endBackgroundOperation();
                 setStateColor();
+            }
+        }
+    }
+
+    private class FlashIconTask extends TimerTask {
+        @Override
+        public void run() {
+            try {
+                setIconColor(Color.TRANSPARENT);
+                Thread.sleep(500);
+                setStateColor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

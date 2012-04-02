@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+        >
+    <ImageView
+            android:id="@+id/image"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/image_view"/>
+
+    <ScrollView android:id="@+id/options_scroll"
+                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:scrollbars="none">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/options_pane"
+                        android:layout_height="wrap_content"
+                        android:layout_width="66dp"
+                        android:orientation="vertical">
+            <Button
+                    android:id="@+id/btn_show_verifiers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/ic_menu_padlock"
+                    />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <HorizontalScrollView
+            android:id="@+id/plugin_scroll"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:scrollbars="none"
+            android:layout_toRightOf="@id/options_scroll">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/plugins_pane"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent">
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ProgressBar
+            android:id="@+id/camera_save_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"
+            android:text="@string/camera_image_roll"
+            />
+
+
+</RelativeLayout>

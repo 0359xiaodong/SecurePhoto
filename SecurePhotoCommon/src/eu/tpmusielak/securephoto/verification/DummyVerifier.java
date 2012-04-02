@@ -8,11 +8,26 @@ import eu.tpmusielak.securephoto.container.SPImage;
  * Date: 09.02.12
  * Time: 14:42
  */
-public class DummyVerifier implements VerificationFactor {
+public class DummyVerifier extends BasicVerifier {
 
+    private int startupdelay;
+
+    public DummyVerifier() {
+        this(0);
+    }
+
+    public DummyVerifier(int startupdelay) {
+        this.startupdelay = startupdelay;
+    }
 
     @Override
-    public void onCreate() {
+    protected VerifierState onInitialize() {
+        try {
+            Thread.sleep(startupdelay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return VerifierState.INIT_SUCCESS;
     }
 
     @Override
@@ -22,6 +37,6 @@ public class DummyVerifier implements VerificationFactor {
 
     @Override
     public String toString() {
-        return "DummyVerifier";
+        return String.format("DummyVerifier(%d)", startupdelay);
     }
 }

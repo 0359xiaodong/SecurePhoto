@@ -85,6 +85,14 @@ public class VerifierPrototype {
         }
     }
 
+    public void printVerifierData(SPImage image) {
+        Map<Class<Verifier>, VerificationFactorData> verificationFactorData = image.getVerificationFactorData();
+        for (VerificationFactorData data : verificationFactorData.values()) {
+            System.out.println(data.toString());
+        }
+
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException, TSPException {
         Scanner scanner = new Scanner(System.in);
         String filename = scanner.next();
@@ -96,8 +104,9 @@ public class VerifierPrototype {
 
 //        SPImage img = vp.openSPI("./SecurePhotoPrototype/SCIMG_20120209_174216.spi");
         SPImage img = vp.openSPI(String.format("./SecurePhotoPrototype/%s", filename));
-        vp.extractTimestampData(img);
+//        vp.extractTimestampData(img);
         vp.printVerificationFactors(img);
+        vp.printVerifierData(img);
 
 
     }

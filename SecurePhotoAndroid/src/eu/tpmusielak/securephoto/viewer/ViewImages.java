@@ -2,18 +2,17 @@ package eu.tpmusielak.securephoto.viewer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.*;
 import eu.tpmusielak.securephoto.R;
-import eu.tpmusielak.securephoto.container.SPImage;
 import eu.tpmusielak.securephoto.tools.FileHandling;
+import eu.tpmusielak.securephoto.viewer.lazylist.ImageLoader;
 
 import java.io.File;
 
@@ -34,13 +33,16 @@ public class ViewImages extends Activity {
 
     private void setupScreen() {
         setContentView(R.layout.gallery_view);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         ListView listView = (ListView) findViewById(R.id.gallery_list);
         String[] fileNames = FileHandling.getFileNames(".spi");
         File[] files = FileHandling.getFiles();
 
+
         if (files.length > 0) {
             listView.setAdapter(new ImageViewAdapter(ViewImages.this, R.layout.gallery_row, files));
+            listView.setOnItemClickListener(new ImageClickListener());
         } else {
             //TODO: show something in the gallery when no images are shown
         }
@@ -50,68 +52,71 @@ public class ViewImages extends Activity {
     private class ImageViewAdapter extends ArrayAdapter<File> {
         // http://android-er.blogspot.com/2010/06/using-convertview-in-getview-to-make.html
 
-        public ImageViewAdapter(Context context, int textViewResourceId, File[] objects) {
-            super(context, textViewResourceId, objects);
+        // inspired by: https://github.com/thest1/LazyList/
+        private Context context;
+        private int layoutResourceId;
+        private File[] files;
+
+        private LayoutInflater layoutInflater;
+        private ImageLoader imageLoader;
+
+        public ImageViewAdapter(Context context, int layoutResourceId, File[] files) {
+            super(context, layoutResourceId, files);
+            this.context = context;
+            this.layoutResourceId = layoutResourceId;
+            this.files = files;
+
+            layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            imageLoader = new ImageLoader(context);
         }
+
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View row = convertView;
 
             if (row == null) {
-                LayoutInflater inflater = getLayoutInflater();
-                row = inflater.inflate(R.layout.gallery_row, parent, false);
+                row = layoutInflater.inflate(layoutResourceId, parent, false);
             }
 
             File file = getItem(position);
             String fileName = file.getName();
 
             TextView label = (TextView) row.findViewById(R.id.roll_descriptor);
+            View fileView = row.findViewById(R.id.file_view);
+
             label.setText(fileName);
 
             ViewGroup parentView = (ViewGroup) row;
+            int viewIndex = parentView.indexOfChild(fileView);
+            parentView.removeViewAt(viewIndex);
 
-            parentView.removeAllViews();
-            parentView.addView(label);
+            ImageView imageView = new ImageView(context);
+            imageView.setId(R.id.file_view);
 
-            View displayView = null;
+            imageLoader.load(file, imageView);
 
-            try {
-                if (fileName.endsWith(".spi")) {
-                    ImageView imageView = new ImageView(getContext());
-
-                    SPImage spImage = SPImage.fromFile(file);
-                    byte[] imageData = spImage.getImageData();
-
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-                    bitmap = ThumbnailUtils.extractThumbnail(bitmap, 200, 150);
-
-                    imageView.setImageBitmap(bitmap);
-
-                    displayView = imageView;
-
-
-                } else if (fileName.endsWith(".spr")) {
-                    Gallery roll = new Gallery(getContext());
-                    roll.setAdapter(new ImageAdapter(getContext(), file));
-                    displayView = roll;
-
-                } else if (fileName.endsWith(".jpg")) {
-                    ImageView imageView = new ImageView(getContext());
-                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_gallery));
-                    displayView = imageView;
-                }
-
-                if (displayView != null) {
-                    displayView.setId(R.id.file_view);
-                    parentView.addView(displayView);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            parentView.addView(imageView, viewIndex);
 
             return row;
+        }
+
+    }
+
+    private class ImageClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            View fileView = view.findViewById(R.id.file_view);
+
+            if (fileView == null) {
+            } else if (fileView instanceof ImageView) {
+                File file = (File) parent.getItemAtPosition(position);
+
+                Intent i = new Intent(getApplicationContext(), OpenImage.class);
+                i.putExtra("filename", file.getAbsolutePath());
+                startActivity(i);
+            }
         }
     }
 
@@ -164,4 +169,41 @@ public class ViewImages extends Activity {
             return imageView;
         }
     }
+
+//    try {
+//                   if (fileName.endsWith(".spi")) {
+//                       ImageView imageView = new ImageView(getContext());
+//
+//                       SPImage spImage = SPImage.fromFile(file);
+//                       byte[] imageData = spImage.getImageData();
+//
+//                       Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+//                       bitmap = ThumbnailUtils.extractThumbnail(bitmap, 200, 150);
+//
+//                       imageView.setImageBitmap(bitmap);
+//
+//                       displayView = imageView;
+//
+//
+//                   } else if (fileName.endsWith(".spr")) {
+//                       Gallery roll = new Gallery(getContext());
+//                       roll.setAdapter(new ImageAdapter(getContext(), file));
+//                       displayView = roll;
+//
+//                   } else if (fileName.endsWith(".jpg")) {
+//                       ImageView imageView = new ImageView(getContext());
+//                       imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_gallery));
+//                       displayView = imageView;
+//                   }
+//
+//                   if (displayView != null) {
+//                       displayView.setId(R.id.file_view);
+//                       parentView.addView(displayView);
+//                   }
+//
+//               } catch (Exception e) {
+//                   e.printStackTrace();
+//               }
+
+
 }
