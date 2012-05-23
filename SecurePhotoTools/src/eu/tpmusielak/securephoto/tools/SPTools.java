@@ -1,3 +1,5 @@
+package eu.tpmusielak.securephoto.tools;
+
 import eu.tpmusielak.securephoto.container.SPImage;
 import eu.tpmusielak.securephoto.container.SPImageRoll;
 import eu.tpmusielak.securephoto.verification.VerificationFactorData;
@@ -9,11 +11,9 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -23,8 +23,8 @@ import java.util.Map;
  * Date: 22/05/12
  * Time: 20:46
  */
-public class Main implements ActionListener {
-    private final static String APPLICATION_NAME = "SecurePhotoTools";
+public class SPTools implements ActionListener {
+    private final static String APPLICATION_NAME = "SecurePhoto Tools";
 
     private JButton openButton;
     private JButton exitButton;
@@ -40,6 +40,11 @@ public class Main implements ActionListener {
     private JButton newSPRButton;
     private JButton addToSPRButton;
     private JButton saveButton;
+    private JButton exportAsJPGButton;
+
+    private static JMenuBar menuBar;
+    private JMenu fileMenu;
+    private JMenuItem openMenuItem, saveMenuItem, saveAsMenuItem, exitMenuItem;
 
 
     final JFileChooser openFileChooser = new JFileChooser();
@@ -51,50 +56,48 @@ public class Main implements ActionListener {
 
     private static JFrame mainFrame;
 
-    public Main() {
-        openButton.addActionListener(Main.this);
-        exitButton.addActionListener(Main.this);
-        prevButton.addActionListener(Main.this);
-        nextButton.addActionListener(Main.this);
-        newSPRButton.addActionListener(Main.this);
-        addToSPRButton.addActionListener(Main.this);
-        saveButton.addActionListener(Main.this);
+    private void createUIComponents() {
+        menuBar = new JMenuBar();
 
+        fileMenu = new JMenu("File");
+        openMenuItem = new JMenuItem("Open");
+        saveAsMenuItem = new JMenuItem("Save As...");
+        saveMenuItem = new JMenuItem("Save");
+        exitMenuItem = new JMenuItem("Exit");
 
-        openFileChooser.addChoosableFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                String name = f.getName();
-                int dotIndex = name.lastIndexOf('.');
-                String ext = name.substring(dotIndex + 1).toLowerCase();
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        menuBar.add(fileMenu);
 
-                return ext.equals(SPImage.defaultExtension)
-                        || ext.equals(SPImageRoll.defaultExtension)
-                        || ext.equals("jpg")
-                        || f.isDirectory();
-            }
+        openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
+        fileMenu.add(openMenuItem);
 
-            @Override
-            public String getDescription() {
-                return "SPImage, SPImageRoll or JPEG";
-            }
-        });
+        fileMenu.addSeparator();
 
-        saveFileChooser.addChoosableFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                return f.isDirectory() || f.getName().endsWith(SPImageRoll.defaultExtension);
-            }
+        saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
+        fileMenu.add(saveMenuItem);
 
-            @Override
-            public String getDescription() {
-                return "SPImageRoll (*.spr)";
-            }
-        });
+        fileMenu.add(saveAsMenuItem);
+
+        fileMenu.addSeparator();
+
+        exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, KeyEvent.ALT_MASK));
+        fileMenu.add(exitMenuItem);
+    }
+
+    public SPTools() {
+        openButton.addActionListener(SPTools.this);
+        exitButton.addActionListener(SPTools.this);
+        prevButton.addActionListener(SPTools.this);
+        nextButton.addActionListener(SPTools.this);
+        newSPRButton.addActionListener(SPTools.this);
+        addToSPRButton.addActionListener(SPTools.this);
+        saveButton.addActionListener(SPTools.this);
+        exportAsJPGButton.addActionListener(SPTools.this);
 
         splitPane.setDividerLocation(0.80d);
         textPane.setEditable(false);
         setNaviButtonsState(false);
+        exportAsJPGButton.setEnabled(false);
     }
 
 
@@ -106,12 +109,17 @@ public class Main implements ActionListener {
         Object source = e.getSource();
 
         if (source == openButton) {
+            openFileChooser.resetChoosableFileFilters();
+            openFileChooser.addChoosableFileFilter(new InputFileFilter());
             int retVal = openFileChooser.showOpenDialog(mainPanel);
 
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 openFile(openFileChooser.getSelectedFile());
             }
         } else if (source == newSPRButton) {
+            saveFileChooser.resetChoosableFileFilters();
+            saveFileChooser.addChoosableFileFilter(new SPRFileFilter());
+
             int retVal = saveFileChooser.showSaveDialog(mainPanel);
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 newSPR(saveFileChooser.getSelectedFile());
@@ -122,8 +130,36 @@ public class Main implements ActionListener {
             if (retVal == JFileChooser.APPROVE_OPTION) {
 
             }
+        } else if (source == exportAsJPGButton) {
+            saveFileChooser.resetChoosableFileFilters();
+            saveFileChooser.addChoosableFileFilter(new JPGFileFilter());
+
+            File outputFile = getFileWithoutExtension(currentFile);
+            saveFileChooser.setSelectedFile(outputFile);
+
+            int retVal = saveFileChooser.showSaveDialog(mainPanel);
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                exportJPG(saveFileChooser.getSelectedFile());
+            }
+
+            saveFileChooser.setSelectedFile(null);
         } else if (source == exitButton) {
             System.exit(0);
+        }
+
+    }
+
+    private void exportJPG(File file) {
+        if (!file.getName().endsWith(".jpg")) {
+            file = new File(file.getAbsolutePath() + ".jpg");
+        }
+
+        try {
+            ImageIO.write(currentImage, "JPG", file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
@@ -132,6 +168,7 @@ public class Main implements ActionListener {
         if (!file.getName().endsWith("." + SPImageRoll.defaultExtension)) {
             file = new File(file.getAbsolutePath() + "." + SPImageRoll.defaultExtension);
         }
+
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -155,6 +192,10 @@ public class Main implements ActionListener {
             openJPEGFile(file);
         }
         displayImage();
+
+        if (currentImage != null)
+            exportAsJPGButton.setEnabled(true);
+
         mainFrame.setTitle(APPLICATION_NAME + " - " + currentFile.getName());
     }
 
@@ -232,11 +273,66 @@ public class Main implements ActionListener {
         imageLabel.setIcon(new ImageIcon(scaledPicture));
     }
 
+
+    private class InputFileFilter extends FileFilter {
+        @Override
+        public boolean accept(File f) {
+            String name = f.getName();
+            int dotIndex = name.lastIndexOf('.');
+            String ext = name.substring(dotIndex + 1).toLowerCase();
+
+            return ext.equals(SPImage.defaultExtension)
+                    || ext.equals(SPImageRoll.defaultExtension)
+                    || ext.equals("jpg")
+                    || f.isDirectory();
+        }
+
+        @Override
+        public String getDescription() {
+            return "SPImage, SPImageRoll or JPEG";
+        }
+
+    }
+
+    private class SPRFileFilter extends FileFilter {
+        @Override
+        public boolean accept(File f) {
+            return f.isDirectory() || f.getName().endsWith(SPImageRoll.defaultExtension);
+        }
+
+        @Override
+        public String getDescription() {
+            return "SPImageRoll (*." + SPImageRoll.defaultExtension.toLowerCase() + ")";
+        }
+    }
+
+    private class JPGFileFilter extends FileFilter {
+        @Override
+        public boolean accept(File f) {
+            return f.isDirectory() || f.getName().endsWith("jpg");
+        }
+
+        @Override
+        public String getDescription() {
+            return "JPG File (*.jpg)";
+        }
+    }
+
+    private static File getFileWithoutExtension(File file) {
+        String filePath = file.getAbsolutePath();
+        int index = filePath.lastIndexOf('.');
+        String filePathWithoutName = filePath.substring(0, index);
+
+        return new File(filePathWithoutName);
+    }
+
+
     public static void main(String[] args) {
         mainFrame = new JFrame(APPLICATION_NAME);
-        mainFrame.setContentPane(new Main().mainPanel);
+        mainFrame.setContentPane(new SPTools().mainPanel);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
+        mainFrame.setJMenuBar(menuBar);
         mainFrame.setVisible(true);
         mainFrame.setResizable(false);
     }
