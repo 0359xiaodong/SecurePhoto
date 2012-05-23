@@ -1,5 +1,7 @@
 package eu.tpmusielak.securephoto.container;
 
+import android.content.Context;
+
 import java.io.File;
 
 /**
@@ -10,4 +12,6 @@ import java.io.File;
  */
 public interface SPFileHandler {
     public File saveFile(byte[] bytes);
+
+    void onInitialize(Context context);
 }

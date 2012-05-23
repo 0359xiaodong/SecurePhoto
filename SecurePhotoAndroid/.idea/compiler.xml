@@ -8,6 +8,8 @@
       <directory url="file://$PROJECT_DIR$/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/addons/TimestampVerifierWrapper/gen" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/../gen" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/SecurePhotoVerifier/gen" includeSubdirectories="true" />
     </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>

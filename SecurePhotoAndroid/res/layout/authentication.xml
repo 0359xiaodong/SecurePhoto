@@ -4,12 +4,15 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               style="@style/IconGrid"
-              android:gravity="center">
+              android:gravity="center"
+              android:orientation="vertical">
     <Button android:id="@+id/btn_go_auth"
             android:text="@string/authentication"
-            android:layout_width="200px"
-            android:layout_height="200px"/>
-
-
+            android:layout_width="133dp"
+            android:layout_height="133dp"/>
+    <Button android:id="@+id/btn_debug_create_SPIroll"
+            android:text="@string/debug_create_SPIroll"
+            android:layout_width="133dp"
+            android:layout_height="133dp"/>
 
 </LinearLayout>

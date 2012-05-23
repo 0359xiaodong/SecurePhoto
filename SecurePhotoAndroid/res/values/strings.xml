@@ -36,4 +36,12 @@
     <string name="verifier_settings">Verifier settings</string>
     <string name="no_files_found">No files found</string>
     <string name="image_view">View of the image</string>
+    <string name="no_verifiers_found">No verifiers found</string>
+    <string name="debug_create_SPIroll">Create SPI Roll</string>
+    <string name="delete">Delete</string>
+    <string name="view_info">View info</string>
+    <string name="ask_confirm">Are you sure?</string>
+    <string name="delete_success">File deleted</string>
+    <string name="delete_failure">Warning: file not deleted</string>
+    <string name="cannot_use_handler">Cannot use this handler</string>
 </resources>

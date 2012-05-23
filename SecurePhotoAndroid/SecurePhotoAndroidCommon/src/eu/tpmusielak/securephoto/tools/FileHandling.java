@@ -3,6 +3,7 @@ package eu.tpmusielak.securephoto.tools;
 import android.os.Environment;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,10 +49,19 @@ public class FileHandling {
 
     public static File[] getFiles() {
         File dir = new File(dirPath);
-
         return dir.listFiles();
-
     }
+
+    public static File[] getFiles(final String extension) {
+        File dir = new File(dirPath);
+        return dir.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.endsWith(extension);
+            }
+        });
+    }
+
 
     public static String[] getFileNames(final String extension) {
         File dir = new File(dirPath);

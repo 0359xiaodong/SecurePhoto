@@ -1,5 +1,6 @@
 package eu.tpmusielak.securephoto.container;
 
+import android.content.Context;
 import eu.tpmusielak.securephoto.tools.FileHandling;
 
 import java.io.File;
@@ -30,8 +31,6 @@ public class SPImageHandler implements SPFileHandler {
             throw new RuntimeException("Cannot create output file");
         }
 
-        // TODO: stop exception swallowing
-
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(pictureFile);
             SPImage image = SPImage.getInstance(bytes, verifierProvider.getVerifiers());
@@ -44,6 +43,10 @@ public class SPImageHandler implements SPFileHandler {
         }
 
         return pictureFile;
+    }
+
+    @Override
+    public void onInitialize(Context context) {
     }
 }
 

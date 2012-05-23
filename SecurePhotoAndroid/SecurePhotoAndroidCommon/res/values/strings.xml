@@ -6,6 +6,7 @@
     <string name="enabled_summary">Enable</string>
     <string name="kpref_enable">Enable</string>
     <string name="kpref_edittext">Text preference</string>
+    <string name="select_roll">Select image roll</string>
 
 
 </resources>

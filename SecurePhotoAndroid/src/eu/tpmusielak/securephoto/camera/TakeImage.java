@@ -163,6 +163,11 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         backgroundOperationBar.isIndeterminate();
     }
 
+    private void setFileHandler(SPFileHandler handler) {
+        handler.onInitialize(TakeImage.this);
+        fileHandler = handler;
+    }
+
     private class SaveModeListener implements Button.OnClickListener {
         public SaveModeListener(Button saveModeButton) {
             saveModeButton.setBackgroundResource(saveMode.getDrawableResID());
@@ -171,7 +176,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         @Override
         public void onClick(View view) {
             saveMode = saveMode.switchMode();
-            fileHandler = fileHandlers.get(saveMode);
+            setFileHandler(fileHandlers.get(saveMode));
             ((Button) view).setBackgroundResource(saveMode.getDrawableResID());
         }
     }

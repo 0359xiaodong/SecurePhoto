@@ -24,6 +24,7 @@
         <option name="RUN_PROGUARD" value="false" />
         <option name="PROGUARD_CFG_PATH" value="/proguard.cfg" />
         <resOverlayFolders />
+        <includeSystemProguardFile>false</includeSystemProguardFile>
       </configuration>
     </facet>
   </component>
@@ -36,10 +37,10 @@
     <orderEntry type="jdk" jdkName="Android 2.3.3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="SecurePhotoCommon" exported="" />
-    <orderEntry type="library" scope="PROVIDED" name="bouncy" level="project" />
     <orderEntry type="module" module-name="SecurePhotoAndroidCommon" />
     <orderEntry type="module" module-name="TimestampVerifierWrapper" />
     <orderEntry type="module" module-name="GeolocationVerifierWrapper" />
+    <orderEntry type="library" scope="PROVIDED" name="bouncy" level="project" />
   </component>
 </module>
 

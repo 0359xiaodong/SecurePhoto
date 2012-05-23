@@ -12,6 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceBinder;
+import eu.tpmusielak.securephoto.tools.FileHandling;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -43,6 +48,7 @@ public class BaseAuthenticate extends Activity {
         }
     };
     private Button authButton;
+    private Button createSPIRollButton;
 
 
     @Override
@@ -52,11 +58,11 @@ public class BaseAuthenticate extends Activity {
         preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         androidID = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-        
+
         setContentView(R.layout.authentication);
 
         final String address = preferences.getString(getString(R.string.kpref_base_station_address), null);
-        
+
         authButton = (Button) findViewById(R.id.btn_go_auth);
         authButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -64,8 +70,19 @@ public class BaseAuthenticate extends Activity {
             }
         });
 
-
-
+        createSPIRollButton = (Button) findViewById(R.id.btn_debug_create_SPIroll);
+        createSPIRollButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                try {
+                    File f = FileHandling.getOutputFile("spr");
+                    FileOutputStream fileOutputStream = new FileOutputStream(f);
+                    fileOutputStream.write(0);
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -91,8 +108,8 @@ public class BaseAuthenticate extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        
-        if(boundToCommService) {
+
+        if (boundToCommService) {
             unbindService(communicationServiceConnection);
             boundToCommService = false;
         }
@@ -115,7 +132,7 @@ public class BaseAuthenticate extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        
+
         setResult(Activity.RESULT_CANCELED);
     }
 

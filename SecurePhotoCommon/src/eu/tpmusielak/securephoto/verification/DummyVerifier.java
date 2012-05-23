@@ -32,7 +32,17 @@ public class DummyVerifier extends BasicVerifier {
 
     @Override
     public VerificationFactorData onCapture(SPImage image) {
-        return null;
+        return new VerificationFactorData() {
+            @Override
+            public byte[] getHash() {
+                return new byte[0];
+            }
+
+            @Override
+            public String toString() {
+                return "Dummy Data";
+            }
+        };
     }
 
     @Override

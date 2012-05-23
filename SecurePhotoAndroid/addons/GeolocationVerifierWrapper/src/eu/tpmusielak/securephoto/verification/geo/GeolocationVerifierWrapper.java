@@ -38,6 +38,7 @@ public class GeolocationVerifierWrapper extends VerifierWrapper implements Geolo
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
             notifyNoGPS();
 
+        currentLocation = null; // Invalidate location
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
@@ -117,7 +118,9 @@ public class GeolocationVerifierWrapper extends VerifierWrapper implements Geolo
     @Override
     public void onLocationChanged(Location location) {
         if (isBetterLocation(location, currentLocation))
-            currentLocation = location;
+            if (currentLocation == null)
+                stopFlashingIcon();
+        currentLocation = location;
     }
 
     @Override

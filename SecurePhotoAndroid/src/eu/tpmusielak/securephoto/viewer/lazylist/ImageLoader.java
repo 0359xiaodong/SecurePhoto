@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.container.SPImage;
+import eu.tpmusielak.securephoto.viewer.ViewImages;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ImageLoader {
-    private final int THUMBNAIL_SIZE = 140;
+    private final int THUMBNAIL_SIZE = 100;
 
     MemoryCache memoryCache = new MemoryCache();
     FileCache fileCache;
@@ -28,7 +29,7 @@ public class ImageLoader {
 
     public ImageLoader(Context context) {
         fileCache = new FileCache(context);
-        executorService = Executors.newFixedThreadPool(5);
+        executorService = Executors.newFixedThreadPool(7); //TODO: replace with AsyncTask
     }
 
     final int stub_id = R.drawable.ic_menu_gallery;
@@ -56,14 +57,13 @@ public class ImageLoader {
         File f = fileCache.getFile(file.getName());
 
         //from SD cache
-        Bitmap b = decodeFile(f, THUMBNAIL_SIZE);
+        Bitmap b = decodeFile(f, ViewImages.THUMBNAIL_SIZE);
         if (b != null)
             return b;
 
-        //from web
+        //from disk
         try {
-            Bitmap bitmap = decodeFile(file, THUMBNAIL_SIZE);
-            return bitmap;
+            return decodeFile(file, ViewImages.THUMBNAIL_SIZE);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
@@ -82,20 +82,9 @@ public class ImageLoader {
 
             if (fileName.endsWith(".spi")) {
                 byte[] bytes = SPImage.extractImageData(f);
-
-
                 BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o);
 
-                //Find the correct scale value. It should be the power of 2.
-                int width_tmp = o.outWidth, height_tmp = o.outHeight;
-                int scale = 1;
-                while (true) {
-                    if (width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
-                        break;
-                    width_tmp /= 2;
-                    height_tmp /= 2;
-                    scale *= 2;
-                }
+                int scale = getScale(requiredSize, o);
 
                 //decode with inSampleSize
                 BitmapFactory.Options o2 = new BitmapFactory.Options();
@@ -104,19 +93,8 @@ public class ImageLoader {
             } else {
                 BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 
-                //Find the correct scale value. It should be the power of 2.
-                final int REQUIRED_SIZE = 140;
-                int width_tmp = o.outWidth, height_tmp = o.outHeight;
-                int scale = 1;
-                while (true) {
-                    if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE)
-                        break;
-                    width_tmp /= 2;
-                    height_tmp /= 2;
-                    scale *= 2;
-                }
+                int scale = getScale(requiredSize, o);
 
-                //decode with inSampleSize
                 BitmapFactory.Options o2 = new BitmapFactory.Options();
                 o2.inSampleSize = scale;
 
@@ -132,6 +110,20 @@ public class ImageLoader {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static int getScale(int requiredSize, BitmapFactory.Options o) {
+        //Find the correct scale value. It should be the power of 2.
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
+        int scale = 1;
+        while (true) {
+            if (width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
+                break;
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
+        return scale;
     }
 
     //Task for the queue

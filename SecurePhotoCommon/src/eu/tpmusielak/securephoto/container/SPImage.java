@@ -49,6 +49,7 @@ public class SPImage implements Serializable {
         return getInstance(imageData, null);
     }
 
+    @SuppressWarnings("unchecked")
     public static SPImage getInstance(byte[] imageData, List<Verifier> verifiers) {
         SPImage image = new SPImage(imageData);
 

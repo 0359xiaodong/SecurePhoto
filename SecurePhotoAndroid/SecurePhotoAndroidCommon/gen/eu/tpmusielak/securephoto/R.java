@@ -25,6 +25,7 @@ public final class R {
         public static int enabled_summary = 0x7f040003;
         public static int kpref_edittext = 0x7f040005;
         public static int kpref_enable = 0x7f040004;
+        public static int select_roll = 0x7f040006;
         public static int verifier_name = 0x7f040001;
     }
 }
