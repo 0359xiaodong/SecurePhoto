@@ -25,7 +25,7 @@ public class TimestampData implements VerificationFactorData, Serializable {
         byte[] mTimestampHash = null;
 
         try {
-            MessageDigest messageDigest = MessageDigest.getInstance(SPImage.digestAlgorithm);
+            MessageDigest messageDigest = MessageDigest.getInstance(SPImage.DIGEST_ALGORITHM);
 
             byte[] jointTS = new byte[request.length + response.length];
             System.arraycopy(request, 0, jointTS, 0, request.length);

@@ -26,7 +26,7 @@ public class SPImageHandler implements SPFileHandler {
     public File saveFile(byte[] bytes) {
         File pictureFile = null;
         try {
-            pictureFile = FileHandling.getOutputFile(SPImage.defaultExtension);
+            pictureFile = FileHandling.getOutputFile(SPImage.DEFAULT_EXTENSION);
         } catch (IOException e) {
             throw new RuntimeException("Cannot create output file");
         }

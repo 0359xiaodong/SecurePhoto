@@ -17,11 +17,11 @@ import java.util.Map;
  * Date: 09.02.12
  * Time: 01:43
  */
-public class SPImage implements Serializable {
+public final class SPImage implements Serializable {
     private static final long serialVersionUID = -8843183001340004634L;
 
-    public final static String digestAlgorithm = "SHA-1";
-    public final static String defaultExtension = "spi";
+    public final static String DIGEST_ALGORITHM = "SHA-1";
+    public final static String DEFAULT_EXTENSION = "spi";
 
     private final byte[] imageData;
     private final byte[] imageHash;
@@ -29,15 +29,16 @@ public class SPImage implements Serializable {
     private List<Class<Verifier>> verificationFactors;
     private Map<Class<Verifier>, VerificationFactorData> verificationFactorData;
 
+
     private SPImage(byte[] imageData) {
         byte[] mImageHash = null;
         this.imageData = imageData;
 
         try {
-            MessageDigest messageDigest = MessageDigest.getInstance(digestAlgorithm);
+            MessageDigest messageDigest = MessageDigest.getInstance(DIGEST_ALGORITHM);
             mImageHash = messageDigest.digest(imageData);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            throw new RuntimeException(String.format("Digest algorighm %s is not available", DIGEST_ALGORITHM));
         }
 
         this.imageHash = mImageHash;

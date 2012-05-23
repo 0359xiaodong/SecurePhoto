@@ -26,6 +26,21 @@ import java.util.Map;
 public class SPTools implements ActionListener {
     private final static String APPLICATION_NAME = "SecurePhoto Tools";
 
+    private enum FileType {
+        JPG, SPI, SPR, UNK;
+
+        public static FileType getFileType(File file) {
+            if (file.getName().endsWith(SPImage.DEFAULT_EXTENSION)) {
+                return SPI;
+            } else if (file.getName().endsWith(SPImageRoll.DEFAULT_EXTENSION)) {
+                return SPR;
+            } else if (file.getName().toLowerCase().endsWith("jpg")) {
+                return JPG;
+            }
+            return UNK;
+        }
+    }
+
     private JButton openButton;
     private JButton exitButton;
     private JPanel mainPanel;
@@ -51,10 +66,13 @@ public class SPTools implements ActionListener {
     final JFileChooser saveFileChooser = new JFileChooser();
 
     private File currentFile;
+
+    private SPImage currentSPImage;
+    private SPImageRoll currentSPRoll;
     private BufferedImage currentImage;
 
-
     private static JFrame mainFrame;
+
 
     private void createUIComponents() {
         menuBar = new JMenuBar();
@@ -94,7 +112,7 @@ public class SPTools implements ActionListener {
         saveButton.addActionListener(SPTools.this);
         exportAsJPGButton.addActionListener(SPTools.this);
 
-        splitPane.setDividerLocation(0.80d);
+        splitPane.setDividerLocation(0.75d);
         textPane.setEditable(false);
         setNaviButtonsState(false);
         exportAsJPGButton.setEnabled(false);
@@ -115,6 +133,14 @@ public class SPTools implements ActionListener {
 
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 openFile(openFileChooser.getSelectedFile());
+
+                displayImage();
+
+                if (currentImage != null)
+                    exportAsJPGButton.setEnabled(true);
+
+                mainFrame.setTitle(APPLICATION_NAME + " - " + currentFile.getName());
+
             }
         } else if (source == newSPRButton) {
             saveFileChooser.resetChoosableFileFilters();
@@ -125,10 +151,14 @@ public class SPTools implements ActionListener {
                 newSPR(saveFileChooser.getSelectedFile());
             }
         } else if (source == addToSPRButton) {
+            openFileChooser.resetChoosableFileFilters();
+            openFileChooser.addChoosableFileFilter(new JPGFileFilter());
+            openFileChooser.addChoosableFileFilter(new SPIFileFilter());
+
             int retVal = openFileChooser.showOpenDialog(mainPanel);
 
             if (retVal == JFileChooser.APPROVE_OPTION) {
-
+                addImageToSPR(openFileChooser.getSelectedFile());
             }
         } else if (source == exportAsJPGButton) {
             saveFileChooser.resetChoosableFileFilters();
@@ -149,6 +179,7 @@ public class SPTools implements ActionListener {
 
     }
 
+
     private void exportJPG(File file) {
         if (!file.getName().endsWith(".jpg")) {
             file = new File(file.getAbsolutePath() + ".jpg");
@@ -156,6 +187,7 @@ public class SPTools implements ActionListener {
 
         try {
             ImageIO.write(currentImage, "JPG", file);
+            // TODO: Exception handling
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -165,49 +197,91 @@ public class SPTools implements ActionListener {
     }
 
     private void newSPR(File file) {
-        if (!file.getName().endsWith("." + SPImageRoll.defaultExtension)) {
-            file = new File(file.getAbsolutePath() + "." + SPImageRoll.defaultExtension);
+        if (!file.getName().endsWith("." + SPImageRoll.DEFAULT_EXTENSION)) {
+            file = new File(file.getAbsolutePath() + "." + SPImageRoll.DEFAULT_EXTENSION);
         }
 
+        SPImageRoll imageRoll = new SPImageRoll(file);
 
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(0);
-            fileOutputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        openFile(file);
+    }
+
+    private void addImageToSPR(File selectedFile) {
+        SPImage spImage = null;
+        BufferedImage image = null;
+
+        FileType fileType = FileType.getFileType(selectedFile);
+
+        switch (fileType) {
+            case SPI:
+                try {
+                    spImage = SPImage.fromFile(selectedFile);
+                    // TODO: Exception handling
+                } catch (IOException e) {
+                    return;
+                } catch (ClassNotFoundException e) {
+                    return;
+                }
+                break;
+            case JPG:
+                image = openJPEGFile(selectedFile);
+                break;
+            default:
+                return;
         }
+
+        // Should never hapen
+        if (currentSPRoll == null)
+            return;
+
+        // If currentSPImage is null create a new SPImage
+        if (spImage == null) {
+            //No image to load - nothing to do
+            if (image == null)
+                return;
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(image, "jpg", byteArrayOutputStream);
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                byteArrayOutputStream.close();
+                spImage = SPImage.getInstance(imageBytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        // Add image to roll
+        currentSPRoll.addImage(spImage);
+        openFile(currentFile);
     }
 
     private void openFile(File file) {
         currentFile = file;
+
+        currentSPImage = null;
+        currentSPRoll = null;
+
         clearImage();
         textPane.setText("");
 
-        if (file.getName().endsWith(SPImage.defaultExtension)) {
-            openSPIFile(file);
-        } else if (file.getName().endsWith(SPImageRoll.defaultExtension)) {
-            openSPRFile(file);
-        } else if (file.getName().toLowerCase().endsWith("jpg")) {
-            openJPEGFile(file);
+        FileType fileType = FileType.getFileType(file);
+
+        switch (fileType) {
+            case SPI:
+                currentImage = openSPIFile(file);
+                break;
+            case SPR:
+                currentImage = openSPRFile(file);
+                break;
+            case JPG:
+                currentImage = openJPEGFile(file);
+                break;
+            default:
         }
-        displayImage();
-
-        if (currentImage != null)
-            exportAsJPGButton.setEnabled(true);
-
-        mainFrame.setTitle(APPLICATION_NAME + " - " + currentFile.getName());
     }
 
-    private void openJPEGFile(File file) {
-        try {
-            currentImage = ImageIO.read(file);
-            setNaviButtonsState(false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void setNaviButtonsState(boolean state) {
         prevButton.setEnabled(state);
@@ -216,23 +290,49 @@ public class SPTools implements ActionListener {
         addToSPRButton.setEnabled(state);
     }
 
-    private void openSPRFile(File file) {
-        setNaviButtonsState(true);
+    private BufferedImage openJPEGFile(File file) {
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(file);
+            setNaviButtonsState(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
-    private void openSPIFile(File file) {
+    private BufferedImage openSPRFile(File file) {
+        BufferedImage image = null;
+        setNaviButtonsState(true);
         try {
-            SPImage image = SPImage.fromFile(file);
-            byte[] imageBytes = image.getImageData();
+            currentSPRoll = SPImageRoll.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (currentSPRoll != null) {
+            textPane.setText(currentSPRoll.toString());
+        }
+        return image;
+    }
+
+    private BufferedImage openSPIFile(File file) {
+        BufferedImage image = null;
+        try {
+            currentSPImage = SPImage.fromFile(file);
+            byte[] imageBytes = currentSPImage.getImageData();
 
             currentImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
             setNaviButtonsState(false);
-            printVerifierData(image);
+            printVerifierData(currentSPImage);
         } catch (IOException e) {
             textPane.setText(Arrays.toString(e.getStackTrace()));
         } catch (ClassNotFoundException e) {
             textPane.setText(Arrays.toString(e.getStackTrace()));
         }
+        return image;
     }
 
     public void printVerifierData(SPImage image) {
@@ -250,7 +350,9 @@ public class SPTools implements ActionListener {
     }
 
     private void clearImage() {
+        currentImage = null;
         imageLabel.setIcon(null);
+        imageLabel.revalidate();
     }
 
     private void displayImage() {
@@ -281,8 +383,8 @@ public class SPTools implements ActionListener {
             int dotIndex = name.lastIndexOf('.');
             String ext = name.substring(dotIndex + 1).toLowerCase();
 
-            return ext.equals(SPImage.defaultExtension)
-                    || ext.equals(SPImageRoll.defaultExtension)
+            return ext.equals(SPImage.DEFAULT_EXTENSION)
+                    || ext.equals(SPImageRoll.DEFAULT_EXTENSION)
                     || ext.equals("jpg")
                     || f.isDirectory();
         }
@@ -294,15 +396,28 @@ public class SPTools implements ActionListener {
 
     }
 
-    private class SPRFileFilter extends FileFilter {
+    private class SPIFileFilter extends FileFilter {
         @Override
         public boolean accept(File f) {
-            return f.isDirectory() || f.getName().endsWith(SPImageRoll.defaultExtension);
+            return f.isDirectory() || f.getName().endsWith(SPImage.DEFAULT_EXTENSION);
         }
 
         @Override
         public String getDescription() {
-            return "SPImageRoll (*." + SPImageRoll.defaultExtension.toLowerCase() + ")";
+            return "SPImage file (*." + SPImage.DEFAULT_EXTENSION.toLowerCase() + ")";
+        }
+    }
+
+
+    private class SPRFileFilter extends FileFilter {
+        @Override
+        public boolean accept(File f) {
+            return f.isDirectory() || f.getName().endsWith(SPImageRoll.DEFAULT_EXTENSION);
+        }
+
+        @Override
+        public String getDescription() {
+            return "SPImageRoll (*." + SPImageRoll.DEFAULT_EXTENSION.toLowerCase() + ")";
         }
     }
 
@@ -330,7 +445,7 @@ public class SPTools implements ActionListener {
     public static void main(String[] args) {
         mainFrame = new JFrame(APPLICATION_NAME);
         mainFrame.setContentPane(new SPTools().mainPanel);
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.pack();
         mainFrame.setJMenuBar(menuBar);
         mainFrame.setVisible(true);

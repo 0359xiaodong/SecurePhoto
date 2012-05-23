@@ -1,9 +1,9 @@
 package eu.tpmusielak.securephoto.container;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+import java.util.Random;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,85 +11,149 @@ import java.util.List;
  * Date: 15.02.12
  * Time: 11:53
  */
-public class SPImageRoll implements Serializable {
-    private transient Header rollHeader;
+public final class SPImageRoll implements Serializable {
+    public static final long NO_EXPIRY = -1;
 
-    private byte[] currentHash;
-    public final static String defaultExtension = "spr";
+    public final static String DIGEST_ALGORITHM = "SHA-1";
+    public static final String DEFAULT_EXTENSION = "spr";
+    public static final int DIGEST_LENGTH = 20;
 
+    protected class Header implements Serializable {
+        protected final long expiryDate;
+        protected final byte[] uniqueID;
+        protected int frameCount;
+        protected byte[] currentHash;
 
-    public static class Header {
-        protected final Date expiryDate;
-        protected final long uniqueID;
-        protected int imageCount;
-        protected List<List<Byte>> thumbnails;
-
-        protected Header(Date expiryDate, long uniqueID) {
+        public Header(byte[] uniqueID, long expiryDate) {
             this.expiryDate = expiryDate;
-            this.uniqueID = uniqueID;
-            imageCount = 0;
 
-            thumbnails = new ArrayList<List<Byte>>();
+            this.uniqueID = uniqueID;
+            frameCount = 0;
+            currentHash = Arrays.copyOf(uniqueID, uniqueID.length);
         }
     }
 
-    public byte[] toByteArray() {
-        byte[] bytes = null;
+    Header header;
+    File rollFile;
+
+    public SPImageRoll(File file) {
+        Random random = new Random();
+        byte[] uniqueID = new byte[DIGEST_LENGTH];
+        random.nextBytes(uniqueID);
+
+        new SPImageRoll(file, uniqueID, NO_EXPIRY);
+    }
+
+
+    public SPImageRoll(File file, byte[] uniqueID) {
+        new SPImageRoll(file, uniqueID, NO_EXPIRY);
+    }
+
+    public SPImageRoll(File file, long expiryDate) {
+        Random random = new Random();
+        byte[] uniqueID = new byte[DIGEST_LENGTH];
+        random.nextBytes(uniqueID);
+
+        new SPImageRoll(file, uniqueID, expiryDate);
+    }
+
+    public SPImageRoll(File file, byte[] uniqueID, long expiryDate) {
+        rollFile = file;
+        header = new Header(uniqueID, expiryDate);
+
+        writeHeader();
+    }
+
+    // Constructor for reading SPImageRoll from file
+    private SPImageRoll(Header header, File file) {
+        this.header = header;
+        rollFile = file;
+    }
+
+    public static SPImageRoll fromFile(File file) throws IOException, ClassNotFoundException {
+        FileInputStream inputStream = new FileInputStream(file);
+        long fileLength = file.length();
+
+        ObjectInput objectInput = new ObjectInputStream(inputStream);
+        Header header = (Header) objectInput.readObject();
+
+        inputStream.close();
+        objectInput.close();
+
+        return new SPImageRoll(header, file);
+    }
+
+    private void writeHeader() {
+        writeImage(null);
+    }
+
+    private void writeImage(SPImage image) {
         try {
-            ByteArrayOutputStream byteArrayOutput = new ByteArrayOutputStream();
-            ObjectOutputStream objectOutput = new ObjectOutputStream(byteArrayOutput);
+            RandomAccessFile file = new RandomAccessFile(rollFile, "rw");
 
-            objectOutput.writeObject(SPImageRoll.this);
-            bytes = byteArrayOutput.toByteArray();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutput objectOutput = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutput.writeObject(header);
 
+            byte[] headerBytes = byteArrayOutputStream.toByteArray();
+
+            byteArrayOutputStream.close();
             objectOutput.close();
-            byteArrayOutput.close();
 
+            file.seek(0); // Go to beginning
+            file.write(headerBytes); // Update header
+
+            // If writing image
+            if (image != null) {
+                file.seek(file.length()); // Go to EOF
+                file.write(image.toByteArray()); // Write new image
+            }
+
+            file.close();
+
+            // TODO: add exception handling
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return bytes;
     }
 
-    private void setRollHeader(Header header) {
-        this.rollHeader = header;
+    public void addImage(SPImage image) {
+        header.currentHash = image.getImageHash();
+        header.frameCount++;
+        writeImage(image);
     }
 
-    public List<List<Byte>> getThumbnails() {
-        return rollHeader.thumbnails;
+
+    public int getFrameCount() {
+        return header.frameCount;
     }
 
-    public void writeImageRoll(OutputStream outputStream) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 
-        objectOutputStream.writeObject(rollHeader);
-        objectOutputStream.writeObject(this);
+    private static String byteArrayToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
 
-        objectOutputStream.close();
+        for (byte aByte : bytes) {
+            sb.append(Integer.toHexString(aByte & 0xFF).toUpperCase());
+        }
+
+        return sb.toString();
     }
 
-    public static SPImageRoll readImageRoll(InputStream inputStream) throws IOException, ClassNotFoundException {
-        Header header = null;
-        SPImageRoll imageRoll = null;
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SPImageRoll \n");
+        sb.append(String.format("\n"));
 
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-        header = (Header) objectInputStream.readObject();
-        imageRoll = (SPImageRoll) objectInputStream.readObject();
-        imageRoll.setRollHeader(header);
+        Date date = new Date(header.expiryDate);
 
-        objectInputStream.close();
+        sb.append(String.format("Unique ID: %s\n", byteArrayToHex(header.uniqueID)));
+        sb.append(String.format("Expiry date: %s\n", date.toString()));
+        sb.append(String.format("Images stored: %d\n", header.frameCount));
+        sb.append(String.format("Current hash: %s\n", byteArrayToHex(header.currentHash)));
 
-        return imageRoll;
-    }
-
-    public static Header readHeader(InputStream inputStream) throws IOException, ClassNotFoundException {
-        Header header = null;
-        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-
-        header = (Header) objectInputStream.readObject();
-
-        objectInputStream.close();
-        return header;
+        return sb.toString();
     }
 
 

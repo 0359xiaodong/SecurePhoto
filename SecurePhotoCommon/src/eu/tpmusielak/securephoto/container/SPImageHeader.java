@@ -10,8 +10,6 @@ import java.io.Serializable;
  */
 public class SPImageHeader implements Serializable {
     private static final long serialVersionUID = 8824183001340004634L;
-
     private int imageSize;
-
 
 }
