@@ -12,7 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -33,18 +35,33 @@ public class Main implements ActionListener {
     private JSplitPane splitPane;
     private JTextPane textPane;
     private JLabel imageLabel;
+    private JLabel frameNumberLabel;
+    private JLabel frameCountLabel;
+    private JButton newSPRButton;
+    private JButton addToSPRButton;
+    private JButton saveButton;
 
 
-    final JFileChooser fileChooser = new JFileChooser();
+    final JFileChooser openFileChooser = new JFileChooser();
+    final JFileChooser saveFileChooser = new JFileChooser();
+
+    private File currentFile;
     private BufferedImage currentImage;
+
+
     private static JFrame mainFrame;
 
     public Main() {
         openButton.addActionListener(Main.this);
         exitButton.addActionListener(Main.this);
+        prevButton.addActionListener(Main.this);
+        nextButton.addActionListener(Main.this);
+        newSPRButton.addActionListener(Main.this);
+        addToSPRButton.addActionListener(Main.this);
+        saveButton.addActionListener(Main.this);
 
 
-        fileChooser.addChoosableFileFilter(new FileFilter() {
+        openFileChooser.addChoosableFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
                 String name = f.getName();
@@ -63,8 +80,21 @@ public class Main implements ActionListener {
             }
         });
 
+        saveFileChooser.addChoosableFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.isDirectory() || f.getName().endsWith(SPImageRoll.defaultExtension);
+            }
+
+            @Override
+            public String getDescription() {
+                return "SPImageRoll (*.spr)";
+            }
+        });
+
         splitPane.setDividerLocation(0.80d);
         textPane.setEditable(false);
+        setNaviButtonsState(false);
     }
 
 
@@ -76,22 +106,44 @@ public class Main implements ActionListener {
         Object source = e.getSource();
 
         if (source == openButton) {
-            int retVal = fileChooser.showOpenDialog(mainPanel);
+            int retVal = openFileChooser.showOpenDialog(mainPanel);
 
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                openFile(fileChooser.getSelectedFile());
+                openFile(openFileChooser.getSelectedFile());
             }
+        } else if (source == newSPRButton) {
+            int retVal = saveFileChooser.showSaveDialog(mainPanel);
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                newSPR(saveFileChooser.getSelectedFile());
+            }
+        } else if (source == addToSPRButton) {
+            int retVal = openFileChooser.showOpenDialog(mainPanel);
 
+            if (retVal == JFileChooser.APPROVE_OPTION) {
 
+            }
         } else if (source == exitButton) {
             System.exit(0);
-        } else {
-
         }
 
     }
 
+    private void newSPR(File file) {
+        if (!file.getName().endsWith("." + SPImageRoll.defaultExtension)) {
+            file = new File(file.getAbsolutePath() + "." + SPImageRoll.defaultExtension);
+        }
+
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(0);
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void openFile(File file) {
+        currentFile = file;
         clearImage();
         textPane.setText("");
 
@@ -103,7 +155,7 @@ public class Main implements ActionListener {
             openJPEGFile(file);
         }
         displayImage();
-        mainFrame.setTitle(APPLICATION_NAME + " - " + file.getName());
+        mainFrame.setTitle(APPLICATION_NAME + " - " + currentFile.getName());
     }
 
     private void openJPEGFile(File file) {
@@ -119,6 +171,8 @@ public class Main implements ActionListener {
     private void setNaviButtonsState(boolean state) {
         prevButton.setEnabled(state);
         nextButton.setEnabled(state);
+        saveButton.setEnabled(state);
+        addToSPRButton.setEnabled(state);
     }
 
     private void openSPRFile(File file) {
@@ -134,13 +188,16 @@ public class Main implements ActionListener {
             setNaviButtonsState(false);
             printVerifierData(image);
         } catch (IOException e) {
-            e.printStackTrace();
+            textPane.setText(Arrays.toString(e.getStackTrace()));
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            textPane.setText(Arrays.toString(e.getStackTrace()));
         }
     }
 
     public void printVerifierData(SPImage image) {
+        if (image == null)
+            return;
+
         StringBuilder sb = new StringBuilder();
 
         Map<Class<Verifier>, VerificationFactorData> verificationFactorData = image.getVerificationFactorData();

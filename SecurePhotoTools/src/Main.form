@@ -57,7 +57,48 @@
             <constraints/>
             <properties/>
           </component>
-          <hspacer id="4354">
+          <component id="f901" class="javax.swing.JLabel" binding="frameNumberLabel">
+            <constraints/>
+            <properties>
+              <text value="0"/>
+            </properties>
+          </component>
+          <component id="28378" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="/"/>
+            </properties>
+          </component>
+          <component id="dd03a" class="javax.swing.JLabel" binding="frameCountLabel">
+            <constraints/>
+            <properties>
+              <text value="0"/>
+            </properties>
+          </component>
+          <component id="c95a2" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="cc359" class="javax.swing.JButton" binding="newSPRButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="New SPR"/>
+              <toolTipText value="Create SPImageRoll"/>
+            </properties>
+          </component>
+          <component id="54244" class="javax.swing.JButton" binding="addToSPRButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Add to SPR"/>
+            </properties>
+          </component>
+          <component id="90545" class="javax.swing.JButton" binding="saveButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Save"/>
+            </properties>
+          </component>
+          <hspacer id="8c10c">
             <constraints/>
           </hspacer>
           <component id="5b4d2" class="javax.swing.JButton" binding="exitButton" default-binding="true">
