@@ -29,6 +29,24 @@ public final class SPImage implements Serializable {
     private List<Class<Verifier>> verificationFactors;
     private Map<Class<Verifier>, VerificationFactorData> verificationFactorData;
 
+    public class SPImageHeader implements Serializable {
+        private final long size;
+        private final byte[] frameHash;
+
+        public SPImageHeader(long size, byte[] frameHash) {
+            this.size = size;
+            this.frameHash = frameHash;
+        }
+
+        public long getSize() {
+            return size;
+        }
+
+        public byte[] getFrameHash() {
+            return frameHash;
+        }
+    }
+
 
     private SPImage(byte[] imageData) {
         byte[] mImageHash = null;
@@ -125,10 +143,22 @@ public final class SPImage implements Serializable {
             ObjectOutputStream objectOutput = new ObjectOutputStream(byteArrayOutput);
 
             objectOutput.writeObject(SPImage.this);
-            bytes = byteArrayOutput.toByteArray();
+            byte[] frameBytes = byteArrayOutput.toByteArray();
+
+            // TODO: frameHash instead of imageHash
+            SPImageHeader header = new SPImageHeader(frameBytes.length, imageHash);
+            byteArrayOutput.reset();
+            objectOutput = new ObjectOutputStream(byteArrayOutput);
+            objectOutput.writeObject(header);
+
+            byte[] headerBytes = byteArrayOutput.toByteArray();
 
             objectOutput.close();
             byteArrayOutput.close();
+
+            bytes = new byte[headerBytes.length + frameBytes.length];
+            System.arraycopy(headerBytes, 0, bytes, 0, headerBytes.length);
+            System.arraycopy(frameBytes, 0, bytes, headerBytes.length, frameBytes.length);
 
         } catch (IOException e) {
             e.printStackTrace();

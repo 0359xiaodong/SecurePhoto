@@ -12,6 +12,8 @@ import java.util.Random;
  * Time: 11:53
  */
 public final class SPImageRoll implements Serializable {
+    private static final long serialVersionUID = 10;
+
     public static final long NO_EXPIRY = -1;
 
     public final static String DIGEST_ALGORITHM = "SHA-1";
@@ -33,8 +35,9 @@ public final class SPImageRoll implements Serializable {
         }
     }
 
-    Header header;
-    File rollFile;
+    private Header header;
+    private File rollFile;
+
 
     public SPImageRoll(File file) {
         Random random = new Random();
@@ -128,6 +131,53 @@ public final class SPImageRoll implements Serializable {
 
     public int getFrameCount() {
         return header.frameCount;
+    }
+
+    public SPImage getFrame(int index) {
+        SPImage frame = null;
+
+        if (index > (getFrameCount() - 1) || index < 0)
+            throw new IndexOutOfBoundsException();
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(rollFile);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+            Header rollHeader = (Header) objectInputStream.readObject(); // Read and discard the header
+            long skipped;
+
+            // Now the pointer is at the first frame header
+
+            SPImage.SPImageHeader frameHeader = null;
+
+            for (int i = 0; i < index; i++) {
+                objectInputStream = new ObjectInputStream(fileInputStream);
+                frameHeader = (SPImage.SPImageHeader) objectInputStream.readObject(); // Read the SPImageHeader
+
+                long frameSize = frameHeader.getSize();
+                skipped = fileInputStream.skip(frameSize); // Skip the frame
+
+                if (skipped != frameSize)
+                    throw new IOException("Could not skip the frame");
+            }
+
+            // Now we are at the header of the right frame
+
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            frameHeader = (SPImage.SPImageHeader) objectInputStream.readObject(); // Reading and discarding the frame header
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            frame = (SPImage) objectInputStream.readObject(); // Reading the frame;
+
+            // TODO: Exception handling
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return frame;
     }
 
 

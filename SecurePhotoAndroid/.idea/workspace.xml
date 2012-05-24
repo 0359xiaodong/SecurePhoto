@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="AndroidConfiguredLogFilters">
     <filters>
       <filter>
@@ -41,9 +44,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="050ad933-fc6a-4b2f-818f-87c92fffad67" name="Default" comment="">
+      <change type="DELETED" beforePath="D:\SecurePhoto\SecurePhotoCommon\src\eu\tpmusielak\securephoto\container\SPImageHeader.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/gen/eu/tpmusielak/securephoto/R.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/gen/eu/tpmusielak/securephoto/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/eu/tpmusielak/securephoto/R.java" afterPath="$PROJECT_DIR$/gen/eu/tpmusielak/securephoto/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/camera_view.xml" afterPath="$PROJECT_DIR$/res/layout/camera_view.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/IMessagePrinter.java" afterPath="$PROJECT_DIR$/../SecurePhotoBase/src/eu/tpmusielak/securephoto/server/IMessagePrinter.java" />
@@ -53,9 +56,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/SecurePhotoCommon.iml" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/SecurePhotoCommon.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/SPConstants.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/SPConstants.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageHeader.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageHeader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/TimestampData.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/TimestampData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.java" afterPath="$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.java" />
     </list>
     <ignored path="SecurePhotoAndroid.iws" />
@@ -171,19 +172,6 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" line="84" class="eu.tpmusielak.securephoto.container.SPImage" package="eu.tpmusielak.securephoto.container">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
       <breakpoint url="file://$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.java" line="0" class="SPTools.java" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
@@ -197,7 +185,33 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.java" line="209" class="eu.tpmusielak.securephoto.tools.SPTools" package="eu.tpmusielak.securephoto.tools">
+      <breakpoint url="file://$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.java" line="239" class="eu.tpmusielak.securephoto.tools.SPTools" package="eu.tpmusielak.securephoto.tools">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java" line="136" class="eu.tpmusielak.securephoto.container.SPImageRoll" package="eu.tpmusielak.securephoto.container">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" line="138" class="eu.tpmusielak.securephoto.container.SPImage" package="eu.tpmusielak.securephoto.container">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -258,8 +272,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="exception_breakpoints_groupByClasses" value="true" />
+      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -272,16 +286,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SPTools.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SPTools.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="209" column="0" selection-start="6782" selection-end="6782" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="class#FileType#0;class#SPTools#0" expanded="false" />
-                <element signature="method#createUIComponents#0;class#SPTools#0" expanded="false" />
-                <element signature="method#SPTools#0;class#SPTools#0" expanded="false" />
-              </folding>
+            <state line="398" column="30" selection-start="12111" selection-end="12124" vertical-scroll-proportion="0.33256617">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -289,25 +298,16 @@
       <file leaf-file-name="SPImageRoll.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="121" column="29" selection-start="3498" selection-end="3498" vertical-scroll-proportion="0.0">
+            <state line="179" column="0" selection-start="5565" selection-end="5565" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SPImage.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SPImage.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="4" selection-start="926" selection-end="926" vertical-scroll-proportion="0.43037975">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SPImageHeader.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageHeader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="26" selection-start="324" selection-end="324" vertical-scroll-proportion="0.0">
+            <state line="136" column="47" selection-start="4115" selection-end="4115" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -360,9 +360,9 @@
         <option value="$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/JPEGHandler.java" />
         <option value="$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPIHandler.java" />
         <option value="$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/AbstractFileHandler.java" />
+        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" />
         <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java" />
         <option value="$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.java" />
-        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" />
       </list>
     </option>
   </component>
@@ -449,16 +449,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Problems" />
         <subPane subId="Project Files">
@@ -624,22 +614,32 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="275" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
-    <property name="OverrideImplement.combined" value="true" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="294" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="275" />
     <property name="project.structure.proportion" value="0.15" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="294" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="Repository.Attach.JavaDocs" value="true" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="recentsLimit" value="5" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="290" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="295" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="964" />
@@ -652,13 +652,13 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="Repository.Attach.Sources" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="Repository.Attach.Sources" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="Downloaded.Files.Path" value="C:\Program Files\Java\jdk1.6.0_29\lib" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="Downloaded.Files.Path" value="C:\Program Files\Java\jdk1.6.0_29\lib" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
@@ -666,8 +666,8 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -1037,7 +1037,11 @@
       <created>1337778723452</created>
       <updated>1337778723452</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added SPRoll frame construction">
+      <created>1337801470642</created>
+      <updated>1337801470642</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1064,7 +1068,6 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21966863" sideWeight="0.67767656" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.49509802" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32656333" sideWeight="0.67767656" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1078,8 +1081,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1998931" sideWeight="0.31919643" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.67410713" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39925173" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1998931" sideWeight="0.4095982" order="1" side_tool="false" content_ui="combo" x="19" y="91" width="419" height="896" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1998931" sideWeight="0.6785714" order="1" side_tool="false" content_ui="combo" x="19" y="91" width="419" height="896" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32142857" sideWeight="0.49754903" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21966863" sideWeight="0.67767656" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="101" y="101" width="1718" height="838" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24906467" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1130,7 +1134,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="SecurePhotoTools update&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added SPRoll frame construction" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1158,6 +1162,7 @@
     <MESSAGE value="SecurePhotoTools" />
     <MESSAGE value="&#10;" />
     <MESSAGE value="SecurePhotoTools update&#10;" />
+    <MESSAGE value="Added SPRoll frame construction" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1197,16 +1202,14 @@
         <state line="366" column="18" selection-start="12540" selection-end="12540" vertical-scroll-proportion="1.7997699" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageHeader.java">
+    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/verification/VerificationFactorData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="26" selection-start="324" selection-end="324" vertical-scroll-proportion="0.0" />
+        <state line="15" column="42" selection-start="306" selection-end="306" vertical-scroll-proportion="0.29344073" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SecurePhotoPrototype/src/VerifierPrototype.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="3" selection-start="2856" selection-end="3160" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="87" column="3" selection-start="2856" selection-end="3160" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.form">
@@ -1214,28 +1217,51 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_31/src.zip!/java/io/ObjectInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="209" column="0" selection-start="6782" selection-end="6782" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#FileType#0;class#SPTools#0" expanded="false" />
-            <element signature="method#createUIComponents#0;class#SPTools#0" expanded="false" />
-            <element signature="method#SPTools#0;class#SPTools#0" expanded="false" />
-          </folding>
+        <state line="1276" column="19" selection-start="51070" selection-end="51070" vertical-scroll-proportion="-0.95857304">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_31/src.zip!/java/io/InputStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="29" selection-start="3498" selection-end="3498" vertical-scroll-proportion="0.0">
+        <state line="328" column="29" selection-start="14554" selection-end="14554" vertical-scroll-proportion="0.589183">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_31/src.zip!/java/io/ObjectOutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="615" column="30" selection-start="26294" selection-end="26294" vertical-scroll-proportion="0.3521289">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_31/src.zip!/java/io/ObjectStreamConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="23" selection-start="455" selection-end="455" vertical-scroll-proportion="0.31300345">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="4" selection-start="926" selection-end="926" vertical-scroll-proportion="0.43037975">
+        <state line="136" column="47" selection-start="4115" selection-end="4115" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="179" column="0" selection-start="5565" selection-end="5565" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SecurePhotoTools/src/eu/tpmusielak/securephoto/tools/SPTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="398" column="30" selection-start="12111" selection-end="12124" vertical-scroll-proportion="0.33256617">
           <folding />
         </state>
       </provider>

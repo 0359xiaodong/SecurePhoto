@@ -71,6 +71,9 @@ public class SPTools implements ActionListener {
     private SPImageRoll currentSPRoll;
     private BufferedImage currentImage;
 
+    private int frameCount = 0;
+    private int frameNumber = -1;
+
     private static JFrame mainFrame;
 
 
@@ -116,6 +119,9 @@ public class SPTools implements ActionListener {
         textPane.setEditable(false);
         setNaviButtonsState(false);
         exportAsJPGButton.setEnabled(false);
+
+        setFrameNumber(-1);
+        setFrameCount(0);
     }
 
 
@@ -127,21 +133,7 @@ public class SPTools implements ActionListener {
         Object source = e.getSource();
 
         if (source == openButton) {
-            openFileChooser.resetChoosableFileFilters();
-            openFileChooser.addChoosableFileFilter(new InputFileFilter());
-            int retVal = openFileChooser.showOpenDialog(mainPanel);
-
-            if (retVal == JFileChooser.APPROVE_OPTION) {
-                openFile(openFileChooser.getSelectedFile());
-
-                displayImage();
-
-                if (currentImage != null)
-                    exportAsJPGButton.setEnabled(true);
-
-                mainFrame.setTitle(APPLICATION_NAME + " - " + currentFile.getName());
-
-            }
+            openFileAction();
         } else if (source == newSPRButton) {
             saveFileChooser.resetChoosableFileFilters();
             saveFileChooser.addChoosableFileFilter(new SPRFileFilter());
@@ -173,10 +165,48 @@ public class SPTools implements ActionListener {
             }
 
             saveFileChooser.setSelectedFile(null);
+        } else if (source == prevButton) {
+            prevButtonAction();
+        } else if (source == nextButton) {
+            nextButtonAction();
         } else if (source == exitButton) {
             System.exit(0);
         }
 
+    }
+
+    private void nextButtonAction() {
+        if (currentSPRoll == null)
+            return;
+        setFrameNumber(frameNumber + 1);
+        loadFrame();
+        displayImage();
+    }
+
+    private void prevButtonAction() {
+        if (currentSPRoll == null)
+            return;
+        setFrameNumber(frameNumber - 1);
+        loadFrame();
+        displayImage();
+    }
+
+    private void openFileAction() {
+        resetFrameCounters();
+        openFileChooser.resetChoosableFileFilters();
+        openFileChooser.addChoosableFileFilter(new InputFileFilter());
+        int retVal = openFileChooser.showOpenDialog(mainPanel);
+
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            openFile(openFileChooser.getSelectedFile());
+
+            displayImage();
+
+            if (currentImage != null)
+                exportAsJPGButton.setEnabled(true);
+
+            mainFrame.setTitle(APPLICATION_NAME + " - " + currentFile.getName());
+        }
     }
 
 
@@ -284,9 +314,6 @@ public class SPTools implements ActionListener {
 
 
     private void setNaviButtonsState(boolean state) {
-        prevButton.setEnabled(state);
-        nextButton.setEnabled(state);
-        saveButton.setEnabled(state);
         addToSPRButton.setEnabled(state);
     }
 
@@ -297,23 +324,6 @@ public class SPTools implements ActionListener {
             setNaviButtonsState(false);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        return image;
-    }
-
-    private BufferedImage openSPRFile(File file) {
-        BufferedImage image = null;
-        setNaviButtonsState(true);
-        try {
-            currentSPRoll = SPImageRoll.fromFile(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (currentSPRoll != null) {
-            textPane.setText(currentSPRoll.toString());
         }
         return image;
     }
@@ -334,6 +344,84 @@ public class SPTools implements ActionListener {
         }
         return image;
     }
+
+
+    private BufferedImage openSPRFile(File file) {
+        BufferedImage image = null;
+        try {
+            currentSPRoll = SPImageRoll.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (currentSPRoll == null)
+            return image;
+
+        textPane.setText(currentSPRoll.toString());
+        addToSPRButton.setEnabled(true);
+
+        int count = currentSPRoll.getFrameCount();
+        if (count < 1)
+            return image;
+
+        setFrameCount(currentSPRoll.getFrameCount());
+        setFrameNumber(0);
+
+        try {
+            currentSPImage = currentSPRoll.getFrame(frameNumber);
+            byte[] imageBytes = currentSPImage.getImageData();
+
+            image = ImageIO.read(new ByteArrayInputStream(imageBytes));
+            printVerifierData(currentSPImage);
+        } catch (IOException e) {
+            textPane.setText(Arrays.toString(e.getStackTrace()));
+        }
+
+        setNaviButtonsState(true);
+
+        return image;
+    }
+
+    private void loadFrame() {
+        currentSPImage = currentSPRoll.getFrame(frameNumber);
+        byte[] imageBytes = currentSPImage.getImageData();
+
+        try {
+            currentImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printVerifierData(currentSPImage);
+    }
+
+    private void setFrameCount(int count) {
+        frameCount = count;
+        frameCountLabel.setText(String.valueOf(frameCount));
+    }
+
+    private void setFrameNumber(int number) {
+        frameNumber = number;
+        frameNumberLabel.setText(String.valueOf(frameNumber + 1));
+
+        if (frameNumber == (frameCount - 1)) {
+            nextButton.setEnabled(false);
+        } else {
+            nextButton.setEnabled(true);
+        }
+        if (frameNumber <= 0) {
+            prevButton.setEnabled(false);
+        } else {
+            prevButton.setEnabled(true);
+        }
+    }
+
+    private void resetFrameCounters() {
+        setFrameCount(0);
+        setFrameNumber(-1);
+    }
+
 
     public void printVerifierData(SPImage image) {
         if (image == null)
