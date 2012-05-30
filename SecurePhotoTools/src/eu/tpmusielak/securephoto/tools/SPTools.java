@@ -76,6 +76,8 @@ public class SPTools implements ActionListener {
 
     private static JFrame mainFrame;
 
+    private TextPaneHandler textPaneHandler;
+
 
     private void createUIComponents() {
         menuBar = new JMenuBar();
@@ -122,6 +124,7 @@ public class SPTools implements ActionListener {
 
         setFrameNumber(-1);
         setFrameCount(0);
+        textPaneHandler = new TextPaneHandler(textPane);
     }
 
 
@@ -294,7 +297,7 @@ public class SPTools implements ActionListener {
         currentSPRoll = null;
 
         clearImage();
-        textPane.setText("");
+        textPaneHandler.clear();
 
         FileType fileType = FileType.getFileType(file);
 
@@ -334,13 +337,13 @@ public class SPTools implements ActionListener {
             currentSPImage = SPImage.fromFile(file);
             byte[] imageBytes = currentSPImage.getImageData();
 
-            currentImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
+            image = ImageIO.read(new ByteArrayInputStream(imageBytes));
             setNaviButtonsState(false);
             printVerifierData(currentSPImage);
         } catch (IOException e) {
-            textPane.setText(Arrays.toString(e.getStackTrace()));
+            textPaneHandler.showException(Arrays.toString(e.getStackTrace()));
         } catch (ClassNotFoundException e) {
-            textPane.setText(Arrays.toString(e.getStackTrace()));
+            textPaneHandler.showException(Arrays.toString(e.getStackTrace()));
         }
         return image;
     }
@@ -359,7 +362,7 @@ public class SPTools implements ActionListener {
         if (currentSPRoll == null)
             return image;
 
-        textPane.setText(currentSPRoll.toString());
+        textPaneHandler.setRollInfo(currentSPRoll.toString());
         addToSPRButton.setEnabled(true);
 
         int count = currentSPRoll.getFrameCount();
@@ -376,7 +379,7 @@ public class SPTools implements ActionListener {
             image = ImageIO.read(new ByteArrayInputStream(imageBytes));
             printVerifierData(currentSPImage);
         } catch (IOException e) {
-            textPane.setText(Arrays.toString(e.getStackTrace()));
+            textPaneHandler.showException(Arrays.toString(e.getStackTrace()));
         }
 
         setNaviButtonsState(true);
@@ -434,7 +437,7 @@ public class SPTools implements ActionListener {
             sb.append(data.toString());
             sb.append('\n');
         }
-        textPane.setText(sb.toString());
+        textPaneHandler.setFrameInfo(sb.toString());
     }
 
     private void clearImage() {
@@ -518,6 +521,46 @@ public class SPTools implements ActionListener {
         @Override
         public String getDescription() {
             return "JPG File (*.jpg)";
+        }
+    }
+
+    private class TextPaneHandler {
+        private JTextPane textPane;
+        private String rollInfo;
+        private String frameInfo;
+
+
+        public TextPaneHandler(JTextPane textPane) {
+            this.textPane = textPane;
+        }
+
+        public void setRollInfo(String rollInfo) {
+            this.rollInfo = rollInfo;
+            update();
+        }
+
+        public void setFrameInfo(String frameInfo) {
+            this.frameInfo = frameInfo;
+            update();
+        }
+
+        public void clear() {
+            rollInfo = "";
+            frameInfo = "";
+            update();
+        }
+
+        private void update() {
+            StringBuilder sb = new StringBuilder();
+            sb.append(rollInfo);
+            sb.append('\n');
+            sb.append(frameInfo);
+
+            textPane.setText(sb.toString());
+        }
+
+        public void showException(String s) {
+            textPane.setText(s);
         }
     }
 

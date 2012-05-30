@@ -36,7 +36,7 @@ public class RFC3161Timestamp extends BasicVerifier {
     public VerificationFactorData onCapture(SPImage image) {
         // TODO: add error handling
 
-        byte[] imageHash = image.getImageHash();
+        byte[] frameHash = image.getFrameHash();
 
         byte[] request = null;
         byte[] response = null;
@@ -46,7 +46,7 @@ public class RFC3161Timestamp extends BasicVerifier {
             SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
             BigInteger nonce = BigInteger.valueOf(secureRandom.nextLong());
 
-            TimeStampRequest timeStampRequest = reqGen.generate(TSPAlgorithms.SHA1, imageHash, nonce);
+            TimeStampRequest timeStampRequest = reqGen.generate(TSPAlgorithms.SHA1, frameHash, nonce);
 
             request = timeStampRequest.getEncoded();
 

@@ -3,6 +3,7 @@ package eu.tpmusielak.securephoto.verification.geo;
 import eu.tpmusielak.securephoto.verification.VerificationFactorData;
 
 import java.io.Serializable;
+import java.nio.ByteBuffer;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,8 +29,7 @@ public class CellularData implements VerificationFactorData, Serializable {
 
     @Override
     public byte[] getHash() {
-        //TODO: Check auto-generated code
-        return new byte[0];
+        return ByteBuffer.allocate(4 * 4).putInt(cid).putInt(lac).putInt(mcc).putInt(mnc).array();
     }
 
     @Override

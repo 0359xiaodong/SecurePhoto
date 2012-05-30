@@ -6,10 +6,7 @@ import eu.tpmusielak.securephoto.verification.Verifier;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,10 +21,11 @@ public final class SPImage implements Serializable {
     public final static String DEFAULT_EXTENSION = "spi";
 
     private final byte[] imageData;
-    private final byte[] imageHash;
+    private byte[] frameHash;
 
     private List<Class<Verifier>> verificationFactors;
     private Map<Class<Verifier>, VerificationFactorData> verificationFactorData;
+
 
     public class SPImageHeader implements Serializable {
         private final long size;
@@ -47,30 +45,47 @@ public final class SPImage implements Serializable {
         }
     }
 
+    private SPImage(byte[] imageData, byte[] inputHash) {
+        if (inputHash == null)
+            inputHash = new byte[0];
 
-    private SPImage(byte[] imageData) {
         byte[] mImageHash = null;
         this.imageData = imageData;
 
+        byte[] mFrameHash = Arrays.copyOf(imageData, imageData.length + inputHash.length);
+        System.arraycopy(inputHash, 0, mFrameHash, imageData.length, inputHash.length);
+
         try {
             MessageDigest messageDigest = MessageDigest.getInstance(DIGEST_ALGORITHM);
-            mImageHash = messageDigest.digest(imageData);
+            mImageHash = messageDigest.digest(mFrameHash);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(String.format("Digest algorighm %s is not available", DIGEST_ALGORITHM));
         }
 
-        this.imageHash = mImageHash;
+        this.frameHash = mImageHash;
         verificationFactors = new ArrayList<Class<Verifier>>();
         verificationFactorData = new HashMap<Class<Verifier>, VerificationFactorData>();
+    }
+
+    private SPImage(byte[] imageData) {
+        this.imageData = imageData;
+        new SPImage(imageData, null);
     }
 
     public static SPImage getInstance(byte[] imageData) {
         return getInstance(imageData, null);
     }
 
-    @SuppressWarnings("unchecked")
-    public static SPImage getInstance(byte[] imageData, List<Verifier> verifiers) {
-        SPImage image = new SPImage(imageData);
+
+    public static SPImage getInstance(byte[] imageData, List<Verifier> verifiers, byte[] inputHash) {
+        SPImage image = new SPImage(imageData, inputHash);
+
+        MessageDigest messageDigest = null;
+        try {
+            messageDigest = MessageDigest.getInstance(DIGEST_ALGORITHM);
+        } catch (NoSuchAlgorithmException ignored) {
+            throw new RuntimeException(String.format("Digest algorighm %s is not available", DIGEST_ALGORITHM));
+        }
 
         if (verifiers != null) {
             for (Verifier v : verifiers) {
@@ -78,17 +93,35 @@ public final class SPImage implements Serializable {
                 Class<Verifier> verifierClass = (Class<Verifier>) v.getClass();
                 VerificationFactorData data = v.onCapture(image);
 
+                // Add verification factors and data to file
                 image.verificationFactors.add(verifierClass);
                 image.verificationFactorData.put(verifierClass, data);
+
+                // Recompute frame hash including the verifier data
+                byte[] verificationFactorDataHash = data.getHash();
+                byte[] combinedHash = Arrays.copyOf(image.frameHash, image.frameHash.length + verificationFactorDataHash.length);
+                System.arraycopy(verificationFactorDataHash, 0, combinedHash, image.frameHash.length, verificationFactorDataHash.length);
+
+                // Update frame hash
+                image.frameHash = messageDigest.digest(combinedHash);
             }
         }
         return image;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static SPImage getInstance(byte[] imageData, List<Verifier> verifiers) {
+        return getInstance(imageData, verifiers, null);
     }
 
     public static SPImage fromBytes(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream byteArrayInput = new ByteArrayInputStream(bytes);
         ObjectInput objectInput = new ObjectInputStream(byteArrayInput);
 
+        // Read and discard the header
+        SPImageHeader header = (SPImageHeader) objectInput.readObject();
+
+        objectInput = new ObjectInputStream(byteArrayInput); // OIS workaround
         SPImage image = (SPImage) objectInput.readObject();
 
         objectInput.close();
@@ -124,8 +157,8 @@ public final class SPImage implements Serializable {
         return imageData;
     }
 
-    public byte[] getImageHash() {
-        return imageHash;
+    public byte[] getFrameHash() {
+        return frameHash;
     }
 
     public List<Class<Verifier>> getVerificationFactors() {
@@ -145,8 +178,8 @@ public final class SPImage implements Serializable {
             objectOutput.writeObject(SPImage.this);
             byte[] frameBytes = byteArrayOutput.toByteArray();
 
-            // TODO: frameHash instead of imageHash
-            SPImageHeader header = new SPImageHeader(frameBytes.length, imageHash);
+            // TODO: frameHash instead of frameHash
+            SPImageHeader header = new SPImageHeader(frameBytes.length, frameHash);
             byteArrayOutput.reset();
             objectOutput = new ObjectOutputStream(byteArrayOutput);
             objectOutput.writeObject(header);

@@ -123,7 +123,7 @@ public final class SPImageRoll implements Serializable {
     }
 
     public void addImage(SPImage image) {
-        header.currentHash = image.getImageHash();
+        header.currentHash = image.getFrameHash();
         header.frameCount++;
         writeImage(image);
     }
@@ -151,7 +151,7 @@ public final class SPImageRoll implements Serializable {
             SPImage.SPImageHeader frameHeader = null;
 
             for (int i = 0; i < index; i++) {
-                objectInputStream = new ObjectInputStream(fileInputStream);
+                objectInputStream = new ObjectInputStream(fileInputStream); // KLUDGE
                 frameHeader = (SPImage.SPImageHeader) objectInputStream.readObject(); // Read the SPImageHeader
 
                 long frameSize = frameHeader.getSize();
@@ -163,9 +163,9 @@ public final class SPImageRoll implements Serializable {
 
             // Now we are at the header of the right frame
 
-            objectInputStream = new ObjectInputStream(fileInputStream);
+            objectInputStream = new ObjectInputStream(fileInputStream); // KLUDGE
             frameHeader = (SPImage.SPImageHeader) objectInputStream.readObject(); // Reading and discarding the frame header
-            objectInputStream = new ObjectInputStream(fileInputStream);
+            objectInputStream = new ObjectInputStream(fileInputStream); // KLUDGE
             frame = (SPImage) objectInputStream.readObject(); // Reading the frame;
 
             // TODO: Exception handling
