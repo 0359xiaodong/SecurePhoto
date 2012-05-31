@@ -7,6 +7,7 @@ import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.tools.FileHandling;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,6 +19,7 @@ public class SPImageRollHandler implements SPFileHandler {
 
     private VerifierProvider verifierProvider;
     private File rollFile;
+    private SPImageRoll filmRoll;
 
     public SPImageRollHandler(VerifierProvider provider) {
         this.verifierProvider = provider;
@@ -25,8 +27,9 @@ public class SPImageRollHandler implements SPFileHandler {
 
     @Override
     public File saveFile(byte[] bytes) {
-        //TODO: Check auto-generated code
-        return null;
+        SPImage image = SPImage.getInstance(bytes, verifierProvider.getVerifiers());
+        filmRoll.addImage(image);
+        return rollFile;
     }
 
     @Override
@@ -44,6 +47,14 @@ public class SPImageRollHandler implements SPFileHandler {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 rollFile = rolls[i];
+                try {
+                    filmRoll = SPImageRoll.fromFile(rollFile);
+                    // TODO: Exception handling
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
         builder.setCancelable(true);

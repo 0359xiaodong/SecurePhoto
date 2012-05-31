@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="camera_parameters">
+        <item>Picture size</item>
+        <item>Flash mode</item>
+        <item>White balance</item>
+    </string-array>
+</resources>

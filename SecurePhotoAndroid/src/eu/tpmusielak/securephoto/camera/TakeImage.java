@@ -42,6 +42,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
 
     private Button shutterButton;
     private Button saveModeButton;
+    private Button cameraSettingsButton;
     private Button verifierSettingsButton;
     private Button reviewImageButton;
 
@@ -144,9 +145,11 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         verifierSettingsButton = (Button) findViewById(R.id.btn_verifier_settings);
         verifierSettingsButton.setOnClickListener(new VerifierSettingsListener());
 
+        cameraSettingsButton = (Button) findViewById(R.id.btn_camera_settings);
+        cameraSettingsButton.setOnClickListener(new CameraSettingsListener());
+
         reviewImageButton = (Button) findViewById(R.id.btn_review_image);
         reviewImageButton.setOnClickListener(new ReviewImageListener());
-
 
         optionsPane = (ViewGroup) findViewById(R.id.options_pane);
         pluginsPane = (ViewGroup) findViewById(R.id.plugins_pane);
@@ -185,6 +188,13 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         @Override
         public void onClick(View view) {
             verifierManager.showVerificationFactors();
+        }
+    }
+
+    private class CameraSettingsListener implements Button.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            cameraHandler.showCameraSettings();
         }
     }
 

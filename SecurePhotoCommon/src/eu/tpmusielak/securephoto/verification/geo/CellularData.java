@@ -19,17 +19,21 @@ public class CellularData implements VerificationFactorData, Serializable {
 
     public final String simSerialNumber;
 
+    public final byte[] dataHash;
+
     public CellularData(int cid, int lac, int mcc, int mnc, String simSerialNumber) {
         this.cid = cid;
         this.lac = lac;
         this.mcc = mcc;
         this.mnc = mnc;
         this.simSerialNumber = simSerialNumber;
+
+        dataHash = ByteBuffer.allocate(4 * 4).putInt(cid).putInt(lac).putInt(mcc).putInt(mnc).array();
     }
 
     @Override
     public byte[] getHash() {
-        return ByteBuffer.allocate(4 * 4).putInt(cid).putInt(lac).putInt(mcc).putInt(mnc).array();
+        return dataHash;
     }
 
     @Override

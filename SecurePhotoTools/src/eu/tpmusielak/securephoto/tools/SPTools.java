@@ -7,6 +7,8 @@ import eu.tpmusielak.securephoto.verification.Verifier;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,8 +25,9 @@ import java.util.Map;
  * Date: 22/05/12
  * Time: 20:46
  */
-public class SPTools implements ActionListener {
+public class SPTools implements ActionListener, ChangeListener {
     private final static String APPLICATION_NAME = "SecurePhoto Tools";
+
 
     private enum FileType {
         JPG, SPI, SPR, UNK;
@@ -50,7 +53,7 @@ public class SPTools implements ActionListener {
     private JSplitPane splitPane;
     private JTextPane textPane;
     private JLabel imageLabel;
-    private JLabel frameNumberLabel;
+    private JSpinner frameNumberSpinner;
     private JLabel frameCountLabel;
     private JButton newSPRButton;
     private JButton addToSPRButton;
@@ -125,6 +128,9 @@ public class SPTools implements ActionListener {
         setFrameNumber(-1);
         setFrameCount(0);
         textPaneHandler = new TextPaneHandler(textPane);
+        SpinnerModel model = new SpinnerNumberModel(0, 0, 0, 0);
+        frameNumberSpinner.setModel(model);
+        frameNumberSpinner.addChangeListener(this);
     }
 
 
@@ -174,24 +180,36 @@ public class SPTools implements ActionListener {
             nextButtonAction();
         } else if (source == exitButton) {
             System.exit(0);
+        } else if (source == frameNumberSpinner) {
+
         }
 
+
     }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        SpinnerModel model = frameNumberSpinner.getModel();
+
+        int number = (Integer) model.getValue();
+
+        setFrameNumber(number - 1);
+        loadFrame();
+        displayImage();
+    }
+
 
     private void nextButtonAction() {
         if (currentSPRoll == null)
             return;
-        setFrameNumber(frameNumber + 1);
-        loadFrame();
-        displayImage();
+
+        frameNumberSpinner.setValue(frameNumberSpinner.getNextValue());
     }
 
     private void prevButtonAction() {
         if (currentSPRoll == null)
             return;
-        setFrameNumber(frameNumber - 1);
-        loadFrame();
-        displayImage();
+        frameNumberSpinner.setValue(frameNumberSpinner.getPreviousValue());
     }
 
     private void openFileAction() {
@@ -369,8 +387,12 @@ public class SPTools implements ActionListener {
         if (count < 1)
             return image;
 
-        setFrameCount(currentSPRoll.getFrameCount());
+        int frameCount = currentSPRoll.getFrameCount();
+
+        setFrameCount(frameCount);
         setFrameNumber(0);
+
+        frameNumberSpinner.setModel(new SpinnerNumberModel(1, 1, frameCount, 1));
 
         try {
             currentSPImage = currentSPRoll.getFrame(frameNumber);
@@ -388,13 +410,14 @@ public class SPTools implements ActionListener {
     }
 
     private void loadFrame() {
-        currentSPImage = currentSPRoll.getFrame(frameNumber);
-        byte[] imageBytes = currentSPImage.getImageData();
-
         try {
+            currentSPImage = currentSPRoll.getFrame(frameNumber);
+            byte[] imageBytes = currentSPImage.getImageData();
             currentImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            textPaneHandler.showException("Cannot display image");
         }
         printVerifierData(currentSPImage);
     }
@@ -406,7 +429,6 @@ public class SPTools implements ActionListener {
 
     private void setFrameNumber(int number) {
         frameNumber = number;
-        frameNumberLabel.setText(String.valueOf(frameNumber + 1));
 
         if (frameNumber == (frameCount - 1)) {
             nextButton.setEnabled(false);
@@ -423,6 +445,7 @@ public class SPTools implements ActionListener {
     private void resetFrameCounters() {
         setFrameCount(0);
         setFrameNumber(-1);
+        frameNumberSpinner.setModel(new SpinnerNumberModel(0, 0, 0, 0));
     }
 
 

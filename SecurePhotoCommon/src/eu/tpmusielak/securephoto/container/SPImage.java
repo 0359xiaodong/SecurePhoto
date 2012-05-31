@@ -98,12 +98,12 @@ public final class SPImage implements Serializable {
                 image.verificationFactorData.put(verifierClass, data);
 
                 // Recompute frame hash including the verifier data
-                byte[] verificationFactorDataHash = data.getHash();
-                byte[] combinedHash = Arrays.copyOf(image.frameHash, image.frameHash.length + verificationFactorDataHash.length);
-                System.arraycopy(verificationFactorDataHash, 0, combinedHash, image.frameHash.length, verificationFactorDataHash.length);
 
                 // Update frame hash
-                image.frameHash = messageDigest.digest(combinedHash);
+                messageDigest.update(image.frameHash);
+                messageDigest.update(data.getHash());
+
+                image.frameHash = messageDigest.digest();
             }
         }
         return image;

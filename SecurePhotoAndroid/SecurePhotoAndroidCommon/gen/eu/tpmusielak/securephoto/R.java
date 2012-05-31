@@ -8,6 +8,10 @@
 package eu.tpmusielak.securephoto;
 
 public final class R {
+    public static final class array {
+        public static int camera_parameters = 0x7f040000;
+    }
+
     public static final class attr {
     }
 
@@ -20,12 +24,12 @@ public final class R {
     }
 
     public static final class string {
-        public static int app_name = 0x7f040000;
-        public static int enabled = 0x7f040002;
-        public static int enabled_summary = 0x7f040003;
-        public static int kpref_edittext = 0x7f040005;
-        public static int kpref_enable = 0x7f040004;
-        public static int select_roll = 0x7f040006;
-        public static int verifier_name = 0x7f040001;
+        public static int app_name = 0x7f050000;
+        public static int enabled = 0x7f050002;
+        public static int enabled_summary = 0x7f050003;
+        public static int kpref_edittext = 0x7f050005;
+        public static int kpref_enable = 0x7f050004;
+        public static int select_roll = 0x7f050006;
+        public static int verifier_name = 0x7f050001;
     }
 }

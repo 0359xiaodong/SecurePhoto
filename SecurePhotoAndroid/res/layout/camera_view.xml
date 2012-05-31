@@ -40,6 +40,12 @@
                     android:id="@+id/btn_verifier_settings"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
+                    android:background="@drawable/ic_menu_padlock"
+                    />
+            <Button
+                    android:id="@+id/btn_camera_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
                     android:background="@drawable/ic_menu_preferences"
                     />
 

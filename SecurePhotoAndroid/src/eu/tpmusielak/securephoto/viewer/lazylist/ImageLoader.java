@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.container.SPImage;
+import eu.tpmusielak.securephoto.container.SPImageRoll;
 import eu.tpmusielak.securephoto.viewer.ViewImages;
 
 import java.io.File;
@@ -82,6 +83,20 @@ public class ImageLoader {
 
             if (fileName.endsWith(".spi")) {
                 byte[] bytes = SPImage.extractImageData(f);
+                BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o);
+
+                int scale = getScale(requiredSize, o);
+
+                //decode with inSampleSize
+                BitmapFactory.Options o2 = new BitmapFactory.Options();
+                o2.inSampleSize = scale;
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o2);
+            } else if (fileName.endsWith(".spr")) {
+                SPImageRoll imageRoll = SPImageRoll.fromFile(f);
+                int imageCount = imageRoll.getFrameCount();
+                SPImage spImage = imageRoll.getFrame(imageCount - 1);
+                byte[] bytes = spImage.getImageData();
+
                 BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o);
 
                 int scale = getScale(requiredSize, o);

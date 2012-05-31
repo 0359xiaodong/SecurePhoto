@@ -31,7 +31,8 @@ public class TimeUpdateTask extends TimerTask {
             @Override
             public void run() {
                 TextView cameraDate = (TextView) activity.findViewById(R.id.camera_date);
-                cameraDate.setText(timeString);
+                if (cameraDate != null)
+                    cameraDate.setText(timeString);
             }
         });
     }

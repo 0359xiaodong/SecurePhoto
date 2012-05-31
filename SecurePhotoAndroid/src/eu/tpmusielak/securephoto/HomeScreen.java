@@ -63,10 +63,6 @@ public class HomeScreen extends Activity {
         viewImgButton = (Button) findViewById(R.id.btn_viewimg);
         viewImgButton.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(intent, VIEW_IMAGE_INTENT);
                 startViewer();
             }
         });

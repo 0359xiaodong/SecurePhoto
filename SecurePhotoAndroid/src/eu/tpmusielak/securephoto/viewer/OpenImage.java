@@ -99,7 +99,7 @@ public class OpenImage extends Activity {
         Date date = new Date(file.lastModified());
         filedate.setText(date.toLocaleString());
 
-        if (file.getName().endsWith(".spi"))
+        if (file.getName().endsWith(SPImage.DEFAULT_EXTENSION))
             showVerifiersButton.setVisibility(View.VISIBLE);
     }
 
@@ -112,7 +112,7 @@ public class OpenImage extends Activity {
     }
 
     protected void displayVerifiers() {
-        if (!file.getName().endsWith(".spi"))
+        if (!file.getName().endsWith(SPImage.DEFAULT_EXTENSION))
             return;
 
         SPImage image = null;

@@ -12,10 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceBinder;
+import eu.tpmusielak.securephoto.container.SPImageRoll;
 import eu.tpmusielak.securephoto.tools.FileHandling;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -75,9 +75,7 @@ public class BaseAuthenticate extends Activity {
             public void onClick(View view) {
                 try {
                     File f = FileHandling.getOutputFile("spr");
-                    FileOutputStream fileOutputStream = new FileOutputStream(f);
-                    fileOutputStream.write(0);
-                    fileOutputStream.close();
+                    new SPImageRoll(f);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

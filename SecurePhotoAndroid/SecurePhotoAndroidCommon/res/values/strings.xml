@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">APP_NAME</string>
+    <string name="app_name">SecurePhoto</string>
     <string name="verifier_name">Generic Verifier</string>
     <string name="enabled">Enabled</string>
     <string name="enabled_summary">Enable</string>
     <string name="kpref_enable">Enable</string>
     <string name="kpref_edittext">Text preference</string>
     <string name="select_roll">Select image roll</string>
-
-
 </resources>
 
