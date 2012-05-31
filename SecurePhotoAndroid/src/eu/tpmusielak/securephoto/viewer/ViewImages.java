@@ -177,11 +177,11 @@ public class ViewImages extends Activity {
                     if (adapter == null) {
                         adapter = new ImageRollAdapter(getContext(), file);
                         gallery.setAdapter(adapter);
+                        gallery.setOnItemClickListener(new ImageRollClickListener(file));
                     } else {
                         adapter.setFile(file);
+                        ((ImageRollClickListener) gallery.getOnItemClickListener()).setUnderlyingFile(file);
                     }
-
-
                     break;
                 case FRAME_VIEW:
                 default:
@@ -231,7 +231,7 @@ public class ViewImages extends Activity {
     }
 
     // Adapter for image roll
-    class ImageRollAdapter extends BaseAdapter {
+    private class ImageRollAdapter extends BaseAdapter {
         int mGalleryItemBackground;
         private Context mContext;
         private File file;
@@ -289,6 +289,26 @@ public class ViewImages extends Activity {
             imageView.setBackgroundResource(mGalleryItemBackground);
 
             return imageView;
+        }
+    }
+
+    private class ImageRollClickListener implements AdapterView.OnItemClickListener {
+        private File underlyingFile;
+
+        private ImageRollClickListener(File underlyingFile) {
+            this.underlyingFile = underlyingFile;
+        }
+
+        public void setUnderlyingFile(File underlyingFile) {
+            this.underlyingFile = underlyingFile;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent i = new Intent(getApplicationContext(), OpenImage.class);
+            i.putExtra("filename", underlyingFile.getAbsolutePath());
+            i.putExtra("frameIndex", position);
+            startActivity(i);
         }
     }
 

@@ -82,7 +82,7 @@ public class ImageLoader {
         int frameIndex = -1;
 
         if (handle instanceof ImageRoll) {
-            frameIndex = ((ImageRoll) handle).index;
+            frameIndex = ((ImageRoll) handle).frameIndex;
         }
 
         try {
@@ -244,16 +244,16 @@ public class ImageLoader {
     }
 
     public static class ImageRoll extends FileHandle {
-        public final int index;
+        public final int frameIndex;
 
-        public ImageRoll(File file, int index) {
+        public ImageRoll(File file, int frameIndex) {
             super(file);
-            this.index = index;
+            this.frameIndex = frameIndex;
         }
 
         @Override
         public String getName() {
-            return String.format("%04x_%s", index, file.getName());
+            return String.format("%04x_%s", frameIndex, file.getName());
         }
     }
 

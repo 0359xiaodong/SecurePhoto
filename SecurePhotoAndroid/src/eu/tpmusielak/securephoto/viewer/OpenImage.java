@@ -43,6 +43,7 @@ public class OpenImage extends Activity {
     private byte[] imageData;
 
     private File file;
+    private int frameIndex = -1;
 
     private Button showVerifiersButton;
     private List<Class<Verifier>> verifiers;
@@ -82,14 +83,26 @@ public class OpenImage extends Activity {
 
         if (i.hasExtra("filename")) { // Displaying image from browser
             file = new File(i.getStringExtra("filename"));
-            displayFile();
+
         }
+        if (i.hasExtra("frameIndex")) {
+            frameIndex = i.getIntExtra("frameIndex", -1);
+        }
+
+        displayFile();
 
     }
 
     private void displayFile() {
         ImageView preview = (ImageView) findViewById(R.id.image);
-        Bitmap bitmap = ImageLoader.decodeFile(file, imageSize);
+
+        Bitmap bitmap;
+        if (frameIndex < 0) {
+            bitmap = ImageLoader.decodeFile(file, imageSize);
+        } else {
+            bitmap = ImageLoader.decodeFile(new ImageLoader.ImageRoll(file, frameIndex), imageSize);
+        }
+
         preview.setImageBitmap(bitmap);
 
         TextView filename = (TextView) findViewById(R.id.filename);
