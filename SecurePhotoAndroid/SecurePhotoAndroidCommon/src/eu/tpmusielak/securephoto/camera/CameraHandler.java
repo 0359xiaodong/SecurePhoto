@@ -139,7 +139,7 @@ public class CameraHandler {
                 optionNames.add(o);
             } else if (option instanceof Camera.Size) {
                 Camera.Size size = (Camera.Size) option;
-                optionNames.add(String.format("(%dx%d)", size.width, size.height));
+                optionNames.add(String.format("%d x %d", size.width, size.height));
             } else {
                 return;
             }

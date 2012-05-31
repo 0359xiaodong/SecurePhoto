@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import eu.tpmusielak.securephoto.R;
+import eu.tpmusielak.securephoto.container.SPImageRoll;
 import eu.tpmusielak.securephoto.tools.FileHandling;
 import eu.tpmusielak.securephoto.viewer.lazylist.ImageLoader;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,7 +43,7 @@ public class ViewImages extends Activity {
         File[] files = FileHandling.getFiles();
 
         if (!(files == null) && files.length > 0) {
-            ImageViewAdapter adapter = new ImageViewAdapter(ViewImages.this, R.layout.gallery_row, files);
+            ImageViewAdapter adapter = new ImageViewAdapter(ViewImages.this, R.layout.gallery_row, R.layout.gallery_roll_row, files);
 
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new ImageClickListener());
@@ -113,17 +115,22 @@ public class ViewImages extends Activity {
         // http://android-er.blogspot.com/2010/06/using-convertview-in-getview-to-make.html
 
         // inspired by: https://github.com/thest1/LazyList/
+        private final int FRAME_VIEW = 0;
+        private final int ROLL_VIEW = 1;
+
         private Context context;
-        private int layoutResourceId;
+        private int frameLayoutResourceId;
+        private int rollLayoutResourceID;
         private File[] files;
 
         private LayoutInflater layoutInflater;
         private ImageLoader imageLoader;
 
-        public ImageViewAdapter(Context context, int layoutResourceId, File[] files) {
-            super(context, layoutResourceId, files);
+        public ImageViewAdapter(Context context, int resourceIDForFrame, int resourceIDForRoll, File[] files) {
+            super(context, resourceIDForFrame, files);
             this.context = context;
-            this.layoutResourceId = layoutResourceId;
+            this.frameLayoutResourceId = resourceIDForFrame;
+            this.rollLayoutResourceID = resourceIDForRoll;
             this.files = files;
 
             layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -134,13 +141,24 @@ public class ViewImages extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
+            int itemViewType = getItemViewType(position);
 
             if (convertView == null) {
-                convertView = layoutInflater.inflate(layoutResourceId, parent, false);
                 holder = new ViewHolder();
-                holder.text = (TextView) convertView.findViewById(R.id.roll_descriptor);
-                holder.image = (ImageView) convertView.findViewById(R.id.file_view);
 
+                switch (itemViewType) {
+                    case ROLL_VIEW:
+                        convertView = layoutInflater.inflate(rollLayoutResourceID, parent, false);
+                        holder.image = convertView.findViewById(R.id.gallery_view);
+                        break;
+                    case FRAME_VIEW:
+                    default:
+                        convertView = layoutInflater.inflate(frameLayoutResourceId, parent, false);
+                        holder.image = convertView.findViewById(R.id.file_view);
+                        break;
+                }
+
+                holder.text = (TextView) convertView.findViewById(R.id.roll_descriptor);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -150,16 +168,49 @@ public class ViewImages extends Activity {
             String fileName = file.getName();
 
             holder.text.setText(fileName);
-            imageLoader.load(file, holder.image);
+
+            switch (itemViewType) {
+                case ROLL_VIEW:
+                    Gallery gallery = (Gallery) holder.image;
+                    ImageRollAdapter adapter = (ImageRollAdapter) gallery.getAdapter();
+
+                    if (adapter == null) {
+                        adapter = new ImageRollAdapter(getContext(), file);
+                        gallery.setAdapter(adapter);
+                    } else {
+                        adapter.setFile(file);
+                    }
+
+
+                    break;
+                case FRAME_VIEW:
+                default:
+                    imageLoader.load(new ImageLoader.SingleImage(file), (ImageView) holder.image);
+            }
 
             return convertView;
         }
 
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            File file = getItem(position);
+            String fileName = file.getName();
+            if (fileName.endsWith(SPImageRoll.DEFAULT_EXTENSION)) {
+                return ROLL_VIEW;
+            } else {
+                return FRAME_VIEW;
+            }
+        }
     }
 
     private static class ViewHolder {
         TextView text;
-        ImageView image;
+        View image;
     }
 
     private class ImageClickListener implements AdapterView.OnItemClickListener {
@@ -180,29 +231,41 @@ public class ViewImages extends Activity {
     }
 
     // Adapter for image roll
-    class ImageAdapter extends BaseAdapter {
+    class ImageRollAdapter extends BaseAdapter {
         int mGalleryItemBackground;
         private Context mContext;
-        private final File spiFile;
+        private File file;
+        private ImageLoader imageLoader;
+        private SPImageRoll spImageRoll;
 
-        private Integer[] mImageIds = {
-                R.drawable.ic_menu_camera,
-                R.drawable.ic_menu_forward,
-                R.drawable.ic_menu_preferences,
-                R.drawable.ic_menu_login
-        };
-
-        public ImageAdapter(Context c, File file) {
-            mContext = c;
+        public ImageRollAdapter(Context context, File file) {
+            mContext = context;
             TypedArray attr = mContext.obtainStyledAttributes(R.styleable.HelloGallery);
             mGalleryItemBackground = attr.getResourceId(
                     R.styleable.HelloGallery_android_galleryItemBackground, 0);
             attr.recycle();
-            spiFile = file;
+            this.file = file;
+
+            try {
+                spImageRoll = SPImageRoll.fromFile(this.file);
+            } catch (IOException ignored) {
+            } catch (ClassNotFoundException ignored) {
+            }
+
+            imageLoader = new ImageLoader(mContext);
+        }
+
+        public void setFile(File file) {
+            this.file = file;
+            try {
+                spImageRoll = SPImageRoll.fromFile(file);
+            } catch (IOException ignored) {
+            } catch (ClassNotFoundException ignored) {
+            }
         }
 
         public int getCount() {
-            return mImageIds.length;
+            return spImageRoll.getFrameCount();
         }
 
         public Object getItem(int position) {
@@ -214,55 +277,20 @@ public class ViewImages extends Activity {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView = new ImageView(mContext);
+            ImageView imageView = (ImageView) convertView;
+            if (imageView == null) {
+                imageView = new ImageView(mContext);
+            }
 
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_gallery));
+            imageLoader.load(new ImageLoader.ImageRoll(file, position), imageView);
 
-            imageView.setImageResource(mImageIds[position]);
-
-            imageView.setLayoutParams(new Gallery.LayoutParams(150, 100));
+            imageView.setLayoutParams(new Gallery.LayoutParams(240, 160));
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setBackgroundResource(mGalleryItemBackground);
-
 
             return imageView;
         }
     }
-
-//    try {
-//                   if (fileName.endsWith(".spi")) {
-//                       ImageView imageView = new ImageView(getContext());
-//
-//                       SPImage spImage = SPImage.fromFile(file);
-//                       byte[] imageData = spImage.getImageData();
-//
-//                       Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-//                       bitmap = ThumbnailUtils.extractThumbnail(bitmap, 200, 150);
-//
-//                       imageView.setImageBitmap(bitmap);
-//
-//                       displayView = imageView;
-//
-//
-//                   } else if (fileName.endsWith(".spr")) {
-//                       Gallery roll = new Gallery(getContext());
-//                       roll.setAdapter(new ImageAdapter(getContext(), file));
-//                       displayView = roll;
-//
-//                   } else if (fileName.endsWith(".jpg")) {
-//                       ImageView imageView = new ImageView(getContext());
-//                       imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_gallery));
-//                       displayView = imageView;
-//                   }
-//
-//                   if (displayView != null) {
-//                       displayView.setId(R.id.file_view);
-//                       parentView.addView(displayView);
-//                   }
-//
-//               } catch (Exception e) {
-//                   e.printStackTrace();
-//               }
 
 
 }

@@ -35,8 +35,8 @@ public class ImageLoader {
 
     final int stub_id = R.drawable.ic_menu_gallery;
 
-    public void load(File file, ImageView imageView) {
-        String name = file.getName();
+    public void load(FileHandle handle, ImageView imageView) {
+        String name = handle.getName();
 
         imageViews.put(imageView, name);
         Bitmap bitmap = memoryCache.get(name);
@@ -44,18 +44,18 @@ public class ImageLoader {
         if (bitmap != null)
             imageView.setImageBitmap(bitmap);
         else {
-            queuePhoto(file, imageView);
+            queuePhoto(handle, imageView);
             imageView.setImageResource(stub_id);
         }
     }
 
-    private void queuePhoto(File file, ImageView imageView) {
-        PhotoToLoad p = new PhotoToLoad(file, imageView);
+    private void queuePhoto(FileHandle handle, ImageView imageView) {
+        PhotoToLoad p = new PhotoToLoad(handle, imageView);
         executorService.submit(new PhotosLoader(p));
     }
 
-    private Bitmap getBitmap(File file) {
-        File f = fileCache.getFile(file.getName());
+    private Bitmap getBitmap(FileHandle handle) {
+        File f = fileCache.getFile(handle.getName());
 
         //from SD cache
         Bitmap b = decodeFile(f, ViewImages.THUMBNAIL_SIZE);
@@ -64,16 +64,26 @@ public class ImageLoader {
 
         //from disk
         try {
-            return decodeFile(file, ViewImages.THUMBNAIL_SIZE);
+            return decodeFile(handle, ViewImages.THUMBNAIL_SIZE);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
+    public static Bitmap decodeFile(File file, int requiredSize) {
+        return decodeFile(new SingleImage(file), requiredSize);
+    }
+
     //decodes image and scales it to reduce memory consumption
-    public static Bitmap decodeFile(File f, int requiredSize) {
-        String fileName = f.getName();
+    public static Bitmap decodeFile(FileHandle handle, int requiredSize) {
+        String fileName = handle.getName();
+        File file = handle.file;
+        int frameIndex = -1;
+
+        if (handle instanceof ImageRoll) {
+            frameIndex = ((ImageRoll) handle).index;
+        }
 
         try {
 
@@ -82,7 +92,7 @@ public class ImageLoader {
             o.inJustDecodeBounds = true;
 
             if (fileName.endsWith(".spi")) {
-                byte[] bytes = SPImage.extractImageData(f);
+                byte[] bytes = SPImage.extractImageData(file);
                 BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o);
 
                 int scale = getScale(requiredSize, o);
@@ -92,9 +102,15 @@ public class ImageLoader {
                 o2.inSampleSize = scale;
                 return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o2);
             } else if (fileName.endsWith(".spr")) {
-                SPImageRoll imageRoll = SPImageRoll.fromFile(f);
+
+
+                SPImageRoll imageRoll = SPImageRoll.fromFile(file);
                 int imageCount = imageRoll.getFrameCount();
-                SPImage spImage = imageRoll.getFrame(imageCount - 1);
+                if (frameIndex < 0) {
+                    frameIndex = imageCount - 1;
+                }
+
+                SPImage spImage = imageRoll.getFrame(frameIndex);
                 byte[] bytes = spImage.getImageData();
 
                 BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o);
@@ -106,14 +122,14 @@ public class ImageLoader {
                 o2.inSampleSize = scale;
                 return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o2);
             } else {
-                BitmapFactory.decodeStream(new FileInputStream(f), null, o);
+                BitmapFactory.decodeStream(new FileInputStream(file), null, o);
 
                 int scale = getScale(requiredSize, o);
 
                 BitmapFactory.Options o2 = new BitmapFactory.Options();
                 o2.inSampleSize = scale;
 
-                return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+                return BitmapFactory.decodeStream(new FileInputStream(file), null, o2);
             }
 
 
@@ -143,11 +159,11 @@ public class ImageLoader {
 
     //Task for the queue
     private class PhotoToLoad {
-        public File file;
+        public FileHandle file;
         public ImageView imageView;
 
-        public PhotoToLoad(File file, ImageView i) {
-            this.file = file;
+        public PhotoToLoad(FileHandle handle, ImageView i) {
+            this.file = handle;
             imageView = i;
         }
     }
@@ -204,5 +220,42 @@ public class ImageLoader {
         memoryCache.clear();
         fileCache.clear();
     }
+
+    private static abstract class FileHandle {
+        public final File file;
+
+        protected FileHandle(File file) {
+            this.file = file;
+        }
+
+        public abstract String getName();
+    }
+
+    public static class SingleImage extends FileHandle {
+
+        public SingleImage(File file) {
+            super(file);
+        }
+
+        @Override
+        public String getName() {
+            return file.getName();
+        }
+    }
+
+    public static class ImageRoll extends FileHandle {
+        public final int index;
+
+        public ImageRoll(File file, int index) {
+            super(file);
+            this.index = index;
+        }
+
+        @Override
+        public String getName() {
+            return String.format("%04x_%s", index, file.getName());
+        }
+    }
+
 
 }
