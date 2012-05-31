@@ -180,6 +180,7 @@ public class ViewImages extends Activity {
                         gallery.setOnItemClickListener(new ImageRollClickListener(file));
                     } else {
                         adapter.setFile(file);
+                        adapter.notifyDataSetChanged();
                         ((ImageRollClickListener) gallery.getOnItemClickListener()).setUnderlyingFile(file);
                     }
                     break;
