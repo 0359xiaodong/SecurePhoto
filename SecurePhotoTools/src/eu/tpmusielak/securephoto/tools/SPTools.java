@@ -59,6 +59,7 @@ public class SPTools implements ActionListener, ChangeListener {
     private JButton addToSPRButton;
     private JButton saveButton;
     private JButton exportAsJPGButton;
+    private JButton verifyButton;
 
     private static JMenuBar menuBar;
     private JMenu fileMenu;
@@ -119,6 +120,7 @@ public class SPTools implements ActionListener, ChangeListener {
         addToSPRButton.addActionListener(SPTools.this);
         saveButton.addActionListener(SPTools.this);
         exportAsJPGButton.addActionListener(SPTools.this);
+        verifyButton.addActionListener(SPTools.this);
 
         splitPane.setDividerLocation(0.75d);
         textPane.setEditable(false);
@@ -178,6 +180,8 @@ public class SPTools implements ActionListener, ChangeListener {
             prevButtonAction();
         } else if (source == nextButton) {
             nextButtonAction();
+        } else if (source == verifyButton) {
+            verifyButtonAction();
         } else if (source == exitButton) {
             System.exit(0);
         } else if (source == frameNumberSpinner) {
@@ -185,6 +189,28 @@ public class SPTools implements ActionListener, ChangeListener {
         }
 
 
+    }
+
+    private void verifyButtonAction() {
+        boolean result;
+
+        if (currentSPRoll == null) {
+            result = currentSPImage.checkIntegrity();
+        } else {
+            result = currentSPRoll.checkIntegrity();
+        }
+
+        String message;
+        int messageType;
+        if (result) {
+            message = "Hash verification positive";
+            messageType = JOptionPane.INFORMATION_MESSAGE;
+        } else {
+            message = "Hash verification negative";
+            messageType = JOptionPane.WARNING_MESSAGE;
+        }
+
+        JOptionPane.showMessageDialog(mainFrame, message, "Verification result", messageType);
     }
 
     @Override
@@ -296,7 +322,7 @@ public class SPTools implements ActionListener, ChangeListener {
                 ImageIO.write(image, "jpg", byteArrayOutputStream);
                 byte[] imageBytes = byteArrayOutputStream.toByteArray();
                 byteArrayOutputStream.close();
-                spImage = SPImage.getInstance(imageBytes);
+                spImage = SPImage.getInstance(imageBytes, null, currentSPRoll.getCurrentHash());
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
@@ -343,6 +369,7 @@ public class SPTools implements ActionListener, ChangeListener {
         try {
             image = ImageIO.read(file);
             setNaviButtonsState(false);
+            verifyButton.setEnabled(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -358,6 +385,7 @@ public class SPTools implements ActionListener, ChangeListener {
             image = ImageIO.read(new ByteArrayInputStream(imageBytes));
             setNaviButtonsState(false);
             printVerifierData(currentSPImage);
+            verifyButton.setEnabled(true);
         } catch (IOException e) {
             textPaneHandler.showException(Arrays.toString(e.getStackTrace()));
         } catch (ClassNotFoundException e) {
@@ -382,6 +410,7 @@ public class SPTools implements ActionListener, ChangeListener {
 
         textPaneHandler.setRollInfo(currentSPRoll.toString());
         addToSPRButton.setEnabled(true);
+        verifyButton.setEnabled(true);
 
         int count = currentSPRoll.getFrameCount();
         if (count < 1)

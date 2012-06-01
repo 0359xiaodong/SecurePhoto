@@ -19,7 +19,7 @@ public class SPImageRollHandler implements SPFileHandler {
 
     private VerifierProvider verifierProvider;
     private File rollFile;
-    private SPImageRoll filmRoll;
+    private SPImageRoll spImageRoll;
 
     public SPImageRollHandler(VerifierProvider provider) {
         this.verifierProvider = provider;
@@ -27,14 +27,14 @@ public class SPImageRollHandler implements SPFileHandler {
 
     @Override
     public File saveFile(byte[] bytes) {
-        SPImage image = SPImage.getInstance(bytes, verifierProvider.getVerifiers());
-        filmRoll.addImage(image);
+        SPImage image = SPImage.getInstance(bytes, verifierProvider.getVerifiers(), spImageRoll.getCurrentHash());
+        spImageRoll.addImage(image);
         return rollFile;
     }
 
     @Override
     public void onInitialize(final Context context) {
-        final File[] rolls = FileHandling.getFiles(".spr");
+        final File[] rolls = FileHandling.getFiles(SPImageRoll.DEFAULT_EXTENSION);
         final String[] names = new String[rolls.length];
 
         for (int i = 0; i < rolls.length; i++) {
@@ -48,7 +48,7 @@ public class SPImageRollHandler implements SPFileHandler {
             public void onClick(DialogInterface dialogInterface, int i) {
                 rollFile = rolls[i];
                 try {
-                    filmRoll = SPImageRoll.fromFile(rollFile);
+                    spImageRoll = SPImageRoll.fromFile(rollFile);
                     // TODO: Exception handling
                 } catch (IOException e) {
                     e.printStackTrace();

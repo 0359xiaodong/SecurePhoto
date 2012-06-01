@@ -44,4 +44,6 @@
     <string name="delete_success">File deleted</string>
     <string name="delete_failure">Warning: file not deleted</string>
     <string name="cannot_use_handler">Cannot use this handler</string>
+    <string name="last_frame">You are at the last frame</string>
+    <string name="first_frame">You are at the first frame</string>
 </resources>

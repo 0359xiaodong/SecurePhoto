@@ -8,15 +8,11 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.container.SPImage;
+import eu.tpmusielak.securephoto.container.SPImageRoll;
 import eu.tpmusielak.securephoto.verification.VerificationFactorData;
 import eu.tpmusielak.securephoto.verification.Verifier;
 import eu.tpmusielak.securephoto.viewer.lazylist.ImageLoader;
@@ -44,11 +40,13 @@ public class OpenImage extends Activity {
 
     private File file;
     private int frameIndex = -1;
+    private int frameCount = 0;
 
     private Button showVerifiersButton;
     private List<Class<Verifier>> verifiers;
     private Map<Class<Verifier>, VerificationFactorData> verifierData;
     private String[] verifierNamesArray;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +71,17 @@ public class OpenImage extends Activity {
 
         showVerifiersButton = (Button) findViewById(R.id.btn_show_verifiers);
         showVerifiersButton.setOnClickListener(new VerifiersButtonListener());
+
+
+        // CC-Attribution
+        // Source: StackOverflow
+        // Author: Thomas Frankhauser (http://stackoverflow.com/users/408557/thomas-fankhauser)
+        // Question: http://stackoverflow.com/questions/937313/android-basic-gesture-detection
+        ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
+        RelativeLayout lowestLayout = (RelativeLayout) this.findViewById(R.id.open_image_view);
+        lowestLayout.setOnTouchListener(activitySwipeDetector);
+        // End of attribution
+
     }
 
     @Override
@@ -100,6 +109,12 @@ public class OpenImage extends Activity {
         if (frameIndex < 0) {
             bitmap = ImageLoader.decodeFile(file, imageSize);
         } else {
+            try {
+                SPImageRoll roll = SPImageRoll.fromFile(file);
+                frameCount = roll.getFrameCount();
+            } catch (IOException ignored) {
+            } catch (ClassNotFoundException ignored) {
+            }
             bitmap = ImageLoader.decodeFile(new ImageLoader.ImageRoll(file, frameIndex), imageSize);
         }
 
@@ -114,6 +129,25 @@ public class OpenImage extends Activity {
 
         if (file.getName().endsWith(SPImage.DEFAULT_EXTENSION))
             showVerifiersButton.setVisibility(View.VISIBLE);
+    }
+
+    protected void loadNextFrame() {
+        if (frameIndex < (frameCount - 1)) {
+            frameIndex++;
+            displayFile();
+        } else if (frameCount > 0) {
+            Toast.makeText(OpenImage.this, R.string.last_frame, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    protected void loadPreviousFrame() {
+        if (frameIndex > 0) {
+            frameIndex--;
+            displayFile();
+        } else if (frameCount > 0) {
+            Toast.makeText(OpenImage.this, R.string.first_frame, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 
@@ -189,4 +223,85 @@ public class OpenImage extends Activity {
             dialog.show();
         }
     }
+
+    // CC-Attribution
+    // Source: StackOverflow
+    // Author: Thomas Frankhauser (http://stackoverflow.com/users/408557/thomas-fankhauser)
+    // Question: http://stackoverflow.com/questions/937313/android-basic-gesture-detection
+    private class ActivitySwipeDetector implements View.OnTouchListener {
+
+        private OpenImage activity;
+        static final int MIN_DISTANCE = 100;
+        private float downX, downY, upX, upY;
+
+        public ActivitySwipeDetector(OpenImage activity) {
+            this.activity = activity;
+        }
+
+        public void onRightToLeftSwipe() {
+            activity.loadNextFrame();
+        }
+
+        public void onLeftToRightSwipe() {
+            activity.loadPreviousFrame();
+        }
+
+        public void onTopToBottomSwipe() {
+        }
+
+        public void onBottomToTopSwipe() {
+        }
+
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    downX = event.getX();
+                    downY = event.getY();
+                    return true;
+                }
+                case MotionEvent.ACTION_UP: {
+                    upX = event.getX();
+                    upY = event.getY();
+
+                    float deltaX = downX - upX;
+                    float deltaY = downY - upY;
+
+                    // swipe horizontal?
+                    if (Math.abs(deltaX) > MIN_DISTANCE) {
+                        // left or right
+                        if (deltaX < 0) {
+                            this.onLeftToRightSwipe();
+                            return true;
+                        }
+                        if (deltaX > 0) {
+                            this.onRightToLeftSwipe();
+                            return true;
+                        }
+                    } else {
+                        return false; // We don't consume the event
+                    }
+
+                    // swipe vertical?
+                    if (Math.abs(deltaY) > MIN_DISTANCE) {
+                        // top or down
+                        if (deltaY < 0) {
+                            this.onTopToBottomSwipe();
+                            return true;
+                        }
+                        if (deltaY > 0) {
+                            this.onBottomToTopSwipe();
+                            return true;
+                        }
+                    } else {
+                        return false; // We don't consume the event
+                    }
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    }
+    // End of attribution
 }

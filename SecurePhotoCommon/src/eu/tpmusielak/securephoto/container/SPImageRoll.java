@@ -1,9 +1,12 @@
 package eu.tpmusielak.securephoto.container;
 
+import eu.tpmusielak.securephoto.verification.VerificationFactorData;
+import eu.tpmusielak.securephoto.verification.Verifier;
+
 import java.io.*;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Random;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -133,6 +136,10 @@ public final class SPImageRoll implements Serializable {
         return header.frameCount;
     }
 
+    public byte[] getCurrentHash() {
+        return header.currentHash;
+    }
+
     public SPImage getFrame(int index) {
         SPImage frame = null;
 
@@ -178,6 +185,47 @@ public final class SPImageRoll implements Serializable {
         }
 
         return frame;
+    }
+
+    public boolean checkIntegrity() {
+        if (header.frameCount == 0)
+            return true;
+
+        byte[] calculatedHash = header.uniqueID;
+
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance(SPImage.DIGEST_ALGORITHM);
+
+            for (int i = 0; i < header.frameCount; i++) {
+                SPImage frame = getFrame(i);
+
+                byte[] imageData = frame.getImageData();
+                messageDigest.update(imageData);
+                messageDigest.update(calculatedHash);
+
+                calculatedHash = messageDigest.digest();
+
+                List<Class<Verifier>> verificationFactors = frame.getVerificationFactors();
+                Map<Class<Verifier>, VerificationFactorData> verificationFactorData = frame.getVerificationFactorData();
+
+                for (Class<Verifier> verifierClass : verificationFactors) {
+                    VerificationFactorData factorData = verificationFactorData.get(verifierClass);
+
+                    if (factorData != null) {
+                        messageDigest.update(calculatedHash);
+                        messageDigest.update(factorData.getHash());
+
+                        calculatedHash = messageDigest.digest();
+                    }
+
+                }
+            }
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return Arrays.equals(header.currentHash, calculatedHash);
     }
 
 

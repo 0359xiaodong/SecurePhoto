@@ -57,6 +57,8 @@
             <colspec value="left:4dlu:noGrow"/>
             <colspec value="fill:max(d;4px):noGrow"/>
             <colspec value="left:4dlu:noGrow"/>
+            <colspec value="fill:max(d;4px):noGrow"/>
+            <colspec value="left:4dlu:noGrow"/>
             <colspec value="fill:d:grow"/>
             <colspec value="left:m:noGrow"/>
             <colspec value="fill:max(d;4px):noGrow"/>
@@ -155,7 +157,7 @@
               </component>
               <component id="5b4d2" class="javax.swing.JButton" binding="exitButton" default-binding="true">
                 <constraints>
-                  <grid row="0" column="22" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="24" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
@@ -164,10 +166,20 @@
               </component>
               <hspacer id="25932">
                 <constraints>
-                  <grid row="0" column="20" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="22" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms defaultalign-horz="false"/>
                 </constraints>
               </hspacer>
+              <component id="a98a9" class="javax.swing.JButton" binding="verifyButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="20" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <enabled value="false"/>
+                  <text value="Verify"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>
@@ -181,7 +193,7 @@
         </constraints>
         <properties>
           <continuousLayout value="true"/>
-          <dividerLocation value="515"/>
+          <dividerLocation value="544"/>
           <dividerSize value="5"/>
           <resizeWeight value="0.75"/>
         </properties>

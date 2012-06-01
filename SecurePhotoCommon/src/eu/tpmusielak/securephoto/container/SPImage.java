@@ -49,15 +49,14 @@ public final class SPImage implements Serializable {
         if (inputHash == null)
             inputHash = new byte[0];
 
-        byte[] mImageHash = null;
+        byte[] mImageHash;
         this.imageData = imageData;
-
-        byte[] mFrameHash = Arrays.copyOf(imageData, imageData.length + inputHash.length);
-        System.arraycopy(inputHash, 0, mFrameHash, imageData.length, inputHash.length);
 
         try {
             MessageDigest messageDigest = MessageDigest.getInstance(DIGEST_ALGORITHM);
-            mImageHash = messageDigest.digest(mFrameHash);
+            messageDigest.update(imageData);
+            messageDigest.update(inputHash);
+            mImageHash = messageDigest.digest();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(String.format("Digest algorighm %s is not available", DIGEST_ALGORITHM));
         }
@@ -178,7 +177,6 @@ public final class SPImage implements Serializable {
             objectOutput.writeObject(SPImage.this);
             byte[] frameBytes = byteArrayOutput.toByteArray();
 
-            // TODO: frameHash instead of frameHash
             SPImageHeader header = new SPImageHeader(frameBytes.length, frameHash);
             byteArrayOutput.reset();
             objectOutput = new ObjectOutputStream(byteArrayOutput);
@@ -197,6 +195,41 @@ public final class SPImage implements Serializable {
             e.printStackTrace();
         }
         return bytes;
+    }
+
+    public boolean checkIntegrity() {
+        return checkIntegrity(null);
+    }
+
+    public boolean checkIntegrity(byte[] inputHash) {
+        byte[] calculatedHash = null;
+        if (inputHash == null) {
+            inputHash = new byte[0];
+        }
+
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance(SPImage.DIGEST_ALGORITHM);
+            messageDigest.update(imageData);
+            messageDigest.update(inputHash);
+            calculatedHash = messageDigest.digest();
+
+            if (verificationFactors != null) {
+                for (Class<Verifier> v : verificationFactors) {
+                    VerificationFactorData factorData = verificationFactorData.get(v);
+
+                    if (factorData != null) {
+                        messageDigest.update(calculatedHash);
+                        messageDigest.update(factorData.getHash());
+                        calculatedHash = messageDigest.digest();
+                    }
+                }
+            }
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return Arrays.equals(this.frameHash, calculatedHash);
     }
 
 }

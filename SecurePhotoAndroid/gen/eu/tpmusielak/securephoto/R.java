@@ -42,7 +42,7 @@ public final class R {
         public static final int btn_pref = 0x7f09001a;
         public static final int btn_review_image = 0x7f090009;
         public static final int btn_save_mode = 0x7f090006;
-        public static final int btn_show_verifiers = 0x7f09001d;
+        public static final int btn_show_verifiers = 0x7f09001e;
         public static final int btn_shutter = 0x7f090003;
         public static final int btn_takeimg = 0x7f090017;
         public static final int btn_verifier_settings = 0x7f090007;
@@ -51,25 +51,26 @@ public final class R {
         public static final int camera_date = 0x7f09000f;
         public static final int camera_save_progress = 0x7f09000c;
         public static final int camera_text = 0x7f09000d;
-        public static final int delete = 0x7f090023;
+        public static final int delete = 0x7f090024;
         public static final int file_view = 0x7f090012;
-        public static final int filedate = 0x7f09001f;
-        public static final int filename = 0x7f09001e;
+        public static final int filedate = 0x7f090020;
+        public static final int filename = 0x7f09001f;
         public static final int gallery_info = 0x7f090013;
         public static final int gallery_list = 0x7f090014;
         public static final int gallery_view = 0x7f090011;
-        public static final int help = 0x7f090021;
-        public static final int image = 0x7f09001c;
-        public static final int info = 0x7f090024;
+        public static final int help = 0x7f090022;
+        public static final int image = 0x7f09001d;
+        public static final int info = 0x7f090025;
         public static final int main_layout = 0x7f090015;
+        public static final int open_image_view = 0x7f09001c;
         public static final int options_pane = 0x7f090005;
         public static final int options_scroll = 0x7f090004;
         public static final int plugin_scroll = 0x7f09000a;
         public static final int plugins_pane = 0x7f09000b;
         public static final int preview = 0x7f090002;
         public static final int roll_descriptor = 0x7f090010;
-        public static final int settings = 0x7f090022;
-        public static final int v_factors = 0x7f090020;
+        public static final int settings = 0x7f090023;
+        public static final int v_factors = 0x7f090021;
     }
 
     public static final class layout {
@@ -111,6 +112,7 @@ public final class R {
         public static final int enabled_summary = 0x7f060003;
         public static final int enforce_location_lock = 0x7f06000c;
         public static final int export_images = 0x7f06001b;
+        public static final int first_frame = 0x7f06003d;
         public static final int geolocation_verifier = 0x7f06000a;
         public static final int go_to_GPS_settings = 0x7f060010;
         public static final int gps_disabled_message = 0x7f06000d;
@@ -123,6 +125,7 @@ public final class R {
         public static final int kpref_edittext = 0x7f060005;
         public static final int kpref_enable = 0x7f060004;
         public static final int kpref_use_autofocus = 0x7f060029;
+        public static final int last_frame = 0x7f06003c;
         public static final int msg_authenticating_failed = 0x7f060022;
         public static final int msg_authenticating_ok = 0x7f060021;
         public static final int msg_authenticating_wait = 0x7f060020;
