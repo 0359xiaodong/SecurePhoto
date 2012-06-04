@@ -6,10 +6,10 @@ threadsafe: true
 
 handlers:
 - url: /.*
-  script: helloworld.app
-  login: required
+  script: main.app  
   secure: always
 
 libraries:
 - name: jinja2
   version: latest
+  

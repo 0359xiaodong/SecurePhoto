@@ -23,13 +23,13 @@ class MainPage(webapp2.RequestHandler):
         content = { "SPR_REQUEST_PATH" :SPR_REQUEST_PATH,
                     "HASH_SUBMIT_PATH" : HASH_SUBMIT_PATH,
                     "HASH_RETRIEVE_PATH" : HASH_RETRIEVE_PATH,
-                    "TIME_RETRIEVE_PATH" : TIME_RETRIEVE_PATH,
+                    "TIME_RETRIEVE_PATH" : TIME_RETRIEVE_PATH,                    
                    }
         
         self.response.out.write(template.render(content))
         
 
-routes = [(r'/', MainPage),
+routes = [(r'/', MainPage),          
           (SPR_REQUEST_PATH, SPR_Provider),
           (HASH_SUBMIT_PATH, Hash_Submit),
           (HASH_RETRIEVE_PATH, Hash_Retrieve),
