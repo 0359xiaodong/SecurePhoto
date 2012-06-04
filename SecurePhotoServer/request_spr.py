@@ -37,11 +37,7 @@ class SPR_Provider(webapp2.RequestHandler):
                     }
         
         self.response.out.write(json.dumps(response))
-                
-                
-       
-     
-        
+
 class SPR_Record(db.Model):
     time = db.DateTimeProperty(auto_now_add=True)
     user = db.UserProperty(auto_current_user_add=True)

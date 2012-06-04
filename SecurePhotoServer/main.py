@@ -12,7 +12,7 @@ jinja_environment = jinja2.Environment(
 
 SPR_REQUEST_PATH = r'/request_spr'
 HASH_SUBMIT_PATH = r'/hash_submit'  
-HASH_RETRIEVE_PATH = r'/hash_retrieve'
+HASH_RETRIEVE_PATH = r'/hash_retrieve/(.*)/'
 TIME_RETRIEVE_PATH = r'/get_time'
 
 class MainPage(webapp2.RequestHandler):

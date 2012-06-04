@@ -263,7 +263,12 @@ public class SPTools implements ActionListener, ChangeListener {
         }
 
         try {
-            ImageIO.write(currentImage, "JPG", file);
+            byte[] imageData = currentSPImage.getImageData();
+
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(imageData);
+            fileOutputStream.close();
+
             // TODO: Exception handling
         } catch (FileNotFoundException e) {
             e.printStackTrace();
