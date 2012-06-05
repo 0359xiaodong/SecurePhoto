@@ -188,7 +188,7 @@ public class ViewImages extends Activity {
                     break;
                 case FRAME_VIEW:
                 default:
-                    imageLoader.load(new SPIWrapper(file), (ImageView) holder.image);
+                    imageLoader.load(new SPIWrapper(file, null), (ImageView) holder.image);
             }
 
             return convertView;

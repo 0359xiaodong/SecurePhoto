@@ -95,7 +95,7 @@
 
     <TextView
             android:id="@+id/camera_base"
-            android:text="@string/kpref_base_station_address"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/preview"

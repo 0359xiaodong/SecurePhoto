@@ -75,7 +75,7 @@ public class ImageLoader {
     }
 
     public static Bitmap decodeFile(File file, int requiredSize) {
-        return decodeFile(new SPIWrapper(file), requiredSize);
+        return decodeFile(new SPIWrapper(file, null), requiredSize);
     }
 
     //decodes image and scales it to reduce memory consumption

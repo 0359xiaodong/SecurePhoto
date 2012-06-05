@@ -64,7 +64,7 @@ public class CommunicationService extends Service {
                 Settings.Secure.ANDROID_ID);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        baseStationAddress = preferences.getString(getString(R.string.kpref_base_station_address), null);
+        baseStationAddress = preferences.getString("base_station_address", null);
 
         if (baseStationAddress == null) {
             Toast.makeText(getBaseContext(), getString(R.string.base_station_address_not_set), Toast.LENGTH_SHORT).show();
@@ -110,16 +110,16 @@ public class CommunicationService extends Service {
                         SPImageRoll.Header header = ((SPRWrapper) wrapper).getHeader();
                         nameValuePairs.add(
                                 new BasicNameValuePair("spr_id",
-                                        Base64.encodeToString(header.getUniqueID(), Base64.DEFAULT)));
+                                        Base64.encodeToString(header.getUniqueID(), Base64.NO_WRAP)));
                     }
+                    nameValuePairs.add(
+                            new BasicNameValuePair("image_id",
+                                    Base64.encodeToString(wrapper.getUniqueFrameID(), Base64.NO_WRAP)));
 
-//                    nameValuePairs.add(
-//                            new BasicNameValuePair("image_id",
-//                                    Base64.encodeToString(wrapper.getFrameHash(), Base64.DEFAULT)));
 
                     nameValuePairs.add(
                             new BasicNameValuePair("image_hash",
-                                    Base64.encodeToString(wrapper.getFrameHash(), Base64.DEFAULT)));
+                                    Base64.encodeToString(wrapper.getFrameHash(), Base64.NO_WRAP)));
 
                     request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

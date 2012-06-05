@@ -15,25 +15,36 @@ import java.util.*;
  * Time: 01:43
  */
 public final class SPImage implements Serializable, SPIFile {
-    private static final long serialVersionUID = -8843183001340004634L;
+    private static final long serialVersionUID = -8843183001340004635L;
 
     public final static String DIGEST_ALGORITHM = "SHA-1";
+    public final static int ID_LENGTH = 20;
     public final static String DEFAULT_EXTENSION = "spi";
 
     private final byte[] imageData;
-    private byte[] frameHash;
 
     private List<Class<Verifier>> verificationFactors;
     private Map<Class<Verifier>, VerificationFactorData> verificationFactorData;
 
+    private SPImageHeader header;
+
+    public SPImageHeader getHeader() {
+        return header;
+    }
 
     public class SPImageHeader implements Serializable {
-        private final long size;
-        private final byte[] frameHash;
+        private long size;
+        private byte[] uniqueFrameID;
+        private byte[] frameHash;
 
-        public SPImageHeader(long size, byte[] frameHash) {
+        public SPImageHeader(long size, byte[] frameHash, byte[] uniqueFrameID) {
             this.size = size;
             this.frameHash = frameHash;
+            this.uniqueFrameID = uniqueFrameID;
+        }
+
+        public SPImageHeader() {
+            this(0, null, null);
         }
 
         public long getSize() {
@@ -43,11 +54,23 @@ public final class SPImage implements Serializable, SPIFile {
         public byte[] getFrameHash() {
             return frameHash;
         }
+
+        public byte[] getUniqueFrameID() {
+            return uniqueFrameID;
+        }
     }
 
     private SPImage(byte[] imageData, byte[] inputHash) {
+        header = new SPImageHeader();
+
         if (inputHash == null)
             inputHash = new byte[0];
+
+        //Generate unique frame ID
+        Random random = new Random();
+        byte[] idBytes = new byte[20];
+        random.nextBytes(idBytes);
+        header.uniqueFrameID = idBytes;
 
         byte[] mImageHash;
         this.imageData = imageData;
@@ -61,7 +84,7 @@ public final class SPImage implements Serializable, SPIFile {
             throw new RuntimeException(String.format("Digest algorighm %s is not available", DIGEST_ALGORITHM));
         }
 
-        this.frameHash = mImageHash;
+        header.frameHash = mImageHash;
         verificationFactors = new ArrayList<Class<Verifier>>();
         verificationFactorData = new HashMap<Class<Verifier>, VerificationFactorData>();
     }
@@ -98,10 +121,10 @@ public final class SPImage implements Serializable, SPIFile {
                 // Recompute frame hash including the verifier data
 
                 // Update frame hash
-                messageDigest.update(image.frameHash);
+                messageDigest.update(image.header.frameHash);
                 messageDigest.update(data.getHash());
 
-                image.frameHash = messageDigest.digest();
+                image.header.frameHash = messageDigest.digest();
             }
         }
         return image;
@@ -156,7 +179,11 @@ public final class SPImage implements Serializable, SPIFile {
     }
 
     public byte[] getFrameHash() {
-        return frameHash;
+        return header.frameHash;
+    }
+
+    public byte[] getUniqueFrameID() {
+        return header.uniqueFrameID;
     }
 
     public List<Class<Verifier>> getVerificationFactors() {
@@ -176,7 +203,8 @@ public final class SPImage implements Serializable, SPIFile {
             objectOutput.writeObject(SPImage.this);
             byte[] frameBytes = byteArrayOutput.toByteArray();
 
-            SPImageHeader header = new SPImageHeader(frameBytes.length, frameHash);
+            header.size = frameBytes.length;
+
             byteArrayOutput.reset();
             objectOutput = new ObjectOutputStream(byteArrayOutput);
             objectOutput.writeObject(header);
@@ -228,7 +256,7 @@ public final class SPImage implements Serializable, SPIFile {
             e.printStackTrace();
         }
 
-        return Arrays.equals(this.frameHash, calculatedHash);
+        return Arrays.equals(header.frameHash, calculatedHash);
     }
 
 }

@@ -50,29 +50,26 @@
     <bookmark url="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TimeUpdateTask.java" line="33" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="050ad933-fc6a-4b2f-818f-87c92fffad67" name="Default" comment="Fixed JPG Export">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPFileWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPIWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPRWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPIFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/SecurePhotoTools_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/SecurePhotoTools_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="050ad933-fc6a-4b2f-818f-87c92fffad67" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/gen/eu/tpmusielak/securephoto/R.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/gen/eu/tpmusielak/securephoto/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPFileHandler.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPFileHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPFileWrapper.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPFileWrapper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPIWrapper.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPIWrapper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPRWrapper.java" afterPath="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPRWrapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/eu/tpmusielak/securephoto/R.java" afterPath="$PROJECT_DIR$/gen/eu/tpmusielak/securephoto/R.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/camera_view.xml" afterPath="$PROJECT_DIR$/res/layout/camera_view.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/image_view.xml" afterPath="$PROJECT_DIR$/res/layout/image_view.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/HomeScreen.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/HomeScreen.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/xml/preferences.xml" afterPath="$PROJECT_DIR$/res/xml/preferences.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/BaseAuthenticate.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/BaseAuthenticate.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/CommunicationService.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/CommunicationService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/OpenImage.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/OpenImage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/ViewImages.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/ViewImages.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/lazylist/ImageLoader.java" afterPath="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/lazylist/ImageLoader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java" afterPath="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java" />
     </list>
     <ignored path="SecurePhotoAndroid.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -96,19 +93,6 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/CommunicationService.java" line="0" class="CommunicationService.java" package="">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="&#13;&#13;JAVA" />
-        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
-      </breakpoint>
       <breakpoint url="file://$PROJECT_DIR$/SecurePhotoPrototype/src/VerifierPrototype.java" line="69" class="VerifierPrototype" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
@@ -148,7 +132,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java" line="207" class="eu.tpmusielak.securephoto.container.SPImageRoll" package="eu.tpmusielak.securephoto.container">
+      <breakpoint url="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java" line="206" class="eu.tpmusielak.securephoto.container.SPImageRoll" package="eu.tpmusielak.securephoto.container">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -251,21 +235,12 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf>
-          <file leaf-file-name="BaseAuthenticate.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/BaseAuthenticate.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="68" column="41" selection-start="2206" selection-end="2206" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CommunicationService.java" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="CommunicationService.java" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/CommunicationService.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="116" column="48" selection-start="4166" selection-end="4166" vertical-scroll-proportion="0.58411217">
+                <state line="45" column="44" selection-start="1531" selection-end="1531" vertical-scroll-proportion="0.39719626">
                   <folding>
-                    <element signature="e#3488#3503#0" expanded="true" />
+                    <element signature="e#3465#3480#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -274,18 +249,25 @@
           <file leaf-file-name="SPFileWrapper.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPFileWrapper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="13" column="28" selection-start="321" selection-end="321" vertical-scroll-proportion="0.0">
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
+                <state line="14" column="13" selection-start="336" selection-end="336" vertical-scroll-proportion="0.0">
+                  <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="OpenImage.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/OpenImage.java">
+          <file leaf-file-name="SPImageRoll.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="133" column="39" selection-start="4148" selection-end="4148" vertical-scroll-proportion="0.0">
+                <state line="24" column="36" selection-start="724" selection-end="724" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SPIWrapper.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPIWrapper.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="28" column="57" selection-start="720" selection-end="720" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -304,11 +286,40 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="TakeImage.java" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="TakeImage.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="312" column="44" selection-start="10524" selection-end="10524" vertical-scroll-proportion="0.46378505">
+                <state line="318" column="40" selection-start="10732" selection-end="10732" vertical-scroll-proportion="0.0">
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="camera_view.xml" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/res/layout/camera_view.xml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="97" column="26" selection-start="3789" selection-end="3789" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="image_view.xml" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/res/layout/image_view.xml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="64" column="33" selection-start="2594" selection-end="2594" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SPImage.java" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="46" column="56" selection-start="1401" selection-end="1401" vertical-scroll-proportion="0.0">
+                  <folding>
+                    <element signature="e#4106#4136#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -322,10 +333,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="SCVerifierManager.java" pinned="false" current="false" current-in-tab="false">
+          <file leaf-file-name="SCVerifierManager.java" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="127" column="68" selection-start="3669" selection-end="3669" vertical-scroll-proportion="0.0">
+                <state line="42" column="47" selection-start="1432" selection-end="1432" vertical-scroll-proportion="0.5503597">
                   <folding />
                 </state>
               </provider>
@@ -355,21 +366,21 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/container/SPIHandle.java" />
-        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/container/SPRHandle.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPFileHandler.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPFileHandle.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/res/xml/preferences.xml" />
         <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPIWrapper.java" />
-        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPRWrapper.java" />
-        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/OpenImage.java" />
-        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPFileWrapper.java" />
-        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" />
+        <option value="$PROJECT_DIR$/res/layout/camera_view.xml" />
+        <option value="$PROJECT_DIR$/res/layout/image_view.xml" />
+        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/BaseAuthenticate.java" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/ViewImages.java" />
+        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/lazylist/ImageLoader.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java" />
+        <option value="$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPIWrapper.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPFileWrapper.java" />
+        <option value="$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPRWrapper.java" />
+        <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java" />
         <option value="$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/CommunicationService.java" />
       </list>
     </option>
@@ -451,26 +462,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SecurePhotoAndroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -619,13 +610,83 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SecurePhotoAndroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="275" />
     <property name="project.structure.proportion" value="0.15" />
@@ -1071,7 +1132,11 @@
       <created>1338848991309</created>
       <updated>1338848991309</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="New CommunicationService&#10;SPIFIleWrappers">
+      <created>1338861843982</created>
+      <updated>1338861843982</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1099,27 +1164,27 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.49509802" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32763228" sideWeight="0.58258927" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32656333" sideWeight="0.67410713" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5546875" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.59040177" sideWeight="0.49786323" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47767857" sideWeight="0.49812934" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.421875" sideWeight="0.49786323" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47767857" sideWeight="0.5002672" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20149653" sideWeight="0.5859375" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32589287" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47767857" sideWeight="0.49812934" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47767857" sideWeight="0.49599144" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1998931" sideWeight="0.31919643" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.67410713" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39925173" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20149653" sideWeight="0.4095982" order="1" side_tool="false" content_ui="combo" x="19" y="91" width="419" height="896" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20149653" sideWeight="0.6785714" order="1" side_tool="false" content_ui="combo" x="19" y="91" width="419" height="896" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32142857" sideWeight="0.49754903" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21966863" sideWeight="0.67410713" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="101" y="101" width="1718" height="838" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24906467" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32763228" sideWeight="0.58258927" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924107" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5089286" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -1164,7 +1229,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed JPG Export" />
+    <option name="LAST_COMMIT_MESSAGE" value="New CommunicationService&#10;SPIFIleWrappers" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1201,6 +1266,7 @@
     <MESSAGE value="Fixed image roll display bug" />
     <MESSAGE value="Added SPI and SPR integrity checking&#10;Fixes in SPR frame adding" />
     <MESSAGE value="Fixed JPG Export" />
+    <MESSAGE value="New CommunicationService&#10;SPIFIleWrappers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1210,123 +1276,117 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/lazylist/ImageLoader.java">
+    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/HomeScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="27" selection-start="2752" selection-end="2759" vertical-scroll-proportion="0.6361323">
+        <state line="35" column="71" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="70" selection-start="1811" selection-end="1811" vertical-scroll-proportion="0.53621495">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://D:/Program Files (x86)/Android/android-sdk/platforms/android-10/android.jar!/java/lang/String.class">
+    <entry file="file://$PROJECT_DIR$/res/xml/preferences.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="19" selection-start="1751" selection-end="1751" vertical-scroll-proportion="0.8392405">
+        <state line="10" column="24" selection-start="466" selection-end="466" vertical-scroll-proportion="0.19562715">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/image_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="33" selection-start="2594" selection-end="2594" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/lazylist/ImageLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="51" selection-start="2588" selection-end="2588" vertical-scroll-proportion="0.19544365">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="58" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0">
+        <state line="33" column="36" selection-start="912" selection-end="912" vertical-scroll-proportion="0.49040768">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_31/src.zip!/java/lang/String.java">
+    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPIWrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="19" selection-start="3593" selection-end="3593" vertical-scroll-proportion="0.018472906">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPRWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="780" selection-end="780" vertical-scroll-proportion="0.5707434">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Program Files (x86)/Android/android-sdk/platforms/android-10/android.jar!/android/widget/ImageView.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="16" selection-start="1442" selection-end="1442" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPFileWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="28" selection-start="321" selection-end="321" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/OpenImage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="133" column="39" selection-start="4148" selection-end="4148" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="68" selection-start="3669" selection-end="3669" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="12" selection-start="2128" selection-end="2128" vertical-scroll-proportion="1.2841727">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="43" selection-start="1716" selection-end="1716" vertical-scroll-proportion="0.81534773">
+        <state line="28" column="57" selection-start="720" selection-end="720" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/ViewImages.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="290" column="64" selection-start="10217" selection-end="10217" vertical-scroll-proportion="0.5215827">
+        <state line="287" column="33" selection-start="10018" selection-end="10018" vertical-scroll-proportion="0.3323442">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://D:/Program Files (x86)/Android/android-sdk/platforms/android-10/android.jar!/android/os/AsyncTask.class">
+    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/viewer/OpenImage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="115" column="52" selection-start="3512" selection-end="3512" vertical-scroll-proportion="0.19042057">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/SPImageRollHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="113" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.3323442">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPFileWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="13" selection-start="336" selection-end="336" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SecurePhotoAndroidCommon/src/eu/tpmusielak/securephoto/container/wrapper/SPRWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="4" selection-start="552" selection-end="552" vertical-scroll-proportion="0.35747662">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImageRoll.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="36" selection-start="724" selection-end="724" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../SecurePhotoCommon/src/eu/tpmusielak/securephoto/container/SPImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="56" selection-start="1401" selection-end="1401" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#0#1838#0" expanded="true" />
+            <element signature="e#4106#4136#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/BaseAuthenticate.java">
+    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/verification/SCVerifierManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="41" selection-start="2206" selection-end="2206" vertical-scroll-proportion="0.0">
+        <state line="42" column="47" selection-start="1432" selection-end="1432" vertical-scroll-proportion="0.5503597">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/communication/CommunicationService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="48" selection-start="4166" selection-end="4166" vertical-scroll-proportion="0.58411217">
+        <state line="45" column="44" selection-start="1531" selection-end="1531" vertical-scroll-proportion="0.39719626">
           <folding>
-            <element signature="e#3488#3503#0" expanded="true" />
+            <element signature="e#3465#3480#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/eu/tpmusielak/securephoto/camera/TakeImage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="312" column="44" selection-start="10524" selection-end="10524" vertical-scroll-proportion="0.46378505">
-          <folding />
         </state>
       </provider>
     </entry>

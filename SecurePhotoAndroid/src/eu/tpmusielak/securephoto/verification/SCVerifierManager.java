@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.preference.*;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.verification.geo.CellularVerifierWrapper;
+import eu.tpmusielak.securephoto.verification.geo.GeolocationVerifierWrapper;
 
 import java.lang.ref.WeakReference;
 import java.util.HashSet;
@@ -34,7 +35,7 @@ public class SCVerifierManager extends Service implements VerifierBinder {
     private void initialize() {
         verifierWrappers = new LinkedList<VerifierWrapper>();
 
-//        new GeolocationVerifierWrapper().register(this);
+        new GeolocationVerifierWrapper().register(this);
         new CellularVerifierWrapper().register(this);
 //        new TimestampVerifierWrapper().register(this);
 //        new GenericVerifierWrapper(new DummyVerifier()).register(this);

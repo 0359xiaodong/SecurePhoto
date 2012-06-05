@@ -4,37 +4,21 @@
     <PreferenceCategory
             android:title="@string/auth_features">
 
-
-        <CheckBoxPreference
-                android:key="@string/kpref_base_station_logging"
-                android:summary="@string/base_station_auth_summary"
-                android:title="@string/base_station_auth"
-                android:defaultValue="true"
-                />
-
         <android.preference.EditTextPreference
-                android:key="@string/kpref_base_station_address"
+                android:key="base_station_address"
                 android:summary="@string/pref_summary_base_station_address"
                 android:title="@string/pref_caption_base_station_address"
                 android:defaultValue=""
                 />
 
-        <android.preference.EditTextPreference
-                android:key="@string/kpref_base_station_username"
-                android:summary="@string/pref_summary_base_station_username"
-                android:title="@string/pref_caption_base_station_username"
-                android:defaultValue=""
-                />
 
     </PreferenceCategory>
     <PreferenceCategory
-            android:title="@string/other_features">
-
+            android:title="@string/camera_preferences">
 
         <CheckBoxPreference
-                android:key="@string/kpref_use_autofocus"
-                android:summary="@string/use_autofocus_summary"
-                android:title="@string/use_autofocus"
+                android:key="review_image"
+                android:title="@string/review_image"
                 android:defaultValue="true"
                 />
 

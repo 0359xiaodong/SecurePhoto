@@ -7,14 +7,13 @@
     <string name="base_station_auth">Base station</string>
     <string name="base_station_auth_summary">Enforce logging at base station before taking pictures</string>
     <string name="auth_features">Authentication features</string>
-    <string name="other_features">Other features</string>
+    <string name="camera_preferences">Camera preferences</string>
     <string name="preferences">Preferences</string>
     <string name="auth_button_lbl">Authenticate</string>
     <string name="take_images_lbl">Take images</string>
     <string name="export_images">Export images</string>
     <string name="view_images_lbl">View images</string>
-    <string name="use_autofocus">Use autofocus</string>
-    <string name="use_autofocus_summary">Use autofocus while taking pictures</string>
+    <string name="review_image">Review image</string>
     <string name="authentication">Base authentication</string>
     <string name="msg_authenticating_wait">Authenticating. Please wait…</string>
     <string name="msg_authenticating_ok">Authentication with base station %1$s successful</string>
@@ -23,10 +22,6 @@
     <string name="take_picture">Shoot</string>
     <string name="pref_summary_base_station_address">Address of the base station to connect to</string>
     <string name="pref_caption_base_station_address">Base station address</string>
-    <string name="kpref_base_station_logging">Base station logging</string>
-    <string name="kpref_base_station_address">Base station address</string>
-    <string name="kpref_use_autofocus">Use autofocus</string>
-    <string name="kpref_base_station_username">Base station username</string>
     <string name="pref_caption_base_station_username">User name</string>
     <string name="pref_summary_base_station_username">User name to use with base station</string>
     <string name="camera_image_roll">FilmRoll</string>

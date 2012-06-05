@@ -16,13 +16,14 @@ public class SPRWrapper extends SPFileWrapper implements Serializable {
     private final SPImageRoll.Header header;
 
     public SPRWrapper(File file, SPImageRoll.Header header, int frameIndex) {
-        this(file, header, null, frameIndex);
+        this(file, header, null, null, frameIndex);
     }
 
-    public SPRWrapper(File file, SPImageRoll.Header header, byte[] hash, int frameIndex) {
+    public SPRWrapper(File file, SPImageRoll.Header header, byte[] hash, byte[] uniqueFrameID, int frameIndex) {
         super(file);
         this.frameIndex = frameIndex;
         this.header = header;
+        this.uniqueFrameID = uniqueFrameID;
         if (hash != null)
             setFrameHash(hash);
     }

@@ -152,7 +152,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         timeUpdateTimer = new Timer("TimeUpdateTimer");
         timeUpdateTimer.scheduleAtFixedRate(new TimeUpdateTask(this), 0, 1000);
 
-        String baseStationAddress = preferences.getString(getResources().getString(R.string.kpref_base_station_address), "");
+        String baseStationAddress = preferences.getString("base_station_address", "");
 
         baseStationDisplay = (TextView) findViewById(R.id.camera_base);
         baseStationDisplay.setText(baseStationAddress);
@@ -196,17 +196,17 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     private class ReviewImageListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            reviewLastImage();
+            viewImage(lastImageWrapper);
         }
     }
 
-    private void reviewLastImage() {
-        if (lastImageWrapper == null)
+    private void viewImage(SPFileWrapper wrapper) {
+        if (wrapper == null)
             return;
 
         Intent i = new Intent(getContext(), OpenImage.class);
-        i.putExtra("filename", lastImageWrapper.getFile().getAbsolutePath());
-        i.putExtra("filewrapper", lastImageWrapper);
+        i.putExtra("filename", wrapper.getFile().getAbsolutePath());
+        i.putExtra("filewrapper", wrapper);
         getContext().startActivity(i);
     }
 
@@ -315,7 +315,9 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     public void onImageSaved(SPFileWrapper wrapper) {
         lastImageWrapper = wrapper;
         communicationService.notifyPictureTaken(wrapper);
-        reviewLastImage();
+        if (preferences.getBoolean("review_image", true)) {
+            viewImage(lastImageWrapper);
+        }
     }
 
     @Override

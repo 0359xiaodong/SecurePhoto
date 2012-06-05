@@ -37,7 +37,7 @@ public class SPImageHandler implements SPFileHandler {
             SPImage image = SPImage.getInstance(bytes, verifierProvider.getVerifiers());
             fileOutputStream.write(image.toByteArray());
             fileOutputStream.close();
-            return new SPIWrapper(pictureFile, image.getFrameHash());
+            return new SPIWrapper(pictureFile, image.getHeader(), image.getFrameHash());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(String.format("Cannot write to file %s", pictureFile.getAbsolutePath()));
         } catch (IOException e) {

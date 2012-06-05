@@ -30,7 +30,7 @@ public class SPImageRollHandler implements SPFileHandler {
     public SPRWrapper saveFile(byte[] bytes) {
         SPImage image = SPImage.getInstance(bytes, verifierProvider.getVerifiers(), spImageRoll.getCurrentHash());
         int index = spImageRoll.addImage(image);
-        return new SPRWrapper(rollFile, spImageRoll.getHeader(), image.getFrameHash(), index);
+        return new SPRWrapper(rollFile, spImageRoll.getHeader(), image.getFrameHash(), image.getUniqueFrameID(), index);
     }
 
     @Override

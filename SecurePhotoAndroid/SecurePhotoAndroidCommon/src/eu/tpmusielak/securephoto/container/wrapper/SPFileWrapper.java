@@ -12,6 +12,7 @@ import java.io.Serializable;
 public abstract class SPFileWrapper implements Serializable {
     public final File file;
     private byte[] frameHash;
+    protected byte[] uniqueFrameID;
 
     public SPFileWrapper(File file) {
         this.file = file;
@@ -32,6 +33,10 @@ public abstract class SPFileWrapper implements Serializable {
 
     public byte[] getFrameHash() {
         return this.frameHash;
+    }
+
+    public byte[] getUniqueFrameID() {
+        return this.uniqueFrameID;
     }
 
 }

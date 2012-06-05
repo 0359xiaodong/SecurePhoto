@@ -49,7 +49,7 @@ public class BaseAuthenticate extends Activity {
 
         setContentView(R.layout.authentication);
 
-        final String address = preferences.getString(getString(R.string.kpref_base_station_address), null);
+        final String address = preferences.getString("base_station_address", null);
 
         authButton = (Button) findViewById(R.id.btn_go_auth);
         authButton.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +76,7 @@ public class BaseAuthenticate extends Activity {
         super.onStart();
 
         Intent intent = new Intent(this, CommunicationService.class);
-        String address = preferences.getString(getString(R.string.kpref_base_station_address), null);
+        String address = preferences.getString("base_station_address", null);
 
         if (address != null) {
 
