@@ -14,7 +14,7 @@ import java.util.*;
  * Date: 09.02.12
  * Time: 01:43
  */
-public final class SPImage implements Serializable {
+public final class SPImage implements Serializable, SPIFile {
     private static final long serialVersionUID = -8843183001340004634L;
 
     public final static String DIGEST_ALGORITHM = "SHA-1";
@@ -67,8 +67,7 @@ public final class SPImage implements Serializable {
     }
 
     private SPImage(byte[] imageData) {
-        this.imageData = imageData;
-        new SPImage(imageData, null);
+        this(imageData, null);
     }
 
     public static SPImage getInstance(byte[] imageData) {

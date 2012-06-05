@@ -41,6 +41,9 @@ public class HomeScreen extends Activity {
         Intent verifierServiceIntent = new Intent(this, SCVerifierManager.class);
         startService(verifierServiceIntent);
 
+        Intent communicationServiceIntent = new Intent(this, CommunicationService.class);
+        startService(communicationServiceIntent);
+
         setContentView(R.layout.home_screen);
         initialiseUI();
     }

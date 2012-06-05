@@ -98,6 +98,7 @@ public final class R {
         public static final int auth_features = 0x7f060016;
         public static final int authentication = 0x7f06001f;
         public static final int author_text_lbl = 0x7f060011;
+        public static final int base_station_address_not_set = 0x7f060040;
         public static final int base_station_auth = 0x7f060014;
         public static final int base_station_auth_summary = 0x7f060015;
         public static final int camera_image_roll = 0x7f06002d;
@@ -111,12 +112,14 @@ public final class R {
         public static final int enabled = 0x7f060002;
         public static final int enabled_summary = 0x7f060003;
         public static final int enforce_location_lock = 0x7f06000c;
+        public static final int error_saving_image = 0x7f06003f;
         public static final int export_images = 0x7f06001b;
         public static final int first_frame = 0x7f06003d;
         public static final int geolocation_verifier = 0x7f06000a;
         public static final int go_to_GPS_settings = 0x7f060010;
         public static final int gps_disabled_message = 0x7f06000d;
         public static final int help = 0x7f060013;
+        public static final int image_saved_successfully = 0x7f06003e;
         public static final int image_view = 0x7f060033;
         public static final int kpref_TSA_address = 0x7f060007;
         public static final int kpref_base_station_address = 0x7f060028;

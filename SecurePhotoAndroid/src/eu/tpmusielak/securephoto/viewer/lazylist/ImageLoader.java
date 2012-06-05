@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.container.SPImage;
 import eu.tpmusielak.securephoto.container.SPImageRoll;
+import eu.tpmusielak.securephoto.container.wrapper.SPFileWrapper;
+import eu.tpmusielak.securephoto.container.wrapper.SPIWrapper;
+import eu.tpmusielak.securephoto.container.wrapper.SPRWrapper;
 import eu.tpmusielak.securephoto.viewer.ViewImages;
 
 import java.io.File;
@@ -35,8 +38,8 @@ public class ImageLoader {
 
     final int stub_id = R.drawable.ic_menu_gallery;
 
-    public void load(FileHandle handle, ImageView imageView) {
-        String name = handle.getName();
+    public void load(SPFileWrapper wrapper, ImageView imageView) {
+        String name = wrapper.getName();
 
         imageViews.put(imageView, name);
         Bitmap bitmap = memoryCache.get(name);
@@ -44,18 +47,18 @@ public class ImageLoader {
         if (bitmap != null)
             imageView.setImageBitmap(bitmap);
         else {
-            queuePhoto(handle, imageView);
+            queuePhoto(wrapper, imageView);
             imageView.setImageResource(stub_id);
         }
     }
 
-    private void queuePhoto(FileHandle handle, ImageView imageView) {
-        PhotoToLoad p = new PhotoToLoad(handle, imageView);
+    private void queuePhoto(SPFileWrapper wrapper, ImageView imageView) {
+        PhotoToLoad p = new PhotoToLoad(wrapper, imageView);
         executorService.submit(new PhotosLoader(p));
     }
 
-    private Bitmap getBitmap(FileHandle handle) {
-        File f = fileCache.getFile(handle.getName());
+    private Bitmap getBitmap(SPFileWrapper wrapper) {
+        File f = fileCache.getFile(wrapper.getName());
 
         //from SD cache
         Bitmap b = decodeFile(f, ViewImages.THUMBNAIL_SIZE);
@@ -64,7 +67,7 @@ public class ImageLoader {
 
         //from disk
         try {
-            return decodeFile(handle, ViewImages.THUMBNAIL_SIZE);
+            return decodeFile(wrapper, ViewImages.THUMBNAIL_SIZE);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
@@ -72,17 +75,17 @@ public class ImageLoader {
     }
 
     public static Bitmap decodeFile(File file, int requiredSize) {
-        return decodeFile(new SingleImage(file), requiredSize);
+        return decodeFile(new SPIWrapper(file), requiredSize);
     }
 
     //decodes image and scales it to reduce memory consumption
-    public static Bitmap decodeFile(FileHandle handle, int requiredSize) {
-        String fileName = handle.getName();
-        File file = handle.file;
+    public static Bitmap decodeFile(SPFileWrapper wrapper, int requiredSize) {
+        String fileName = wrapper.getName();
+        File file = wrapper.file;
         int frameIndex = -1;
 
-        if (handle instanceof ImageRoll) {
-            frameIndex = ((ImageRoll) handle).frameIndex;
+        if (wrapper instanceof SPRWrapper) {
+            frameIndex = ((SPRWrapper) wrapper).frameIndex;
         }
 
         try {
@@ -159,11 +162,11 @@ public class ImageLoader {
 
     //Task for the queue
     private class PhotoToLoad {
-        public FileHandle file;
+        public SPFileWrapper file;
         public ImageView imageView;
 
-        public PhotoToLoad(FileHandle handle, ImageView i) {
-            this.file = handle;
+        public PhotoToLoad(SPFileWrapper wrapper, ImageView i) {
+            this.file = wrapper;
             imageView = i;
         }
     }
@@ -219,42 +222,6 @@ public class ImageLoader {
     public void clearCache() {
         memoryCache.clear();
         fileCache.clear();
-    }
-
-    private static abstract class FileHandle {
-        public final File file;
-
-        protected FileHandle(File file) {
-            this.file = file;
-        }
-
-        public abstract String getName();
-    }
-
-    public static class SingleImage extends FileHandle {
-
-        public SingleImage(File file) {
-            super(file);
-        }
-
-        @Override
-        public String getName() {
-            return file.getName();
-        }
-    }
-
-    public static class ImageRoll extends FileHandle {
-        public final int frameIndex;
-
-        public ImageRoll(File file, int frameIndex) {
-            super(file);
-            this.frameIndex = frameIndex;
-        }
-
-        @Override
-        public String getName() {
-            return String.format("%04x_%s", frameIndex, file.getName());
-        }
     }
 
 

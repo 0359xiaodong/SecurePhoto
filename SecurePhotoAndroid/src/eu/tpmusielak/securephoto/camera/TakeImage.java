@@ -13,17 +13,16 @@ import android.view.*;
 import android.widget.*;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.communication.CommunicationService;
-import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceBinder;
 import eu.tpmusielak.securephoto.container.SPFileHandler;
 import eu.tpmusielak.securephoto.container.SPImageHandler;
 import eu.tpmusielak.securephoto.container.SPImageRollHandler;
 import eu.tpmusielak.securephoto.container.VerifierProvider;
+import eu.tpmusielak.securephoto.container.wrapper.SPFileWrapper;
 import eu.tpmusielak.securephoto.verification.SCVerifierManager;
 import eu.tpmusielak.securephoto.verification.Verifier;
 import eu.tpmusielak.securephoto.verification.VerifierGUIReceiver;
 import eu.tpmusielak.securephoto.viewer.OpenImage;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +52,6 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
 
 
     private CommunicationService communicationService;
-    private boolean boundToCommService = false;
-
     private SCVerifierManager verifierManager;
 
     private List<Verifier> verifiers;
@@ -70,17 +67,14 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     private ViewGroup optionsPane;
     private ViewGroup pluginsPane;
 
-    private File lastImage;
+    private SPFileWrapper lastImageWrapper;
 
     private ServiceConnection communicationServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            CommServiceBinder binder = (CommServiceBinder) iBinder;
-            communicationService = binder.getService();
-            boundToCommService = true;
+            communicationService = ((CommunicationService.CommuncationServiceBinder) iBinder).getService();
         }
 
         public void onServiceDisconnected(ComponentName componentName) {
-            boundToCommService = false;
         }
     };
 
@@ -108,6 +102,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         backgroundOpsCounter = new AtomicInteger(0);
 
+        //TODO: replace with user-definable default mode
         saveMode = SaveMode.SINGLE_IMAGE;
 
         setupScreen();
@@ -206,11 +201,12 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     }
 
     private void reviewLastImage() {
-        if (lastImage == null)
+        if (lastImageWrapper == null)
             return;
 
         Intent i = new Intent(getContext(), OpenImage.class);
-        i.putExtra("filename", lastImage.getAbsolutePath());
+        i.putExtra("filename", lastImageWrapper.getFile().getAbsolutePath());
+        i.putExtra("filewrapper", lastImageWrapper);
         getContext().startActivity(i);
     }
 
@@ -223,7 +219,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         new SavePictureTask().execute(new byte[][]{bytes});
     }
 
-    private class SavePictureTask extends AsyncTask<byte[], Void, Pair<File, String>> {
+    private class SavePictureTask extends AsyncTask<byte[], Void, Pair<SPFileWrapper, String>> {
         byte[] pictureData;
 
         @Override
@@ -232,32 +228,31 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         }
 
         @Override
-        protected Pair<File, String> doInBackground(byte[]... bytes) {
+        protected Pair<SPFileWrapper, String> doInBackground(byte[]... bytes) {
             pictureData = bytes[0];
-            File file = null;
+            SPFileWrapper fileWrapper = null;
             String outcome = null;
 
             try {
-                file = fileHandler.saveFile(pictureData);
+                fileWrapper = fileHandler.saveFile(pictureData);
             } catch (NullPointerException e) {
                 throw e;
             } catch (RuntimeException e) {
                 outcome = e.toString();
             }
-            return new Pair<File, String>(file, outcome);
+            return new Pair<SPFileWrapper, String>(fileWrapper, outcome);
         }
 
         @Override
-        protected void onPostExecute(Pair<File, String> result) {
-            File file = result.first;
+        protected void onPostExecute(Pair<SPFileWrapper, String> result) {
+            SPFileWrapper fileWrapper = result.first;
             String outcome = result.second;
 
-            if (file != null) {
-                Toast.makeText(TakeImage.this, "File " + file.getName() + " saved successfully", Toast.LENGTH_SHORT).show();
-
-                onImageSaved(file);
+            if (fileWrapper != null) {
+                Toast.makeText(TakeImage.this, getString(R.string.image_saved_successfully, fileWrapper.getName()), Toast.LENGTH_SHORT).show();
+                onImageSaved(fileWrapper);
             } else
-                Toast.makeText(TakeImage.this, "Error while saving file:" + outcome, Toast.LENGTH_SHORT).show();
+                Toast.makeText(TakeImage.this, getString(R.string.error_saving_image, outcome), Toast.LENGTH_SHORT).show();
 
             endBackgroundOperation();
         }
@@ -272,12 +267,6 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     @Override
     protected void onPause() {
         cameraHandler.pauseCamera();
-
-        if (boundToCommService) {
-            unbindService(communicationServiceConnection);
-            boundToCommService = false;
-        }
-
         super.onPause();
     }
 
@@ -323,8 +312,9 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
 
     }
 
-    public void onImageSaved(File file) {
-        lastImage = file;
+    public void onImageSaved(SPFileWrapper wrapper) {
+        lastImageWrapper = wrapper;
+        communicationService.notifyPictureTaken(wrapper);
         reviewLastImage();
     }
 

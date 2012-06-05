@@ -46,4 +46,7 @@
     <string name="cannot_use_handler">Cannot use this handler</string>
     <string name="last_frame">You are at the last frame</string>
     <string name="first_frame">You are at the first frame</string>
+    <string name="image_saved_successfully">Image %1$s saved successfully"</string>
+    <string name="error_saving_image">Error while saving image: %1$s</string>
+    <string name="base_station_address_not_set">The base station address is not set</string>
 </resources>

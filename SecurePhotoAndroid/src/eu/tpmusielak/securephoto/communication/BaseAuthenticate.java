@@ -3,15 +3,17 @@ package eu.tpmusielak.securephoto.communication;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.*;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.os.*;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.view.View;
 import android.widget.Button;
 import eu.tpmusielak.securephoto.R;
-import eu.tpmusielak.securephoto.communication.CommunicationService.CommServiceBinder;
 import eu.tpmusielak.securephoto.container.SPImageRoll;
 import eu.tpmusielak.securephoto.tools.FileHandling;
 
@@ -33,20 +35,6 @@ public class BaseAuthenticate extends Activity {
     private final int AUTH_PROGRESS_DIALOG = 0;
     private String androidID;
 
-    private CommunicationService communicationService;
-    private boolean boundToCommService = false;
-
-    private ServiceConnection communicationServiceConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            CommServiceBinder binder = (CommServiceBinder) iBinder;
-            communicationService = binder.getService();
-            boundToCommService = true;
-        }
-
-        public void onServiceDisconnected(ComponentName componentName) {
-            boundToCommService = false;
-        }
-    };
     private Button authButton;
     private Button createSPIRollButton;
 
@@ -66,7 +54,7 @@ public class BaseAuthenticate extends Activity {
         authButton = (Button) findViewById(R.id.btn_go_auth);
         authButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                new ConnectToServerTask().execute(address);
+                //TODO:
             }
         });
 
@@ -88,17 +76,10 @@ public class BaseAuthenticate extends Activity {
         super.onStart();
 
         Intent intent = new Intent(this, CommunicationService.class);
-        bindService(intent, communicationServiceConnection, Context.BIND_AUTO_CREATE);
         String address = preferences.getString(getString(R.string.kpref_base_station_address), null);
 
         if (address != null) {
-//            new ConnectToServerTask().execute(address);
-//            ServerMessage serverMessage = communicationService.authenticate(address, androidID);
 
-//            Message m = new Message();
-//            m.obj = serverMessage;
-
-//            msgHandler.sendMessage(m);
         }
 
     }
@@ -106,11 +87,6 @@ public class BaseAuthenticate extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        if (boundToCommService) {
-            unbindService(communicationServiceConnection);
-            boundToCommService = false;
-        }
     }
 
     @Override
@@ -134,28 +110,6 @@ public class BaseAuthenticate extends Activity {
         setResult(Activity.RESULT_CANCELED);
     }
 
-    private class ConnectToServerTask extends AsyncTask<String, Void, ServerMessage> {
-
-        @Override
-        protected void onPreExecute() {
-            showDialog(AUTH_PROGRESS_DIALOG);
-        }
-
-        @Override
-        protected ServerMessage doInBackground(String... servers) {
-            String serverName = servers[0];
-
-            return communicationService.authenticate(serverName, androidID);
-        }
-
-        @Override
-        protected void onPostExecute(ServerMessage serverMessage) {
-            Message m = new Message();
-            m.obj = serverMessage;
-
-            msgHandler.sendMessage(m);
-        }
-    }
 
     private Handler msgHandler = new Handler() {
         @Override

@@ -14,7 +14,7 @@ import java.util.*;
  * Date: 15.02.12
  * Time: 11:53
  */
-public final class SPImageRoll implements Serializable {
+public final class SPImageRoll implements Serializable, SPIFile {
     private static final long serialVersionUID = 10;
 
     public static final long NO_EXPIRY = -1;
@@ -23,11 +23,11 @@ public final class SPImageRoll implements Serializable {
     public static final String DEFAULT_EXTENSION = "spr";
     public static final int DIGEST_LENGTH = 20;
 
-    protected class Header implements Serializable {
-        protected final long expiryDate;
-        protected final byte[] uniqueID;
-        protected int frameCount;
-        protected byte[] currentHash;
+    public class Header implements Serializable {
+        private final long expiryDate;
+        private final byte[] uniqueID;
+        private int frameCount;
+        private byte[] currentHash;
 
         public Header(byte[] uniqueID, long expiryDate) {
             this.expiryDate = expiryDate;
@@ -35,6 +35,22 @@ public final class SPImageRoll implements Serializable {
             this.uniqueID = uniqueID;
             frameCount = 0;
             currentHash = Arrays.copyOf(uniqueID, uniqueID.length);
+        }
+
+        public long getExpiryDate() {
+            return expiryDate;
+        }
+
+        public byte[] getUniqueID() {
+            return uniqueID;
+        }
+
+        public int getFrameCount() {
+            return frameCount;
+        }
+
+        public byte[] getCurrentHash() {
+            return currentHash;
         }
     }
 
@@ -125,10 +141,11 @@ public final class SPImageRoll implements Serializable {
         }
     }
 
-    public void addImage(SPImage image) {
+    public int addImage(SPImage image) {
         header.currentHash = image.getFrameHash();
         header.frameCount++;
         writeImage(image);
+        return header.frameCount - 1;
     }
 
 
@@ -237,6 +254,10 @@ public final class SPImageRoll implements Serializable {
         }
 
         return sb.toString();
+    }
+
+    public Header getHeader() {
+        return header;
     }
 
     public String toString() {

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import eu.tpmusielak.securephoto.R;
+import eu.tpmusielak.securephoto.container.wrapper.SPRWrapper;
 import eu.tpmusielak.securephoto.tools.FileHandling;
 
 import java.io.File;
@@ -26,10 +27,10 @@ public class SPImageRollHandler implements SPFileHandler {
     }
 
     @Override
-    public File saveFile(byte[] bytes) {
+    public SPRWrapper saveFile(byte[] bytes) {
         SPImage image = SPImage.getInstance(bytes, verifierProvider.getVerifiers(), spImageRoll.getCurrentHash());
-        spImageRoll.addImage(image);
-        return rollFile;
+        int index = spImageRoll.addImage(image);
+        return new SPRWrapper(rollFile, spImageRoll.getHeader(), image.getFrameHash(), index);
     }
 
     @Override

@@ -1,8 +1,7 @@
 package eu.tpmusielak.securephoto.container;
 
 import android.content.Context;
-
-import java.io.File;
+import eu.tpmusielak.securephoto.container.wrapper.SPFileWrapper;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,7 +10,7 @@ import java.io.File;
  * Time: 16:24
  */
 public interface SPFileHandler {
-    public File saveFile(byte[] bytes);
+    public SPFileWrapper saveFile(byte[] bytes);
 
     void onInitialize(Context context);
 }

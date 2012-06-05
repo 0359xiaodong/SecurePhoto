@@ -1,6 +1,7 @@
 package eu.tpmusielak.securephoto.container;
 
 import android.content.Context;
+import eu.tpmusielak.securephoto.container.wrapper.SPIWrapper;
 import eu.tpmusielak.securephoto.tools.FileHandling;
 
 import java.io.File;
@@ -23,8 +24,8 @@ public class SPImageHandler implements SPFileHandler {
     }
 
     @Override
-    public File saveFile(byte[] bytes) {
-        File pictureFile = null;
+    public SPIWrapper saveFile(byte[] bytes) {
+        File pictureFile;
         try {
             pictureFile = FileHandling.getOutputFile(SPImage.DEFAULT_EXTENSION);
         } catch (IOException e) {
@@ -36,13 +37,12 @@ public class SPImageHandler implements SPFileHandler {
             SPImage image = SPImage.getInstance(bytes, verifierProvider.getVerifiers());
             fileOutputStream.write(image.toByteArray());
             fileOutputStream.close();
+            return new SPIWrapper(pictureFile, image.getFrameHash());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(String.format("Cannot write to file %s", pictureFile.getAbsolutePath()));
         } catch (IOException e) {
             throw new RuntimeException("IOException: " + e.toString());
         }
-
-        return pictureFile;
     }
 
     @Override

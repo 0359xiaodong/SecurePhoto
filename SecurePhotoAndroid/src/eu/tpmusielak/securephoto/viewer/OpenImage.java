@@ -13,6 +13,7 @@ import android.widget.*;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.container.SPImage;
 import eu.tpmusielak.securephoto.container.SPImageRoll;
+import eu.tpmusielak.securephoto.container.wrapper.SPRWrapper;
 import eu.tpmusielak.securephoto.verification.VerificationFactorData;
 import eu.tpmusielak.securephoto.verification.Verifier;
 import eu.tpmusielak.securephoto.viewer.lazylist.ImageLoader;
@@ -45,7 +46,6 @@ public class OpenImage extends Activity {
     private Button showVerifiersButton;
     private List<Class<Verifier>> verifiers;
     private Map<Class<Verifier>, VerificationFactorData> verifierData;
-    private String[] verifierNamesArray;
 
 
     @Override
@@ -105,17 +105,19 @@ public class OpenImage extends Activity {
     private void displayFile() {
         ImageView preview = (ImageView) findViewById(R.id.image);
 
-        Bitmap bitmap;
+        Bitmap bitmap = null;
         if (frameIndex < 0) {
             bitmap = ImageLoader.decodeFile(file, imageSize);
         } else {
             try {
                 SPImageRoll roll = SPImageRoll.fromFile(file);
                 frameCount = roll.getFrameCount();
+
+                bitmap = ImageLoader.decodeFile(new SPRWrapper(file, roll.getHeader(), frameIndex), imageSize);
             } catch (IOException ignored) {
             } catch (ClassNotFoundException ignored) {
             }
-            bitmap = ImageLoader.decodeFile(new ImageLoader.ImageRoll(file, frameIndex), imageSize);
+
         }
 
         preview.setImageBitmap(bitmap);
@@ -184,7 +186,7 @@ public class OpenImage extends Activity {
             verifierNames.add(factorClass.getSimpleName());
         }
 
-        verifierNamesArray = new String[verifierNames.size()];
+        String[] verifierNamesArray = new String[verifierNames.size()];
         verifierNames.toArray(verifierNamesArray);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

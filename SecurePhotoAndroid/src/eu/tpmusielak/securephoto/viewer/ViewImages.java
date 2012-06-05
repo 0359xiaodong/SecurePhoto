@@ -11,6 +11,8 @@ import android.view.*;
 import android.widget.*;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.container.SPImageRoll;
+import eu.tpmusielak.securephoto.container.wrapper.SPIWrapper;
+import eu.tpmusielak.securephoto.container.wrapper.SPRWrapper;
 import eu.tpmusielak.securephoto.tools.FileHandling;
 import eu.tpmusielak.securephoto.viewer.lazylist.ImageLoader;
 
@@ -186,7 +188,7 @@ public class ViewImages extends Activity {
                     break;
                 case FRAME_VIEW:
                 default:
-                    imageLoader.load(new ImageLoader.SingleImage(file), (ImageView) holder.image);
+                    imageLoader.load(new SPIWrapper(file), (ImageView) holder.image);
             }
 
             return convertView;
@@ -283,7 +285,7 @@ public class ViewImages extends Activity {
                 imageView = new ImageView(mContext);
             }
 
-            imageLoader.load(new ImageLoader.ImageRoll(file, position), imageView);
+            imageLoader.load(new SPRWrapper(file, spImageRoll.getHeader(), position), imageView);
 
             imageView.setLayoutParams(new Gallery.LayoutParams(240, 160));
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
