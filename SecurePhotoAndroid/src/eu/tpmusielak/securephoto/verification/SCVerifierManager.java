@@ -30,8 +30,6 @@ public class SCVerifierManager extends Service implements VerifierBinder {
 
     protected List<VerifierWrapper> verifierWrappers;
 
-    public static SCVerifierManager instance;
-
     private void initialize() {
         verifierWrappers = new LinkedList<VerifierWrapper>();
 

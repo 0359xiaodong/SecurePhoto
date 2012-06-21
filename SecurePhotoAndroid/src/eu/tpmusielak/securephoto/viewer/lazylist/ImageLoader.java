@@ -108,6 +108,11 @@ public class ImageLoader {
 
 
                 SPImageRoll imageRoll = SPImageRoll.fromFile(file);
+
+                if (imageRoll == null) {
+                    return null;
+                }
+
                 int imageCount = imageRoll.getFrameCount();
                 if (frameIndex < 0) {
                     frameIndex = imageCount - 1;

@@ -3,6 +3,7 @@ package eu.tpmusielak.securephoto.verification.geo;
 import eu.tpmusielak.securephoto.verification.VerificationFactorData;
 
 import java.io.Serializable;
+import java.nio.ByteBuffer;
 import java.util.Date;
 
 /**
@@ -20,12 +21,21 @@ public class GeolocationData implements VerificationFactorData, Serializable {
 
     public final float accuracy;
 
+    public final byte[] dataHash;
+
     public GeolocationData(long fixtime, double latitude, double longitude, double altitude, float accuracy) {
         this.fixtime = fixtime;
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitude = altitude;
         this.accuracy = accuracy;
+
+        dataHash = ByteBuffer.allocate(4 * 8 + 4)
+                .putDouble(latitude)
+                .putDouble(longitude)
+                .putDouble(altitude)
+                .putLong(fixtime)
+                .putFloat(accuracy).array();
     }
 
     public GeolocationData(long fixtime, double latitude, double longitude, double altitude) {
@@ -34,8 +44,7 @@ public class GeolocationData implements VerificationFactorData, Serializable {
 
     @Override
     public byte[] getHash() {
-        //TODO: Check auto-generated code
-        return new byte[0];
+        return dataHash;
     }
 
     @Override

@@ -21,7 +21,11 @@ public class CellularVerifier extends BasicVerifier {
 
     @Override
     protected VerifierState onInitialize() {
-        return VerifierState.INIT_SUCCESS;
+        if (cellularDataProvider != null) {
+            return VerifierState.INIT_SUCCESS;
+        } else {
+            return VerifierState.INIT_FAILURE;
+        }
     }
 
     @Override

@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -49,23 +51,41 @@ public class FileHandling {
 
     public static File[] getFiles() {
         File dir = new File(dirPath);
-        return dir.listFiles();
+        File[] files = dir.listFiles();
+        if (files != null) {
+            Arrays.sort(files, new DescendingDateComparator());
+        }
+        return files;
     }
 
     public static File[] getFiles(final String extension) {
         File dir = new File(dirPath);
-        return dir.listFiles(new FilenameFilter() {
+        File[] files = dir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File file, String s) {
                 return s.endsWith(extension);
             }
         });
+
+        if (files != null) {
+            Arrays.sort(files, new DescendingDateComparator());
+        }
+        return files;
     }
 
 
     public static String[] getFileNames(final String extension) {
         File dir = new File(dirPath);
         return dir.list();
+    }
+
+    public static class DescendingDateComparator implements Comparator<File> {
+        @Override
+        public int compare(File f1, File f2) {
+            Long f1Date = f1.lastModified();
+            Long f2Date = f2.lastModified();
+            return f2Date.compareTo(f1Date);
+        }
     }
 
 }

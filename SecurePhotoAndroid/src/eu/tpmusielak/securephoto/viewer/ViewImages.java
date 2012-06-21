@@ -47,6 +47,9 @@ public class ViewImages extends Activity {
         if (!(files == null) && files.length > 0) {
             ImageViewAdapter adapter = new ImageViewAdapter(ViewImages.this, R.layout.gallery_row, R.layout.gallery_roll_row, files);
 
+            // Sort descending
+            adapter.sort(new FileHandling.DescendingDateComparator());
+
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new ImageClickListener());
 

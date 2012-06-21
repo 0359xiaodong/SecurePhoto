@@ -1,6 +1,6 @@
 package eu.tpmusielak.securephoto.container.wrapper;
 
-import eu.tpmusielak.securephoto.container.SPImage;
+import eu.tpmusielak.securephoto.container.SPImageHeader;
 
 import java.io.File;
 import java.io.Serializable;
@@ -12,13 +12,13 @@ import java.io.Serializable;
  * Time: 00:17
  */
 public class SPIWrapper extends SPFileWrapper implements Serializable {
-    private final SPImage.SPImageHeader header;
+    private final SPImageHeader header;
 
-    public SPIWrapper(File file, SPImage.SPImageHeader header) {
+    public SPIWrapper(File file, SPImageHeader header) {
         this(file, header, null);
     }
 
-    public SPIWrapper(File file, SPImage.SPImageHeader header, byte[] hash) {
+    public SPIWrapper(File file, SPImageHeader header, byte[] hash) {
         super(file);
         this.header = header;
         if (hash != null)
@@ -35,7 +35,7 @@ public class SPIWrapper extends SPFileWrapper implements Serializable {
         return "SPI";
     }
 
-    public SPImage.SPImageHeader getHeader() {
+    public SPImageHeader getHeader() {
         return header;
     }
 

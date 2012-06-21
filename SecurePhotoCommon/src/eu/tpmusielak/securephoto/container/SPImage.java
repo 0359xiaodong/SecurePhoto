@@ -32,34 +32,6 @@ public final class SPImage implements Serializable, SPIFile {
         return header;
     }
 
-    public class SPImageHeader implements Serializable {
-        private long size;
-        private byte[] uniqueFrameID;
-        private byte[] frameHash;
-
-        public SPImageHeader(long size, byte[] frameHash, byte[] uniqueFrameID) {
-            this.size = size;
-            this.frameHash = frameHash;
-            this.uniqueFrameID = uniqueFrameID;
-        }
-
-        public SPImageHeader() {
-            this(0, null, null);
-        }
-
-        public long getSize() {
-            return size;
-        }
-
-        public byte[] getFrameHash() {
-            return frameHash;
-        }
-
-        public byte[] getUniqueFrameID() {
-            return uniqueFrameID;
-        }
-    }
-
     private SPImage(byte[] imageData, byte[] inputHash) {
         header = new SPImageHeader();
 

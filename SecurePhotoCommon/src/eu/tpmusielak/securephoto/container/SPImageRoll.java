@@ -172,11 +172,11 @@ public final class SPImageRoll implements Serializable, SPIFile {
 
             // Now the pointer is at the first frame header
 
-            SPImage.SPImageHeader frameHeader = null;
+            SPImageHeader frameHeader = null;
 
             for (int i = 0; i < index; i++) {
                 objectInputStream = new ObjectInputStream(fileInputStream); // KLUDGE
-                frameHeader = (SPImage.SPImageHeader) objectInputStream.readObject(); // Read the SPImageHeader
+                frameHeader = (SPImageHeader) objectInputStream.readObject(); // Read the SPImageHeader
 
                 long frameSize = frameHeader.getSize();
                 skipped = fileInputStream.skip(frameSize); // Skip the frame
@@ -188,7 +188,7 @@ public final class SPImageRoll implements Serializable, SPIFile {
             // Now we are at the header of the right frame
 
             objectInputStream = new ObjectInputStream(fileInputStream); // KLUDGE
-            frameHeader = (SPImage.SPImageHeader) objectInputStream.readObject(); // Reading and discarding the frame header
+            frameHeader = (SPImageHeader) objectInputStream.readObject(); // Reading and discarding the frame header
             objectInputStream = new ObjectInputStream(fileInputStream); // KLUDGE
             frame = (SPImage) objectInputStream.readObject(); // Reading the frame;
 
