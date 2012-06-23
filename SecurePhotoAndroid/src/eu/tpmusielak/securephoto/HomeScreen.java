@@ -1,14 +1,17 @@
 package eu.tpmusielak.securephoto;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import eu.tpmusielak.securephoto.camera.TakeImage;
-import eu.tpmusielak.securephoto.communication.BaseAuthenticate;
 import eu.tpmusielak.securephoto.communication.CommunicationService;
 import eu.tpmusielak.securephoto.communication.ServerMessage;
 import eu.tpmusielak.securephoto.preferences.ShowPreferences;
@@ -23,10 +26,21 @@ public class HomeScreen extends Activity {
     private static final int AUTHENTICATION_INTENT = 102;
     private static final int VIEW_IMAGE_INTENT = 103;
 
-    private Button authButton;
+    private Button getRollButton;
     private Button takeImgButton;
     private Button viewImgButton;
     private Button prefButton;
+
+    private CommunicationService communicationService;
+
+    private ServiceConnection communicationServiceConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            communicationService = ((CommunicationService.CommuncationServiceBinder) iBinder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName componentName) {
+        }
+    };
 
 
     /**
@@ -47,11 +61,20 @@ public class HomeScreen extends Activity {
         initialiseUI();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Intent intent = new Intent(this, CommunicationService.class);
+        bindService(intent, communicationServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+
     public void initialiseUI() {
-        authButton = (Button) findViewById(R.id.btn_auth);
-        authButton.setOnClickListener(new OnClickListener() {
+        getRollButton = (Button) findViewById(R.id.btn_get_roll);
+        getRollButton.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
-                startAuthentication();
+                getRoll();
             }
         });
 
@@ -110,9 +133,8 @@ public class HomeScreen extends Activity {
         startActivityForResult(preferencesIntent, PREFERENCES_INTENT);
     }
 
-    protected void startAuthentication() {
-        Intent authenticationIntent = new Intent(this, BaseAuthenticate.class);
-        startActivityForResult(authenticationIntent, AUTHENTICATION_INTENT);
+    private void getRoll() {
+        communicationService.getSPRoll();
     }
 
     @Override
@@ -141,8 +163,8 @@ public class HomeScreen extends Activity {
                         userMessage = getString(R.string.msg_authenticating_ok);
                         userMessage = String.format(userMessage, serverMessage.getServerName());
 
-                        authButton.setEnabled(false);
-                        authButton.setText(R.string.msg_autheticated);
+                        getRollButton.setEnabled(false);
+                        getRollButton.setText(R.string.msg_autheticated);
 
                         // Starting the communication service
                         Intent serviceIntent = new Intent(this, CommunicationService.class);
@@ -178,6 +200,7 @@ public class HomeScreen extends Activity {
 
     @Override
     protected void onDestroy() {
+        unbindService(communicationServiceConnection);
         if (isFinishing()) {
             stopService(new Intent(this, CommunicationService.class));
             stopService(new Intent(this, SCVerifierManager.class));

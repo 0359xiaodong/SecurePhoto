@@ -32,18 +32,14 @@ class SPR_Provider(webapp2.RequestHandler):
 
         record.put()
         
-        response = { 'spr_id':record.spr_id,
-                     'validity_date':record.validity_date,
-                    }
-        
-        self.response.out.write(json.dumps(response))
+        self.response.headers['spr_id'] = record.spr_id        
 
 class SPR_Record(db.Model):
     time = db.DateTimeProperty(auto_now_add=True)
-    user = db.UserProperty(auto_current_user_add=True)
+    user = db.UserProperty(auto_current_user_add=True, indexed=True)
     device_id = db.StringProperty(default="0")
     spr_id = db.StringProperty(default="0")
-    validity_date = db.DateTimeProperty()
+
     
     
     

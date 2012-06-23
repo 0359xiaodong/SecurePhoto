@@ -29,7 +29,7 @@
                 style="@style/IconGrid">
 
 
-            <Button android:id="@+id/btn_auth"
+            <Button android:id="@+id/btn_get_roll"
                     style="@style/MainButton"
                     android:text="@string/get_roll_button_lbl"
                     android:drawableTop="@drawable/ic_filmroll"

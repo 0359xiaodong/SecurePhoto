@@ -19,10 +19,12 @@ class Hash_Submit(webapp2.RequestHandler):
             self.submit_SPR()
         
     def submit_SPI(self):
-        record = SPI_Hash_Entry()
+        record = Hash_Entry()
         
         record.user = users.get_current_user()
         record.device_id = self.request.get('device_id')
+        record.spr_id = "" 
+                
         record.image_id = self.request.get('image_id')
         record.image_hash = self.request.get('image_hash')
         
@@ -30,7 +32,7 @@ class Hash_Submit(webapp2.RequestHandler):
         self.response_OK()
     
     def submit_SPR(self):
-        record = SPR_Hash_Entry()
+        record = Hash_Entry()
         
         record.user = users.get_current_user()
         record.device_id = self.request.get('device_id')
@@ -45,24 +47,31 @@ class Hash_Submit(webapp2.RequestHandler):
     def response_OK(self):
         response = {'status':1}
         self.response.out.write(json.dumps(response))
-        
-        
-
-class SPI_Hash_Entry(db.Model):        
-    time = db.DateTimeProperty(auto_now_add=True)
-    user = db.UserProperty()
-    device_id = db.StringProperty(default="0")
-    
-    image_id = db.StringProperty()
-    image_hash = db.StringProperty()
-    
-class SPR_Hash_Entry(db.Model):        
+  
+   
+class Hash_Entry(db.Model):        
     time = db.DateTimeProperty(auto_now_add=True)
     user = db.UserProperty()
     device_id = db.StringProperty(default="0")
         
     spr_id = db.StringProperty()
     image_id = db.StringProperty()
-    image_hash = db.StringProperty()      
+    image_hash = db.StringProperty()
+    
+    def __str__(self):
+        vals = (self.time, self.user, self.device_id, self.spr_id, self.image_id, self.image_hash)
+         
+        s = """Time: %s
+        User: %s 
+        Device: %s
+        SPR ID: %s
+        Frame ID: %s
+        Frame Hash: %s""" % vals
+                
+        
+        return s
+        
+        
+              
     
     

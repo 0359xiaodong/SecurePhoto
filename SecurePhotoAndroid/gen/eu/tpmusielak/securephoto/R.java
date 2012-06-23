@@ -33,9 +33,9 @@ public final class R {
     }
 
     public static final class id {
-        public static final int btn_auth = 0x7f090016;
         public static final int btn_camera_settings = 0x7f090008;
         public static final int btn_debug_create_SPIroll = 0x7f090001;
+        public static final int btn_get_roll = 0x7f090016;
         public static final int btn_go_auth = 0x7f090000;
         public static final int btn_pref = 0x7f090019;
         public static final int btn_review_image = 0x7f090009;
@@ -145,6 +145,8 @@ public final class R {
         public static final int send = 0x7f06003c;
         public static final int send_file = 0x7f06003d;
         public static final int settings = 0x7f060012;
+        public static final int spr_retrieval_failed = 0x7f06003f;
+        public static final int spr_retrieved = 0x7f06003e;
         public static final int take_images_lbl = 0x7f06001a;
         public static final int take_picture = 0x7f060023;
         public static final int verification_factors = 0x7f06002a;

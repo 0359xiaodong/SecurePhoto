@@ -274,6 +274,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     protected void onDestroy() {
         verifierManager.unbindFromGUI();
         unbindService(verifierServiceConnection);
+        unbindService(communicationServiceConnection);
         super.onDestroy();
     }
 

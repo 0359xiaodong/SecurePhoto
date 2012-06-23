@@ -15,6 +15,8 @@ import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.container.SPImageRoll;
 import eu.tpmusielak.securephoto.container.wrapper.SPFileWrapper;
 import eu.tpmusielak.securephoto.container.wrapper.SPRWrapper;
+import eu.tpmusielak.securephoto.tools.FileHandling;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -22,6 +24,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
@@ -35,10 +38,12 @@ import java.util.List;
  */
 public class CommunicationService extends Service {
     private SubmitHashTask submitHashTask;
+    private GetSPRTask getSPRTask;
 
     private String baseStationAddress;
     private String androidID;
     private static final String HASH_SUBMIT_PATH = "hash_submit";
+    private static final String GET_SPR_PATH = "request_spr";
 
     public class CommuncationServiceBinder extends Binder {
         private WeakReference<CommunicationService> serviceReference;
@@ -63,14 +68,10 @@ public class CommunicationService extends Service {
         androidID = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        baseStationAddress = preferences.getString("base_station_address", null);
-
-        if (baseStationAddress == null) {
-            Toast.makeText(getBaseContext(), getString(R.string.base_station_address_not_set), Toast.LENGTH_SHORT).show();
-        }
 
         submitHashTask = new SubmitHashTask();
+
+        updateBaseStationAddress();
     }
 
     @Override
@@ -83,9 +84,34 @@ public class CommunicationService extends Service {
         super.onDestroy();
     }
 
+    private void updateBaseStationAddress() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        baseStationAddress = preferences.getString("base_station_address", null);
+
+        if (baseStationAddress == null) {
+            Toast.makeText(getBaseContext(), getString(R.string.base_station_address_not_set), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void notifyPictureTaken(SPFileWrapper wrapper) {
+        updateBaseStationAddress();
+        if (baseStationAddress == null) {
+            return;
+        }
+
+
         submitHashTask = new SubmitHashTask();
         submitHashTask.execute(wrapper);
+    }
+
+    public void getSPRoll() {
+        updateBaseStationAddress();
+        if (baseStationAddress == null) {
+            return;
+        }
+        getSPRTask = new GetSPRTask();
+        //noinspection unchecked
+        getSPRTask.execute();
     }
 
     private class SubmitHashTask extends AsyncTask<SPFileWrapper, Void, Void> {
@@ -100,7 +126,7 @@ public class CommunicationService extends Service {
         protected Void doInBackground(SPFileWrapper... wrappers) {
             for (SPFileWrapper wrapper : wrappers) {
                 try {
-                    HttpPost request = new HttpPost(String.format("http://%s/%s", baseStationAddress, HASH_SUBMIT_PATH));
+                    HttpPost request = new HttpPost(String.format("%s/%s", baseStationAddress, HASH_SUBMIT_PATH));
                     List<NameValuePair> nameValuePairs = new LinkedList<NameValuePair>();
 
                     nameValuePairs.add(new BasicNameValuePair("type", wrapper.getFileTypeName()));
@@ -134,7 +160,61 @@ public class CommunicationService extends Service {
         }
     }
 
+    private class GetSPRTask extends AsyncTask<Void, Void, SPFileWrapper> {
+        HttpClient client;
+
+        @Override
+        protected void onPreExecute() {
+            client = AndroidHttpClient.newInstance("Android");
+        }
+
+        @Override
+        protected SPFileWrapper doInBackground(Void... voids) {
+            try {
+                HttpPost request = new HttpPost(String.format("%s/%s", baseStationAddress, GET_SPR_PATH));
+                List<NameValuePair> nameValuePairs = new LinkedList<NameValuePair>();
+
+                nameValuePairs.add(new BasicNameValuePair("device_id", androidID));
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = client.execute(request);
+                Header[] headers = response.getHeaders("spr_id");
+
+                if (headers == null) {
+                    return null;
+                }
+
+                String identifier = headers[0].getValue();
+                byte[] id = Base64.decode(identifier, Base64.NO_WRAP);
+
+                if (id.length != 20) { // For some reason identifier is invalid
+                    return null;
+                }
+
+                File sprFile = FileHandling.getOutputFile(SPImageRoll.DEFAULT_EXTENSION);
+                SPImageRoll roll = new SPImageRoll(sprFile, id);
+                return SPRWrapper.wrapFile(sprFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(SPFileWrapper wrapper) {
+            if (wrapper == null) {
+                Toast.makeText(getApplicationContext(), getString(R.string.spr_retrieval_failed), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Toast.makeText(getApplicationContext(), getString(R.string.spr_retrieved, wrapper.getName()), Toast.LENGTH_LONG).show();
+        }
+    }
+
 }
+
 
 
 
