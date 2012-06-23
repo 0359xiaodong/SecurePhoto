@@ -26,7 +26,6 @@ public class HomeScreen extends Activity {
     private Button authButton;
     private Button takeImgButton;
     private Button viewImgButton;
-    private Button exportImgButton;
     private Button prefButton;
 
 
@@ -67,12 +66,6 @@ public class HomeScreen extends Activity {
         viewImgButton.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 startViewer();
-            }
-        });
-
-        exportImgButton = (Button) findViewById(R.id.btn_export);
-        exportImgButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
             }
         });
 

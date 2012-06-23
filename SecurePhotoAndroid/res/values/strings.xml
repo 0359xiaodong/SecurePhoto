@@ -9,7 +9,7 @@
     <string name="auth_features">Authentication features</string>
     <string name="camera_preferences">Camera preferences</string>
     <string name="preferences">Preferences</string>
-    <string name="auth_button_lbl">Authenticate</string>
+    <string name="get_roll_button_lbl">Get Roll</string>
     <string name="take_images_lbl">Take images</string>
     <string name="export_images">Export images</string>
     <string name="view_images_lbl">View images</string>
@@ -44,4 +44,6 @@
     <string name="image_saved_successfully">Image %1$s saved successfully"</string>
     <string name="error_saving_image">Error while saving image: %1$s</string>
     <string name="base_station_address_not_set">The base station address is not set</string>
+    <string name="send">Send</string>
+    <string name="send_file">Send file..</string>
 </resources>

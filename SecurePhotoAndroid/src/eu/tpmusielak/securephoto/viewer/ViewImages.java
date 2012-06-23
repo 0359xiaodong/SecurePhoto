@@ -6,18 +6,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import eu.tpmusielak.securephoto.R;
+import eu.tpmusielak.securephoto.container.SPImage;
 import eu.tpmusielak.securephoto.container.SPImageRoll;
+import eu.tpmusielak.securephoto.container.wrapper.SPFileWrapper;
 import eu.tpmusielak.securephoto.container.wrapper.SPIWrapper;
 import eu.tpmusielak.securephoto.container.wrapper.SPRWrapper;
 import eu.tpmusielak.securephoto.tools.FileHandling;
+import eu.tpmusielak.securephoto.verification.VerificationFactorData;
+import eu.tpmusielak.securephoto.verification.Verifier;
 import eu.tpmusielak.securephoto.viewer.lazylist.ImageLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -82,6 +88,12 @@ public class ViewImages extends Activity {
             case R.id.delete:
                 deleteFile((File) listView.getItemAtPosition(info.position));
                 break;
+            case R.id.send:
+                sendFile((File) listView.getItemAtPosition(info.position));
+                break;
+            case R.id.info:
+                viewInfo((File) listView.getItemAtPosition(info.position));
+                break;
             default:
                 break;
         }
@@ -113,6 +125,60 @@ public class ViewImages extends Activity {
                 });
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void sendFile(File file) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("application/octet-stream");
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file.getAbsolutePath()));
+        startActivity(Intent.createChooser(intent, getResources().getString(R.string.send_file)));
+    }
+
+    private void viewInfo(File file) {
+        if (file == null)
+            return;
+
+        SPFileWrapper wrapper = SPFileWrapper.getWrapperForFile(file);
+
+        if (wrapper == null)
+            return;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+
+        if (wrapper instanceof SPIWrapper) {
+            SPImage image = null;
+            try {
+                image = SPImage.fromFile(file);
+
+                StringBuilder sb = new StringBuilder();
+                sb.append(image.toString());
+
+                Map<Class<Verifier>, VerificationFactorData> verificationFactorData = image.getVerificationFactorData();
+                for (VerificationFactorData data : verificationFactorData.values()) {
+                    sb.append(data.toString());
+                    sb.append('\n');
+                }
+
+                builder.setMessage(sb.toString());
+            } catch (IOException e) {
+                builder.setMessage(e.getMessage());
+            } catch (ClassNotFoundException e) {
+                builder.setMessage(e.getMessage());
+            }
+        } else if (wrapper instanceof SPRWrapper) {
+            try {
+                SPImageRoll roll = SPImageRoll.fromFile(file);
+                builder.setMessage(roll.toString());
+            } catch (IOException e) {
+                builder.setMessage(e.getMessage());
+            } catch (ClassNotFoundException e) {
+                builder.setMessage(e.getMessage());
+            }
+        }
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 

@@ -231,4 +231,25 @@ public final class SPImage implements Serializable, SPIFile {
         return Arrays.equals(header.frameHash, calculatedHash);
     }
 
+
+    private static String byteArrayToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+
+        for (byte aByte : bytes) {
+            sb.append(Integer.toHexString(aByte & 0xFF).toUpperCase());
+        }
+
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SPImage \n");
+        sb.append(String.format("\n"));
+        sb.append(String.format("Frame ID: %s\n", byteArrayToHex(header.uniqueFrameID)));
+        sb.append(String.format("Frame hash: %s\n", byteArrayToHex(header.frameHash)));
+
+        return sb.toString();
+    }
 }

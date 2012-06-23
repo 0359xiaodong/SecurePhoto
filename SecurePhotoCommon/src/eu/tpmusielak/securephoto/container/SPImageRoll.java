@@ -6,7 +6,10 @@ import eu.tpmusielak.securephoto.verification.Verifier;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by IntelliJ IDEA.
@@ -265,10 +268,10 @@ public final class SPImageRoll implements Serializable, SPIFile {
         sb.append("SPImageRoll \n");
         sb.append(String.format("\n"));
 
-        Date date = new Date(header.expiryDate);
+//        Date date = new Date(header.expiryDate);
 
         sb.append(String.format("Unique ID: %s\n", byteArrayToHex(header.uniqueID)));
-        sb.append(String.format("Expiry date: %s\n", date.toString()));
+//        sb.append(String.format("Expiry date: %s\n", date.toString()));
         sb.append(String.format("Images stored: %d\n", header.frameCount));
         sb.append(String.format("Current hash: %s\n", byteArrayToHex(header.currentHash)));
 

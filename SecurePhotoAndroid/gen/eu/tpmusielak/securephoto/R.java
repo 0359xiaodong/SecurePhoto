@@ -36,13 +36,11 @@ public final class R {
         public static final int btn_auth = 0x7f090016;
         public static final int btn_camera_settings = 0x7f090008;
         public static final int btn_debug_create_SPIroll = 0x7f090001;
-        public static final int btn_export = 0x7f090019;
         public static final int btn_go_auth = 0x7f090000;
-        public static final int btn_help = 0x7f09001b;
-        public static final int btn_pref = 0x7f09001a;
+        public static final int btn_pref = 0x7f090019;
         public static final int btn_review_image = 0x7f090009;
         public static final int btn_save_mode = 0x7f090006;
-        public static final int btn_show_verifiers = 0x7f09001e;
+        public static final int btn_show_verifiers = 0x7f09001c;
         public static final int btn_shutter = 0x7f090003;
         public static final int btn_takeimg = 0x7f090017;
         public static final int btn_verifier_settings = 0x7f090007;
@@ -51,26 +49,27 @@ public final class R {
         public static final int camera_date = 0x7f09000f;
         public static final int camera_save_progress = 0x7f09000c;
         public static final int camera_text = 0x7f09000d;
-        public static final int delete = 0x7f090024;
+        public static final int delete = 0x7f090022;
         public static final int file_view = 0x7f090012;
-        public static final int filedate = 0x7f090020;
-        public static final int filename = 0x7f09001f;
+        public static final int filedate = 0x7f09001e;
+        public static final int filename = 0x7f09001d;
         public static final int gallery_info = 0x7f090013;
         public static final int gallery_list = 0x7f090014;
         public static final int gallery_view = 0x7f090011;
-        public static final int help = 0x7f090022;
-        public static final int image = 0x7f09001d;
-        public static final int info = 0x7f090025;
+        public static final int help = 0x7f090020;
+        public static final int image = 0x7f09001b;
+        public static final int info = 0x7f090024;
         public static final int main_layout = 0x7f090015;
-        public static final int open_image_view = 0x7f09001c;
+        public static final int open_image_view = 0x7f09001a;
         public static final int options_pane = 0x7f090005;
         public static final int options_scroll = 0x7f090004;
         public static final int plugin_scroll = 0x7f09000a;
         public static final int plugins_pane = 0x7f09000b;
         public static final int preview = 0x7f090002;
         public static final int roll_descriptor = 0x7f090010;
-        public static final int settings = 0x7f090023;
-        public static final int v_factors = 0x7f090021;
+        public static final int send = 0x7f090023;
+        public static final int settings = 0x7f090021;
+        public static final int v_factors = 0x7f09001f;
     }
 
     public static final class layout {
@@ -94,7 +93,6 @@ public final class R {
     public static final class string {
         public static final int app_name = 0x7f060000;
         public static final int ask_confirm = 0x7f060033;
-        public static final int auth_button_lbl = 0x7f060019;
         public static final int auth_features = 0x7f060016;
         public static final int authentication = 0x7f06001e;
         public static final int author_text_lbl = 0x7f060011;
@@ -117,6 +115,7 @@ public final class R {
         public static final int export_images = 0x7f06001b;
         public static final int first_frame = 0x7f060038;
         public static final int geolocation_verifier = 0x7f06000a;
+        public static final int get_roll_button_lbl = 0x7f060019;
         public static final int go_to_GPS_settings = 0x7f060010;
         public static final int gps_disabled_message = 0x7f06000d;
         public static final int help = 0x7f060013;
@@ -143,6 +142,8 @@ public final class R {
         public static final int preferences = 0x7f060018;
         public static final int review_image = 0x7f06001d;
         public static final int select_roll = 0x7f060006;
+        public static final int send = 0x7f06003c;
+        public static final int send_file = 0x7f06003d;
         public static final int settings = 0x7f060012;
         public static final int take_images_lbl = 0x7f06001a;
         public static final int take_picture = 0x7f060023;
