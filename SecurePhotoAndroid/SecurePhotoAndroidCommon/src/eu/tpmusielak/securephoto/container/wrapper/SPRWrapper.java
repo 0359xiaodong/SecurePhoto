@@ -3,6 +3,7 @@ package eu.tpmusielak.securephoto.container.wrapper;
 import eu.tpmusielak.securephoto.container.SPImageRoll;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -15,6 +16,7 @@ public class SPRWrapper extends SPFileWrapper implements Serializable {
     public final int frameIndex;
     private final SPImageRoll.Header header;
 
+
     public SPRWrapper(File file, SPImageRoll.Header header, int frameIndex) {
         this(file, header, null, null, frameIndex);
     }
@@ -26,6 +28,20 @@ public class SPRWrapper extends SPFileWrapper implements Serializable {
         this.uniqueFrameID = uniqueFrameID;
         if (hash != null)
             setFrameHash(hash);
+    }
+
+    public static SPRWrapper wrapFile(File file) {
+        SPImageRoll roll = null;
+        SPImageRoll.Header rollHeader = null;
+        try {
+            roll = SPImageRoll.fromFile(file);
+            rollHeader = roll.getHeader();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return new SPRWrapper(file, rollHeader, 0);
     }
 
     @Override

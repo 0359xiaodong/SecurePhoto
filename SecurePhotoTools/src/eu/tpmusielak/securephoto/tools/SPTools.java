@@ -1,9 +1,14 @@
 package eu.tpmusielak.securephoto.tools;
 
-import eu.tpmusielak.securephoto.container.SPImage;
-import eu.tpmusielak.securephoto.container.SPImageRoll;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import eu.tpmusielak.securephoto.container.*;
 import eu.tpmusielak.securephoto.verification.VerificationFactorData;
 import eu.tpmusielak.securephoto.verification.Verifier;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 /**
  * Created by IntelliJ IDEA.
@@ -57,7 +63,7 @@ public class SPTools implements ActionListener, ChangeListener {
     private JLabel frameCountLabel;
     private JButton newSPRButton;
     private JButton addToSPRButton;
-    private JButton saveButton;
+    private JButton setupButton;
     private JButton exportAsJPGButton;
     private JButton verifyButton;
 
@@ -81,6 +87,10 @@ public class SPTools implements ActionListener, ChangeListener {
     private static JFrame mainFrame;
 
     private TextPaneHandler textPaneHandler;
+    private SPValidatorHandler validatorHandler;
+
+    Preferences preferences;
+    protected String serverURI = "http://192.168.3.50:8000";
 
 
     private void createUIComponents() {
@@ -118,7 +128,7 @@ public class SPTools implements ActionListener, ChangeListener {
         nextButton.addActionListener(SPTools.this);
         newSPRButton.addActionListener(SPTools.this);
         addToSPRButton.addActionListener(SPTools.this);
-        saveButton.addActionListener(SPTools.this);
+        setupButton.addActionListener(SPTools.this);
         exportAsJPGButton.addActionListener(SPTools.this);
         verifyButton.addActionListener(SPTools.this);
 
@@ -133,6 +143,10 @@ public class SPTools implements ActionListener, ChangeListener {
         SpinnerModel model = new SpinnerNumberModel(0, 0, 0, 0);
         frameNumberSpinner.setModel(model);
         frameNumberSpinner.addChangeListener(this);
+
+        validatorHandler = new SPValidatorHandler();
+
+        preferences = Preferences.userNodeForPackage(this.getClass());
     }
 
 
@@ -186,28 +200,38 @@ public class SPTools implements ActionListener, ChangeListener {
             System.exit(0);
         } else if (source == frameNumberSpinner) {
 
+        } else if (source == setupButton) {
+            setupButtonAction();
         }
 
 
     }
 
     private void verifyButtonAction() {
-        boolean result;
+        SPImage.VerificationStatus result;
 
         if (currentSPRoll == null) {
-            result = currentSPImage.checkIntegrity();
+            result = currentSPImage.checkIntegrity(validatorHandler);
         } else {
-            result = currentSPRoll.checkIntegrity();
+            result = currentSPRoll.checkIntegrity(validatorHandler);
         }
 
         String message;
         int messageType;
-        if (result) {
-            message = "Hash verification positive";
-            messageType = JOptionPane.INFORMATION_MESSAGE;
-        } else {
-            message = "Hash verification negative";
-            messageType = JOptionPane.WARNING_MESSAGE;
+        switch (result) {
+            case OK:
+                message = "Hash verification positive";
+                messageType = JOptionPane.INFORMATION_MESSAGE;
+                break;
+            case FAILED:
+                message = "Hash verification negative";
+                messageType = JOptionPane.ERROR_MESSAGE;
+                break;
+            case UNKNOWN:
+            default:
+                message = "Hash verification inconclusive";
+                messageType = JOptionPane.WARNING_MESSAGE;
+                break;
         }
 
         JOptionPane.showMessageDialog(mainFrame, message, "Verification result", messageType);
@@ -254,6 +278,11 @@ public class SPTools implements ActionListener, ChangeListener {
 
             mainFrame.setTitle(APPLICATION_NAME + " - " + currentFile.getName());
         }
+    }
+
+    private void setupButtonAction() {
+        serverURI = (String) JOptionPane.showInputDialog(null, "Enter base station address : ",
+                "Setup", JOptionPane.PLAIN_MESSAGE, null, null, serverURI);
     }
 
 
@@ -347,6 +376,7 @@ public class SPTools implements ActionListener, ChangeListener {
 
         clearImage();
         textPaneHandler.clear();
+        validatorHandler.reset();
 
         FileType fileType = FileType.getFileType(file);
 
@@ -618,6 +648,93 @@ public class SPTools implements ActionListener, ChangeListener {
 
         public void showException(String s) {
             textPane.setText(s);
+        }
+    }
+
+    private class SPValidatorHandler implements SPValidator {
+        private final String SPR_LOOKUP_PATH = "spr_retrieve";
+        private final String FRAME_LOOKUP_PATH = "hash_retrieve";
+
+
+        private StringBuilder sb;
+        private HttpClient client;
+
+
+        private SPValidatorHandler() {
+            client = new DefaultHttpClient();
+            sb = new StringBuilder();
+        }
+
+        private void reset() {
+            sb = new StringBuilder();
+        }
+
+        @Override
+        public void log(String s) {
+            sb.append(s).append("\n");
+            textPane.setText(sb.toString());
+        }
+
+        @Override
+        public SPRInfo lookupSPR(byte[] uniqueID) {
+            String encodedID = Base64.encode(uniqueID);
+
+            try {
+                HttpGet request = new HttpGet(String.format("%s/%s/%s/"
+                        , serverURI, SPR_LOOKUP_PATH, encodedID));
+                HttpResponse response = client.execute(request);
+
+                HttpEntity enty = response.getEntity();
+                if (enty != null)
+                    enty.consumeContent();
+
+                if (!response.containsHeader("time")) {
+                    return null;
+                }
+
+                long creationDate = Long.parseLong(response.getHeaders("time")[0].getValue());
+                String user = response.getHeaders("user")[0].getValue();
+                String deviceID = response.getHeaders("device_id")[0].getValue();
+
+                return new SPRInfo(creationDate, deviceID, encodedID, user);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        public FrameInfo lookupFrame(byte[] uniqueID) {
+            String encodedID = Base64.encode(uniqueID);
+
+            try {
+                HttpGet request = new HttpGet(String.format("%s/%s/%s/"
+                        , serverURI, FRAME_LOOKUP_PATH, encodedID));
+                HttpResponse response = client.execute(request);
+
+                HttpEntity enty = response.getEntity();
+                if (enty != null)
+                    enty.consumeContent();
+
+                if (!response.containsHeader("time")) {
+                    return null;
+                }
+
+                long creationDate = Long.parseLong(response.getHeaders("time")[0].getValue());
+                String user = response.getHeaders("user")[0].getValue();
+                String deviceID = response.getHeaders("device_id")[0].getValue();
+                String sprID = response.getHeaders("spr_id")[0].getValue();
+                String imageHash = response.getHeaders("image_hash")[0].getValue();
+
+                return new FrameInfo(creationDate, imageHash, deviceID, encodedID, sprID, user);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
         }
     }
 

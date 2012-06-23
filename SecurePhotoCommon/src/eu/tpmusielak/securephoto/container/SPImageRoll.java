@@ -1,14 +1,7 @@
 package eu.tpmusielak.securephoto.container;
 
-import eu.tpmusielak.securephoto.verification.VerificationFactorData;
-import eu.tpmusielak.securephoto.verification.Verifier;
-
 import java.io.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -31,6 +24,7 @@ public final class SPImageRoll implements Serializable, SPIFile {
         private final byte[] uniqueID;
         private int frameCount;
         private byte[] currentHash;
+        private byte[] signature;
 
         public Header(byte[] uniqueID, long expiryDate) {
             this.expiryDate = expiryDate;
@@ -38,6 +32,7 @@ public final class SPImageRoll implements Serializable, SPIFile {
             this.uniqueID = uniqueID;
             frameCount = 0;
             currentHash = Arrays.copyOf(uniqueID, uniqueID.length);
+            signature = null;
         }
 
         public long getExpiryDate() {
@@ -151,6 +146,10 @@ public final class SPImageRoll implements Serializable, SPIFile {
         return header.frameCount - 1;
     }
 
+    public void sign(byte[] signature) {
+        header.signature = signature;
+    }
+
 
     public int getFrameCount() {
         return header.frameCount;
@@ -207,45 +206,78 @@ public final class SPImageRoll implements Serializable, SPIFile {
         return frame;
     }
 
-    public boolean checkIntegrity() {
+    public SPImage.VerificationStatus checkIntegrity(SPValidator validator) {
+        validator.log(String.format("Unique ID: %s", byteArrayToHex(header.uniqueID)));
+        validator.log(String.format("Images stored: %d", header.frameCount));
+        validator.log(String.format("Current hash: %s", byteArrayToHex(header.currentHash)));
+
+        if (header.signature == null) {
+            validator.log("No signature.");
+        } else {
+            validator.log("Signature present.");
+        }
+
         if (header.frameCount == 0)
-            return true;
+            return SPImage.VerificationStatus.OK;
+
+        SPImage.VerificationStatus verificationStatus = SPImage.VerificationStatus.UNKNOWN;
+        SPImage.VerificationStatus[] frameStatus = new SPImage.VerificationStatus[header.frameCount];
+
+        validator.log("");
+        validator.log(String.format("Looking up SPRoll ID: %s", byteArrayToHex(header.uniqueID)));
+        SPRInfo sprInfo = validator.lookupSPR(header.uniqueID);
+
+        if (sprInfo != null) {
+            validator.log(sprInfo.toString());
+        } else {
+            validator.log("Rogue SecurePhoto Roll");
+            return SPImage.VerificationStatus.FAILED;
+        }
 
         byte[] calculatedHash = header.uniqueID;
 
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance(SPImage.DIGEST_ALGORITHM);
+        for (int i = 0; i < header.frameCount; i++) {
+            validator.log(String.format("Verifying frame %d of %d:", i + 1, header.frameCount));
+            SPImage frame = getFrame(i);
 
-            for (int i = 0; i < header.frameCount; i++) {
-                SPImage frame = getFrame(i);
+            verificationStatus = frame.checkIntegrity(validator, calculatedHash);
 
-                byte[] imageData = frame.getImageData();
-                messageDigest.update(imageData);
-                messageDigest.update(calculatedHash);
-
-                calculatedHash = messageDigest.digest();
-
-                List<Class<Verifier>> verificationFactors = frame.getVerificationFactors();
-                Map<Class<Verifier>, VerificationFactorData> verificationFactorData = frame.getVerificationFactorData();
-
-                for (Class<Verifier> verifierClass : verificationFactors) {
-                    VerificationFactorData factorData = verificationFactorData.get(verifierClass);
-
-                    if (factorData != null) {
-                        messageDigest.update(calculatedHash);
-                        messageDigest.update(factorData.getHash());
-
-                        calculatedHash = messageDigest.digest();
-                    }
-
-                }
+            switch (verificationStatus) {
+                case OK:
+                case UNKNOWN:
+                    break;
+                case FAILED:
+                    return SPImage.VerificationStatus.FAILED;
             }
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            calculatedHash = frame.getFrameHash();
+
+            validator.log("");
+            frameStatus[i] = verificationStatus;
         }
 
-        return Arrays.equals(header.currentHash, calculatedHash);
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < frameStatus.length; i++) {
+            SPImage.VerificationStatus status = frameStatus[i];
+            switch (status) {
+                case OK:
+                    sb.append("+");
+                    break;
+                case FAILED:
+                    sb.append("-");
+                    break;
+                case UNKNOWN:
+                    sb.append("?");
+                    break;
+            }
+            sb.append(",");
+
+        }
+        sb.append("]");
+        validator.log("Roll validation status: " + sb.toString());
+
+        return verificationStatus;
     }
 
 
@@ -277,6 +309,5 @@ public final class SPImageRoll implements Serializable, SPIFile {
 
         return sb.toString();
     }
-
 
 }

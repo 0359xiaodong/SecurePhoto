@@ -3,6 +3,7 @@ package eu.tpmusielak.securephoto.container;
 import eu.tpmusielak.securephoto.verification.VerificationFactorData;
 import eu.tpmusielak.securephoto.verification.Verifier;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -196,15 +197,19 @@ public final class SPImage implements Serializable, SPIFile {
         return bytes;
     }
 
-    public boolean checkIntegrity() {
-        return checkIntegrity(null);
+    public VerificationStatus checkIntegrity(SPValidator validator) {
+        return checkIntegrity(validator, null);
     }
 
-    public boolean checkIntegrity(byte[] inputHash) {
+    public VerificationStatus checkIntegrity(SPValidator validator, byte[] inputHash) {
         byte[] calculatedHash = null;
         if (inputHash == null) {
+            validator.log("No input hash");
             inputHash = new byte[0];
         }
+
+        validator.log(String.format("Frame ID: %s", byteArrayToHex(header.uniqueFrameID)));
+
 
         try {
             MessageDigest messageDigest = MessageDigest.getInstance(SPImage.DIGEST_ALGORITHM);
@@ -212,7 +217,9 @@ public final class SPImage implements Serializable, SPIFile {
             messageDigest.update(inputHash);
             calculatedHash = messageDigest.digest();
 
+
             if (verificationFactors != null) {
+                validator.log("VerificationFactorData found");
                 for (Class<Verifier> v : verificationFactors) {
                     VerificationFactorData factorData = verificationFactorData.get(v);
 
@@ -222,13 +229,42 @@ public final class SPImage implements Serializable, SPIFile {
                         calculatedHash = messageDigest.digest();
                     }
                 }
+            } else {
+                validator.log("No VerificationFactorData present");
+            }
+
+            validator.log(String.format("Calculated hash: %s", byteArrayToHex(calculatedHash)));
+            validator.log("Signature TODO");
+
+            FrameInfo info = validator.lookupFrame(header.uniqueFrameID);
+
+            if (info != null) {
+                byte[] submittedHash = DatatypeConverter.parseBase64Binary(info.imageHash);
+                validator.log(String.format("Retrieving frame hash: %s", byteArrayToHex(submittedHash)));
+                validator.log(String.format("Frame hash submitted: %s", new Date(info.issueDate * 1000).toString()));
+
+                boolean validationOK = Arrays.equals(calculatedHash, submittedHash);
+
+                if (validationOK) {
+                    validator.log("Hash OK");
+                    validator.log("Frame VERIFIED");
+
+                    return VerificationStatus.OK;
+                } else {
+                    validator.log("Hash verification FAILED.");
+                    return VerificationStatus.FAILED;
+                }
+
+
+            } else {
+                validator.log("No frame record on server.");
             }
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        return Arrays.equals(header.frameHash, calculatedHash);
+        return VerificationStatus.UNKNOWN;
     }
 
 
@@ -251,5 +287,9 @@ public final class SPImage implements Serializable, SPIFile {
         sb.append(String.format("Frame hash: %s\n", byteArrayToHex(header.frameHash)));
 
         return sb.toString();
+    }
+
+    public enum VerificationStatus {
+        OK, FAILED, UNKNOWN
     }
 }

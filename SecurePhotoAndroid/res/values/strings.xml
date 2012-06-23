@@ -46,4 +46,6 @@
     <string name="base_station_address_not_set">The base station address is not set</string>
     <string name="send">Send</string>
     <string name="send_file">Send file..</string>
+    <string name="spr_retrieved">Roll %1$s retrieved"</string>
+    <string name="spr_retrieval_failed">SPR retrieval failed"</string>
 </resources>

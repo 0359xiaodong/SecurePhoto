@@ -137,13 +137,13 @@
                   <text value="Add to SPR"/>
                 </properties>
               </component>
-              <component id="90545" class="javax.swing.JButton" binding="saveButton" default-binding="true">
+              <component id="90545" class="javax.swing.JButton" binding="setupButton">
                 <constraints>
                   <grid row="0" column="16" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="Save"/>
+                  <text value="Setup"/>
                 </properties>
               </component>
               <component id="2ff09" class="javax.swing.JButton" binding="exportAsJPGButton" default-binding="true">
@@ -193,7 +193,7 @@
         </constraints>
         <properties>
           <continuousLayout value="true"/>
-          <dividerLocation value="544"/>
+          <dividerLocation value="548"/>
           <dividerSize value="5"/>
           <resizeWeight value="0.75"/>
         </properties>
