@@ -13,6 +13,7 @@ import android.widget.*;
 import eu.tpmusielak.securephoto.R;
 import eu.tpmusielak.securephoto.container.SPImage;
 import eu.tpmusielak.securephoto.container.SPImageRoll;
+import eu.tpmusielak.securephoto.container.wrapper.SPFileWrapper;
 import eu.tpmusielak.securephoto.container.wrapper.SPRWrapper;
 import eu.tpmusielak.securephoto.verification.VerificationFactorData;
 import eu.tpmusielak.securephoto.verification.Verifier;
@@ -42,6 +43,8 @@ public class OpenImage extends Activity {
     private File file;
     private int frameIndex = -1;
     private int frameCount = 0;
+
+    private SPFileWrapper wrapper;
 
     private Button showVerifiersButton;
     private List<Class<Verifier>> verifiers;
@@ -104,7 +107,6 @@ public class OpenImage extends Activity {
 
     private void displayFile() {
         ImageView preview = (ImageView) findViewById(R.id.image);
-
         Bitmap bitmap = null;
         if (frameIndex < 0) {
             bitmap = ImageLoader.decodeFile(file, imageSize);
@@ -119,7 +121,6 @@ public class OpenImage extends Activity {
             }
 
         }
-
         preview.setImageBitmap(bitmap);
 
         TextView filename = (TextView) findViewById(R.id.filename);
@@ -129,7 +130,7 @@ public class OpenImage extends Activity {
         Date date = new Date(file.lastModified());
         filedate.setText(date.toLocaleString());
 
-        if (file.getName().endsWith(SPImage.DEFAULT_EXTENSION))
+        if (operatingSPFile())
             showVerifiersButton.setVisibility(View.VISIBLE);
     }
 
@@ -152,6 +153,10 @@ public class OpenImage extends Activity {
 
     }
 
+    private boolean operatingSPFile() {
+        return file.getName().endsWith(SPImage.DEFAULT_EXTENSION) || file.getName().endsWith(SPImageRoll.DEFAULT_EXTENSION);
+    }
+
 
     private class VerifiersButtonListener implements View.OnClickListener {
         @Override
@@ -161,12 +166,17 @@ public class OpenImage extends Activity {
     }
 
     protected void displayVerifiers() {
-        if (!file.getName().endsWith(SPImage.DEFAULT_EXTENSION))
+        if (!operatingSPFile())
             return;
 
         SPImage image = null;
         try {
-            image = SPImage.fromFile(file);
+            if (file.getName().endsWith(SPImage.DEFAULT_EXTENSION)) {
+                image = SPImage.fromFile(file);
+            } else {
+                SPImageRoll roll = SPImageRoll.fromFile(file);
+                image = roll.getFrame(frameIndex);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

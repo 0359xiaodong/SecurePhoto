@@ -258,8 +258,7 @@ public final class SPImageRoll implements Serializable, SPIFile {
 
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for (int i = 0; i < frameStatus.length; i++) {
-            SPImage.VerificationStatus status = frameStatus[i];
+        for (SPImage.VerificationStatus status : frameStatus) {
             switch (status) {
                 case OK:
                     sb.append("+");

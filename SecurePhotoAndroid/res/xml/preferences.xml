@@ -11,6 +11,12 @@
                 android:defaultValue=""
                 />
 
+        <CheckBoxPreference
+                android:key="submit_hash"
+                android:title="@string/submit_hash"
+                android:defaultValue="true"
+                />
+
 
     </PreferenceCategory>
     <PreferenceCategory

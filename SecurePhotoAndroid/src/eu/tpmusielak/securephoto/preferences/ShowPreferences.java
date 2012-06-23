@@ -29,7 +29,7 @@ public class ShowPreferences extends PreferenceActivity implements OnSharedPrefe
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             verifierManager = ((SCVerifierManager.VerifierServiceBinder) iBinder).getService();
             verifierManager.bindToPreferences(ShowPreferences.this);
-            verifierManager.generateVerifierEnablers();
+//            verifierManager.generateVerifierEnablers();
             verifierManager.loadVerifierPreferences();
         }
 

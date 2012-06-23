@@ -2,6 +2,6 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/geolocation_verifier">
-        <CheckBoxPreference android:title="@string/enforce_location_lock" android:defaultValue="true"/>
+        <!--<CheckBoxPreference android:title="@string/enforce_location_lock" android:defaultValue="true"/>-->
     </PreferenceCategory>
 </PreferenceScreen>

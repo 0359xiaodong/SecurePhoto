@@ -103,7 +103,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
         backgroundOpsCounter = new AtomicInteger(0);
 
         //TODO: replace with user-definable default mode
-        saveMode = SaveMode.SINGLE_IMAGE;
+        saveMode = SaveMode.IMAGE_ROLL;
 
         setupScreen();
         cameraHandler.setupCamera();
@@ -262,6 +262,7 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
     protected void onResume() {
         super.onResume();
         cameraHandler.resumeCamera();
+        fileHandler.onInitialize(getContext());
     }
 
     @Override
@@ -280,9 +281,9 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.camera_menu, menu);
-        return true;
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.camera_menu, menu);
+        return false;
     }
 
     @Override
@@ -315,7 +316,9 @@ public class TakeImage extends Activity implements VerifierGUIReceiver, CameraRe
 
     public void onImageSaved(SPFileWrapper wrapper) {
         lastImageWrapper = wrapper;
-        communicationService.notifyPictureTaken(wrapper);
+        if (preferences.getBoolean("submit_hash", true)) {
+            communicationService.notifyPictureTaken(wrapper);
+        }
         if (preferences.getBoolean("review_image", true)) {
             viewImage(lastImageWrapper);
         }

@@ -52,6 +52,10 @@ public class CellularVerifierWrapper extends VerifierWrapper implements Cellular
     public CellularData getCellularData() {
         GsmCellLocation location = (GsmCellLocation) telephonyManager.getCellLocation();
 
+        if (location == null) {
+            return new CellularData(0, 0, 0, 0, "");
+        }
+
         final int cid = location.getCid();
         final int lac = location.getLac();
 

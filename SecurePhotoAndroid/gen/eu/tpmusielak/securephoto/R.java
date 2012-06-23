@@ -147,6 +147,7 @@ public final class R {
         public static final int settings = 0x7f060012;
         public static final int spr_retrieval_failed = 0x7f06003f;
         public static final int spr_retrieved = 0x7f06003e;
+        public static final int submit_hash = 0x7f060040;
         public static final int take_images_lbl = 0x7f06001a;
         public static final int take_picture = 0x7f060023;
         public static final int verification_factors = 0x7f06002a;

@@ -234,7 +234,7 @@ public final class SPImage implements Serializable, SPIFile {
             }
 
             validator.log(String.format("Calculated hash: %s", byteArrayToHex(calculatedHash)));
-            validator.log("Signature TODO");
+//            validator.log("Signature TODO");
 
             FrameInfo info = validator.lookupFrame(header.uniqueFrameID);
 

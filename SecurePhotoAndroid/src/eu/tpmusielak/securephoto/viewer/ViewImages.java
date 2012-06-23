@@ -296,6 +296,9 @@ public class ViewImages extends Activity {
                 File file = (File) parent.getItemAtPosition(position);
 
                 Intent i = new Intent(getApplicationContext(), OpenImage.class);
+
+                i.putExtra("wrapper", SPFileWrapper.getWrapperForFile(file));
+
                 i.putExtra("filename", file.getAbsolutePath());
                 startActivity(i);
             }
